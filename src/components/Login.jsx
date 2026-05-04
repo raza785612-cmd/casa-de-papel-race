@@ -36,7 +36,7 @@ const Login = () => {
         .single();
 
       if (authError || !team) {
-        throw new Error('שם צוות לא נמצא');
+        throw new Error('לא נמצא כינוי');
       }
 
       // 3. שמירה בלוקאל סטורג'
@@ -62,7 +62,7 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="שם הצוות"
+            placeholder="כינוי"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
