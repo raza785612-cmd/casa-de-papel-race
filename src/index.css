@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* עיצוב משלים שלנו */
+body {
+  margin: 0;
+  background-color: #000;
+  color: white;
+  overflow-x: hidden;
+}
