@@ -7,3 +7,52 @@ body {
   color: white;
   overflow-x: hidden;
 }
+
+/* --- עיצוב מיוחד לטלפונים --- */
+@media (max-width: 600px) {
+  /* מוודא שרקע הדף יהיה שחור ויתפוס את כל הגובה */
+  body {
+    background-color: #000;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* תיקון הקופסה של הלוגין */
+  .login-container {
+    width: 85% !important;
+    max-width: 400px;
+    margin: 40px auto !important;
+    padding: 20px !important;
+    background-color: #1a1a1a; /* שחור מעט בהיר יותר לקופסה */
+    border: 1px solid #e50914; /* מסגרת אדומה דקה */
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+  }
+
+  /* הגדלת שדות הקלט שיהיה קל ללחוץ */
+  input {
+    width: 100% !important;
+    height: 50px !important;
+    font-size: 16px !important; /* חשוב מאוד נגד זום באייפון */
+    margin-bottom: 15px !important;
+    background: #333 !important;
+    color: white !important;
+    border: 1px solid #444 !important;
+    border-radius: 5px !important;
+    padding: 0 15px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* עיצוב הכפתור */
+  button {
+    width: 100% !important;
+    height: 55px !important;
+    background-color: #e50914 !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+  }
+}

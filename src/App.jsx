@@ -7,8 +7,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/station" element={<Station />} /> {/* הוספנו את הנתיב הזה */}
-        <Route path="/" element={<Navigate to="/login" />} />
+<Route path="/station/:id" element={<Station />} />    
+    <Route path="/" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
   );

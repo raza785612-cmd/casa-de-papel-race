@@ -33,9 +33,11 @@ const Login = () => {
       // בדיקה אם הגיעו מ-QR ספציפי (למשל station=3)
       const stationFromUrl = searchParams.get('s');
       if (stationFromUrl) {
-        navigate(`/station/${stationFromUrl}`);
+       // הוספת / בהתחלה ושימוש באותיות קטנות
+navigate(`/station/${stationId}`);
       } else {
-        navigate('/station/1'); // ברירת מחדל
+        // הוספת / בהתחלה ושימוש באותיות קטנות
+navigate(`/station/${stationId}`);; // ברירת מחדל
       }
     } catch (err) {
       setError(err.message);
