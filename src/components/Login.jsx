@@ -1,112 +1,94 @@
-import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { supabase } from '../supabaseClient'; // וודא שהנתיב לקוח מהקובץ שלך
+import './Login.css'; // נשתמש בזה לעיצוב, או שתוסיף ל-index.css
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
+
+  // חילוץ מספר התחנה מהכתובת (למשל ?s=1)
+  const queryParams = new URLSearchParams(location.search);
+  const stationId = queryParams.get('s') || '1'; 
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError(null);
+    setLoading(true);
+    setError('');
 
     try {
-      if (password !== import.meta.env.VITE_GENERIC_PASSWORD) {
+      // 1. בדיקת סיסמה גנרית מה-Environment Variables
+      const genericPassword = import.meta.env.VITE_GENERIC_PASSWORD;
+      
+      if (password !== genericPassword) {
         throw new Error('קוד גישה שגוי');
       }
 
-      const { data: team, error: sbError } = await supabase
+      // 2. בדיקה אם הצוות קיים ב-Supabase
+      const { data: team, error: authError } = await supabase
         .from('teams')
         .select('*')
-        .eq('username', username.trim())
-        .maybeSingle();
+        .eq('username', username)
+        .single();
 
-      if (sbError || !team) throw new Error('הסוכן לא נמצא במערכת');
-
-      localStorage.setItem('race_user', team.username);
-      
-      // בדיקה אם הגיעו מ-QR ספציפי (למשל station=3)
-      const stationFromUrl = searchParams.get('s');
-      if (stationFromUrl) {
-       // הוספת / בהתחלה ושימוש באותיות קטנות
-navigate(`/station/${stationId}`);
-      } else {
-        // הוספת / בהתחלה ושימוש באותיות קטנות
-navigate(`/station/${stationId}`);; // ברירת מחדל
+      if (authError || !team) {
+        throw new Error('שם צוות לא נמצא');
       }
+
+      // 3. שמירת פרטי הצוות בדפדפן (כדי שלא יצטרכו לוגין שוב)
+      localStorage.setItem('race_user', JSON.stringify(team));
+
+      // 4. ניווט לתחנה הרלוונטית - אותיות קטנות ולוכסן בהתחלה!
+      navigate(`/station/${stationId}`);
+
     } catch (err) {
       setError(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-6 font-sans">
-      {/* Background Decor */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/10 via-black to-black -z-10"></div>
-      
-      <div className="w-full max-w-md">
-        {/* Header Section */}
-        <div className="text-center mb-10">
-          <div className="inline-block px-3 py-1 border border-red-600 text-red-600 text-xs font-bold tracking-[0.3em] uppercase mb-4 animate-pulse">
-            System Online
+    <div className="login-wrapper">
+      <div className="login-container">
+        <div className="mask-icon">🎭</div>
+        <h1>CASA DE PAPEL</h1>
+        <h2>מרוץ התחנות</h2>
+        
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <input
+              type="text"
+              placeholder="שם הצוות"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
-          <h1 className="text-5xl font-black tracking-tighter mb-2">
-            CASA DE <span className="text-red-600 shadow-red-500">PAPEL</span>
-          </h1>
-          <div className="h-1 w-20 bg-red-600 mx-auto"></div>
-        </div>
+          
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="קוד גישה (סיסמה)"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        {/* Login Card */}
-        <div className="bg-zinc-900/50 backdrop-blur-md border border-zinc-800 p-8 rounded-2xl shadow-2xl">
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold mr-1">Agent Identity</label>
-              <input
-                type="text"
-                placeholder="שם משתמש"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full bg-black/50 border border-zinc-700 p-4 rounded-xl focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-zinc-700"
-              />
-            </div>
+          {error && <div className="error-message">{error}</div>}
 
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold mr-1">Access Code</label>
-              <input
-                type="password"
-                placeholder="קוד סודי"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-black/50 border border-zinc-700 p-4 rounded-xl focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all placeholder:text-zinc-700"
-              />
-            </div>
-
-            {error && (
-              <div className="text-red-500 text-sm text-center font-bold bg-red-500/10 py-2 rounded-lg border border-red-500/20">
-                {error}
-              </div>
-            )}
-
-            <button
-              disabled={isLoading}
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-xl shadow-lg shadow-red-900/20 transition-all transform active:scale-95 flex items-center justify-center gap-2"
-            >
-              {isLoading ? 'מתחבר לשרת...' : 'כניסה למערכת'}
-            </button>
-          </form>
-        </div>
-
-        {/* Footer Hint */}
-        <p className="mt-12 text-center text-zinc-600 text-sm italic">
-          "דיזינגוף דיזינגוף הירקון בן יהודה"
-        </p>
+          <button type="submit" disabled={loading}>
+            {loading ? 'מתחבר...' : 'התחל משימה'}
+          </button>
+        </form>
+        
+        <p className="station-indicator">תחנה נוכחית: {stationId}</p>
       </div>
     </div>
   );

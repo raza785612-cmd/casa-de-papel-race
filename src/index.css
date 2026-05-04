@@ -1,58 +1,64 @@
-@import "tailwindcss";
-
-/* עיצוב משלים שלנו */
-body {
-  margin: 0;
+/* עיצוב כללי לדף הלוגין */
+.login-wrapper {
   background-color: #000;
-  color: white;
-  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  direction: rtl;
 }
 
-/* --- עיצוב מיוחד לטלפונים --- */
+.login-container {
+  background-color: #141414;
+  padding: 40px;
+  border-radius: 15px;
+  border: 2px solid #e50914;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+}
+
+.mask-icon { font-size: 50px; margin-bottom: 10px; }
+
+h1 { color: #e50914; margin: 0; font-size: 2rem; letter-spacing: 2px; }
+h2 { color: #fff; margin-bottom: 30px; font-weight: 300; }
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #333;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:active { transform: scale(0.98); }
+
+.error-message { color: #ff4d4d; margin-bottom: 15px; font-size: 14px; }
+.station-indicator { color: #666; margin-top: 20px; font-size: 12px; }
+
+/* התאמה לנייד */
 @media (max-width: 600px) {
-  /* מוודא שרקע הדף יהיה שחור ויתפוס את כל הגובה */
-  body {
-    background-color: #000;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* תיקון הקופסה של הלוגין */
   .login-container {
-    width: 85% !important;
-    max-width: 400px;
-    margin: 40px auto !important;
-    padding: 20px !important;
-    background-color: #1a1a1a; /* שחור מעט בהיר יותר לקופסה */
-    border: 1px solid #e50914; /* מסגרת אדומה דקה */
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
-  }
-
-  /* הגדלת שדות הקלט שיהיה קל ללחוץ */
-  input {
-    width: 100% !important;
-    height: 50px !important;
-    font-size: 16px !important; /* חשוב מאוד נגד זום באייפון */
-    margin-bottom: 15px !important;
-    background: #333 !important;
-    color: white !important;
-    border: 1px solid #444 !important;
-    border-radius: 5px !important;
-    padding: 0 15px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* עיצוב הכפתור */
-  button {
-    width: 100% !important;
-    height: 55px !important;
-    background-color: #e50914 !important;
-    color: white !important;
-    font-weight: bold !important;
-    font-size: 18px !important;
-    border: none !important;
-    border-radius: 5px !important;
-    cursor: pointer;
+    width: 90%;
+    padding: 25px;
   }
 }
