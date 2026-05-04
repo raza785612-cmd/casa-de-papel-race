@@ -75,6 +75,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <p className="password-hint">רמז: "דיזינגוף דיזינגוף הירקון בן יהודה"</p>
 
           {error && <div className="error-message">{error}</div>}
 

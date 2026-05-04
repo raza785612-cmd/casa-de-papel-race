@@ -74,3 +74,10 @@ button {
   .login-container { padding: 20px; }
   h1 { font-size: 1.5rem; }
 }
+.password-hint {
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-style: italic;
+}

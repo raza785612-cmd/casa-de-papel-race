@@ -1,71 +1,107 @@
 import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { useNavigate, useParams } from 'react-router-dom';
 
 const Station = () => {
-  const [team, setTeam] = useState(null);
-  const [station, setStation] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { id } = useParams(); // שואב את מספר התחנה מה-URL
   const navigate = useNavigate();
   
-  // 1. חילוץ ה-ID מהכתובת (למשל station/1)
-  const { id } = useParams(); 
+  const [team, setTeam] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // --- כאן אתה ממלא את התוכן של המשימות בעברית ---
+  const localMissions = {
+    "1": {
+      title: "המשימה הראשונה: הפריצה למרתף",
+      description: `שלום לסוכנים של פרופסור. המשימה הראשונה שלכם מתחילה כאן.
+      עליכם למצוא את המעטפה האדומה המסתתרת באזור...
+      לאחר שתמצאו את הקוד, הזינו אותו והמשיכו לתחנה הבאה.`
+    },
+    "2": {
+      title: "משימה 2: נטרול האזעקה",
+      description: "כאן תכתוב את המלל של משימה 2. למשל: פתרו את החידה הבאה..."
+    },
+    "3": {
+      title: "משימה 3: חדר הבקרה",
+      description: "כאן תכתוב את המלל של משימה 3..."
+    },
+    "4": {
+      title: "משימה 4: הכספת הראשית",
+      description: "כאן תכתוב את המלל של משימה 4..."
+    },
+    "5": {
+      title: "משימה 5: הבריחה הגדולה",
+      description: "כאן תכתוב את המלל של משימה 5..."
+    }
+  };
 
   useEffect(() => {
-    const fetchGameData = async () => {
-      // 2. תיקון קריאת המשתמש מה-localStorage
+    const checkUser = () => {
       const savedUser = localStorage.getItem('race_user');
       if (!savedUser) {
         navigate('/login');
         return;
       }
-
-      const teamData = JSON.parse(savedUser); // הופך את הטקסט חזרה לאובייקט
-      setTeam(teamData);
-
-      // 3. משיכת נתוני התחנה לפי ה-ID מה-URL (ה-QR שנסרק)
-      const { data: stationData, error } = await supabase
-        .from('stations')
-        .select('*')
-        .eq('station_number', id) // משתמש ב-id מהכתובת
-        .single();
-      
-      if (error) {
-        console.error("Error fetching station:", error);
-      } else {
-        setStation(stationData);
-      }
-      
+      setTeam(JSON.parse(savedUser));
       setLoading(false);
     };
 
-    fetchGameData();
-  }, [id, navigate]);
+    checkUser();
+  }, [navigate]);
 
-  if (loading) return <div className="min-h-screen bg-zinc-950 text-white flex items-center justify-center">טוען משימה מהמפקדה...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-red-600 flex items-center justify-center font-bold">
+        טוען נתונים מהמפקדה...
+      </div>
+    );
+  }
+
+  // בחירת המשימה להצגה (לפי ה-ID בכתובת)
+  const currentMission = localMissions[id] || {
+    title: "תחנה לא מזוהה",
+    description: "נראה שסרקתם קוד QR לא תקין או שהתחנה טרם הוגדרה במערכת."
+  };
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white p-6" dir="rtl">
-      <div className="max-w-md mx-auto pt-10">
-        <header className="border-b border-red-600 pb-4 mb-8">
-          <p className="text-red-600 font-bold">צוות: {team?.username}</p>
-          <h1 className="text-2xl font-black italic text-zinc-100">
-            תחנה {id}: {station?.task_title || 'משימה סודית'}
-          </h1>
+      <div className="max-w-md mx-auto pt-8">
+        
+        {/* כותרת הצוות */}
+        <header className="mb-10 text-center">
+          <div className="text-red-600 text-sm font-bold tracking-widest mb-1">סוכן בפעולה: {team?.username}</div>
+          <div className="h-1 w-20 bg-red-600 mx-auto"></div>
         </header>
 
-        <div className="bg-zinc-900 p-6 rounded-lg shadow-xl border border-zinc-800">
-          <p className="text-lg leading-relaxed mb-8 whitespace-pre-line">
-            {station?.task_description || 'המשימה בטעינה...'}
-          </p>
+        {/* כרטיס המשימה */}
+        <main className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+          {/* אפקט דקורטיבי של "בית הנייר" */}
+          <div className="absolute top-0 right-0 p-2 opacity-10 text-4xl">🎭</div>
+          
+          <h1 className="text-3xl font-black mb-6 text-zinc-100 italic border-r-4 border-red-600 pr-4">
+            תחנה {id}: <br/>
+            <span className="text-red-600 not-italic">{currentMission.title}</span>
+          </h1>
 
+          <div className="space-y-4 text-zinc-300 text-lg leading-relaxed mb-10">
+            {/* whitespace-pre-line שומר על ירידות שורה מהטקסט שכתבת למעלה */}
+            <p className="whitespace-pre-line">
+              {currentMission.description}
+            </p>
+          </div>
+
+          {/* כפתור סיום */}
           <button 
-            className="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded shadow-lg shadow-red-900/20 transition"
-            onClick={() => alert('משימה הושלמה! המעבר לתחנה הבאה יתבצע בסריקת ה-QR הבא.')}
+            onClick={() => alert('המשימה הושלמה! עברו לתחנה הבאה וסרקו את ה-QR שלה.')}
+            className="w-full py-5 bg-red-600 hover:bg-red-700 text-white font-black text-xl rounded-xl shadow-lg shadow-red-900/40 transition-all active:scale-95"
           >
-            סיימתי את המשימה!
+            סיימתי את המשימה
           </button>
-        </div>
+        </main>
+
+        <footer className="mt-12 text-center text-zinc-600 text-xs uppercase tracking-tighter">
+          CASA DE PAPEL • MISSION CONTROL SYSTEM • STATION_{id}
+        </footer>
       </div>
     </div>
   );
