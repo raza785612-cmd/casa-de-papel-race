@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { supabase } from '../supabaseClient'; // וודא שהנתיב לקוח מהקובץ שלך
-import './Login.css'; // נשתמש בזה לעיצוב, או שתוסיף ל-index.css
+import { supabase } from '../supabaseClient'; 
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -12,9 +11,10 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // חילוץ מספר התחנה מהכתובת (למשל ?s=1)
+  // --- כאן התיקון הקריטי! מחלצים את הפרמטר מה-URL ---
+  // אם נכנסת לכתובת /login?s=3 המשתנה id יהיה 3
   const queryParams = new URLSearchParams(location.search);
-  const stationId = queryParams.get('s') || '1'; 
+  const idFromUrl = queryParams.get('s') || '1'; 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,14 +22,13 @@ const Login = () => {
     setError('');
 
     try {
-      // 1. בדיקת סיסמה גנרית מה-Environment Variables
+      // 1. בדיקת סיסמה גנרית
       const genericPassword = import.meta.env.VITE_GENERIC_PASSWORD;
-      
       if (password !== genericPassword) {
         throw new Error('קוד גישה שגוי');
       }
 
-      // 2. בדיקה אם הצוות קיים ב-Supabase
+      // 2. בדיקה מול סופהבייס
       const { data: team, error: authError } = await supabase
         .from('teams')
         .select('*')
@@ -40,11 +39,11 @@ const Login = () => {
         throw new Error('שם צוות לא נמצא');
       }
 
-      // 3. שמירת פרטי הצוות בדפדפן (כדי שלא יצטרכו לוגין שוב)
+      // 3. שמירה בלוקאל סטורג'
       localStorage.setItem('race_user', JSON.stringify(team));
 
-      // 4. ניווט לתחנה הרלוונטית - אותיות קטנות ולוכסן בהתחלה!
-      navigate(`/station/${stationId}`);
+      // 4. ניווט - משתמשים במשתנה idFromUrl שהגדרנו למעלה
+      navigate(`/station/${idFromUrl}`);
 
     } catch (err) {
       setError(err.message);
@@ -58,37 +57,33 @@ const Login = () => {
       <div className="login-container">
         <div className="mask-icon">🎭</div>
         <h1>CASA DE PAPEL</h1>
-        <h2>מרוץ התחנות</h2>
+        <p className="subtitle">THE RACE</p>
         
         <form onSubmit={handleLogin}>
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder="שם הצוות"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="שם הצוות"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
           
-          <div className="input-group">
-            <input
-              type="password"
-              placeholder="קוד גישה (סיסמה)"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          <input
+            type="password"
+            placeholder="קוד גישה"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
           {error && <div className="error-message">{error}</div>}
 
           <button type="submit" disabled={loading}>
-            {loading ? 'מתחבר...' : 'התחל משימה'}
+            {loading ? 'מתחבר...' : 'התחל פריצה'}
           </button>
         </form>
         
-        <p className="station-indicator">תחנה נוכחית: {stationId}</p>
+        <div className="station-badge">תחנה {idFromUrl}</div>
       </div>
     </div>
   );

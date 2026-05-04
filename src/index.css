@@ -1,64 +1,76 @@
-/* עיצוב כללי לדף הלוגין */
-.login-wrapper {
+/* עיצוב גלובלי לכל האפליקציה */
+body, html {
+  margin: 0;
+  padding: 0;
   background-color: #000;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Arial', sans-serif;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   direction: rtl;
 }
 
-.login-container {
-  background-color: #141414;
-  padding: 40px;
-  border-radius: 15px;
-  border: 2px solid #e50914;
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.mask-icon { font-size: 50px; margin-bottom: 10px; }
+.login-container {
+  background: #111;
+  border: 2px solid #e50914;
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
+}
 
-h1 { color: #e50914; margin: 0; font-size: 2rem; letter-spacing: 2px; }
-h2 { color: #fff; margin-bottom: 30px; font-weight: 300; }
+.mask-icon { font-size: 4rem; margin-bottom: 10px; }
+
+h1 { color: #e50914; font-size: 1.8rem; margin: 0; letter-spacing: 2px; }
+.subtitle { color: #888; margin-bottom: 25px; font-weight: bold; }
 
 input {
-  width: 100%;
-  padding: 12px;
+  width: 100% !important;
+  height: 50px;
+  background: #222 !important;
+  border: 1px solid #444 !important;
+  color: #fff !important;
   margin-bottom: 15px;
-  background: #333;
-  border: 1px solid #444;
-  color: white;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 0 15px;
+  border-radius: 8px;
+  font-size: 16px !important; /* מונע זום באייפון */
   box-sizing: border-box;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #e50914;
-  color: white;
+  height: 50px;
+  background: #e50914;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s;
+  margin-top: 10px;
 }
 
-button:active { transform: scale(0.98); }
+.error-message { color: #ff4d4d; margin-top: 10px; font-size: 14px; }
+.station-badge { 
+  margin-top: 20px; 
+  display: inline-block; 
+  background: #333; 
+  padding: 5px 15px; 
+  border-radius: 20px; 
+  font-size: 0.8rem;
+}
 
-.error-message { color: #ff4d4d; margin-bottom: 15px; font-size: 14px; }
-.station-indicator { color: #666; margin-top: 20px; font-size: 12px; }
-
-/* התאמה לנייד */
-@media (max-width: 600px) {
-  .login-container {
-    width: 90%;
-    padding: 25px;
-  }
+/* התאמה למסכים קטנים מאוד */
+@media (max-width: 480px) {
+  .login-container { padding: 20px; }
+  h1 { font-size: 1.5rem; }
 }
