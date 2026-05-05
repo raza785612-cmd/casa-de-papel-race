@@ -95,7 +95,7 @@ const Login = () => {
               textAlign: 'right', 
               margin: '0 5px 20px 0' 
             }}>
-              * רמז: הקוד נמצא על גב תג השם שלך
+              * רמז: דיזינגוף דיזינגוף הירקון בן יהודה
             </p>
 
             <button type="submit" disabled={loading}>
