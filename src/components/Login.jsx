@@ -29,28 +29,34 @@ const Login = () => {
       }
 
       // 2. בדיקה מול סופהבייס
+      // הוספתי .trim() כדי למנוע טעויות של רווחים מהמקלדת בטלפון
       const { data: team, error: authError } = await supabase
         .from('teams')
         .select('*')
-        .eq('username', username)
+        .eq('username', username.trim()) 
         .single();
 
-      if (authError || !team) {
-        throw new Error('לא נמצא כינוי');
+      // Debug: זה ידפיס לך בדפדפן (F12) מה הבעיה האמיתית
+      if (authError) {
+        console.error("Supabase Error Object:", authError);
+      }
+
+      if (!team) {
+        throw new Error('לא נמצא כינוי - וודאו שהשם מדויק');
       }
 
       // 3. שמירה בלוקאל סטורג'
       localStorage.setItem('race_user', JSON.stringify(team));
 
-      // 4. ניווט - משתמשים במשתנה idFromUrl שהגדרנו למעלה
+      // 4. ניווט
       navigate(`/station/${idFromUrl}`);
 
     } catch (err) {
+      // כאן אנחנו מציגים את השגיאה המדויקת למשתמש
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
 
   return (
     <div className="login-wrapper">
@@ -62,7 +68,7 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="כינוי"
+            placeholder="שם הצוות"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -75,7 +81,11 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <p className="password-hint">רמז: "דיזינגוף דיזינגוף הירקון בן יהודה"</p>
+
+          {/* הרמז שביקשת */}
+          <p className="password-hint">
+            רמז: "דיזינגוף דיזינגוף הירקון בן יהודה"
+          </p>
 
           {error && <div className="error-message">{error}</div>}
 
@@ -84,7 +94,7 @@ const Login = () => {
           </button>
         </form>
         
-        <div className="station-badge">תחנה {idFromUrl}</div>
+        <div className="station-badge">מתחבר לתחנה {idFromUrl}</div>
       </div>
     </div>
   );

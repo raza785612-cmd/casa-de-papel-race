@@ -75,9 +75,11 @@ button {
   h1 { font-size: 1.5rem; }
 }
 .password-hint {
-  color: #888;
-  font-size: 0.85rem;
+  color: #666;
+  font-size: 0.8rem;
   margin-top: -10px;
   margin-bottom: 15px;
   font-style: italic;
+  text-align: right;
+  padding: 0 5px;
 }
