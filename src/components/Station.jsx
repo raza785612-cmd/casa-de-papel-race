@@ -56,6 +56,12 @@ const Station = () => {
           </div>
 
           <main>
+             {mission.intel && (
+                <div style={{ gridColumn: '1 / -1', pb: '5px' }}>
+                  <p style={{ color: '#ef4444', fontSize: '10px' }}>🔍 :מודיעין</p>
+                  <p style={{ fontSize: '13px', color: '#94a3b8' }}>{mission.intel}</p>
+                </div>
+              )}
             {mission.task && (
               <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '12px', borderRight: '4px solid #dc2626', marginBottom: '15px' }}>
                 <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>המשימה:</p>
@@ -72,7 +78,7 @@ const Station = () => {
 
             {groupInfo?.participants && (
               <div style={{ background: 'rgba(251, 191, 36, 0.1)', padding: '12px', borderRadius: '10px', border: '1px solid #fbbf24', marginBottom: '15px' }}>
-                <p style={{ color: '#fbbf24', fontSize: '10px', margin: 0, fontWeight: 'bold' }}>👥 חברי הקבוצה בתחנה:</p>
+                <p style={{ color: '#fbbf24', fontSize: '10px', margin: 0, fontWeight: 'bold' }}>👥 הצוות:</p>
                 <p style={{ fontSize: '13px', fontWeight: 'bold' }}>{groupInfo.participants}</p>
               </div>
             )}
@@ -84,15 +90,10 @@ const Station = () => {
                   <p style={{ fontSize: '13px', fontWeight: 'bold' }}>{mission.address}</p>
                 </div>
               )}
-              {mission.intel && (
-                <div style={{ gridColumn: '1 / -1', pb: '5px' }}>
-                  <p style={{ color: '#ef4444', fontSize: '10px' }}>🔍 מודיעין</p>
-                  <p style={{ fontSize: '13px', color: '#94a3b8' }}>{mission.intel}</p>
-                </div>
-              )}
-              {mission.hours && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>🕒 זמן</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.hours}</p></div>)}
+             
+              {mission.hours && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>🕒 זמן למשימה</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.hours}</p></div>)}
               {mission.budget && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>💰 תקציב</p><p style={{ fontSize: '12px', fontWeight: 'bold', color: '#22c55e' }}>{mission.budget}</p></div>)}
-              {mission.escort && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>👤 ליווי</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.escort}</p></div>)}
+              {mission.escort && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>👤 מדריך מלווה</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.escort}</p></div>)}
             </div>
 
             {mission.img && mission.img.startsWith('http') && (

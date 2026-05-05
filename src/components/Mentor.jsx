@@ -6,14 +6,16 @@ const Mentor = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
-  // --- נתוני קבוצות (זהה לסטיישן לסנכרון) ---
+  // --- נתוני קבוצות (מסונכרן עם סטיישן - ללא מיקום, רק משתתפים) ---
   const groupsData = {
     "צוות אדום": {
-      "7": { groupLocation: "משימה קבוצתית", participants: "פרנקל, כהן, לוי" }
+      "6": { participants: "פרנקל, כהן, לוי" },
+      "7": { participants: "פרנקל, כהן, לוי" },
+      "8": { participants: "כלל משתתפי המבצע" }
     }
   };
 
-  // --- נתוני מנטור (המבנה שביקשת) ---
+  // --- נתוני מנטור ---
   const allMentorMissions = {
     "אביה": {
       "7": { 
@@ -46,56 +48,63 @@ const Mentor = () => {
       <div className="app-container">
         <div className="card" style={{ textAlign: 'right', borderTop: '4px solid #ef4444' }}>
           
+          {/* ניווט תחנות */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <button onClick={goToPrev} disabled={id === "1"} style={{ width: '40px', padding: '10px', background: '#1e293b', borderRadius: '10px' }}>➔</button>
+            <button onClick={goToPrev} disabled={id === "1"} style={{ width: '40px', padding: '10px', background: '#1e293b', borderRadius: '10px', color: 'white' }}>➔</button>
             <h1 style={{ fontSize: '1.4rem', margin: 0 }}>תחנה {id}</h1>
-            <button onClick={goToNext} disabled={id === "8"} style={{ width: '40px', padding: '10px', background: '#1e293b', borderRadius: '10px' }}>←</button>
+            <button onClick={goToNext} disabled={id === "8"} style={{ width: '40px', padding: '10px', background: '#1e293b', borderRadius: '10px', color: 'white' }}>←</button>
           </div>
 
           <main>
+            {/* כותרת המשימה */}
             <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '15px', borderRight: '5px solid #dc2626', marginBottom: '20px' }}>
-              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>משימה:</p>
-              <p style={{ fontSize: '1.2rem', fontWeight: '900' }}>{currentMission.taskName || "משימה כללית"}</p>
+              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>משימה:</p>
+              <p style={{ fontSize: '1.2rem', fontWeight: '900', margin: 0 }}>{currentMission.taskName || "משימה כללית"}</p>
             </div>
 
-            {/* מיקומים ומשתתפים */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
-               <div style={{ background: '#020617', padding: '10px', borderRadius: '10px' }}>
-                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>📍 מיקום </p>
-                  <p style={{ fontSize: '12px', fontWeight: 'bold' }}>{currentMission.location || "-"}</p>
+            {/* בלוק מיקום וקבוצה */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '15px' }}>
+               <div style={{ background: '#020617', padding: '12px', borderRadius: '10px', border: '1px solid #1e293b' }}>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: '0 0 4px 0' }}>📍 מיקום</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold', margin: 0 }}>{currentMission.location || "-"}</p>
                </div>
-               {groupDetail && (
-                 <div style={{ background: 'rgba(251, 191, 36, 0.1)', padding: '10px', borderRadius: '10px', border: '1px solid #fbbf24' }}>
-                    <p style={{ color: '#fbbf24', fontSize: '10px', margin: 0 }}>👥 קבוצה: {currentMission.group}</p>
-                    <p style={{ fontSize: '11px', fontWeight: 'bold' }}>{groupDetail.groupLocation}</p>
+               
+               {currentMission.group && (
+                 <div style={{ background: 'rgba(251, 191, 36, 0.05)', padding: '12px', borderRadius: '10px', border: '1px solid rgba(251, 191, 36, 0.3)' }}>
+                    <p style={{ color: '#fbbf24', fontSize: '10px', margin: '0 0 4px 0' }}>👥 שיוך קבוצתי</p>
+                    <p style={{ fontSize: '13px', fontWeight: 'bold', margin: 0 }}>{currentMission.group}</p>
                  </div>
                )}
             </div>
 
+            {/* רשימת משתתפים בצוות */}
             {groupDetail?.participants && (
-              <div style={{ marginBottom: '20px', padding: '10px', background: '#0f172a', borderRadius: '10px' }}>
-                 <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}> צוות: </p>
-                 <p style={{ fontSize: '13px', color: '#f8fafc' }}>{groupDetail.participants}</p>
+              <div style={{ marginBottom: '20px', padding: '12px', background: '#0f172a', borderRadius: '10px', borderRight: '3px solid #fbbf24' }}>
+                 <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>צוות בתחנה:</p>
+                 <p style={{ fontSize: '14px', color: '#f8fafc', margin: 0, lineHeight: '1.4' }}>{groupDetail.participants}</p>
               </div>
             )}
 
             {/* הנחיות טקסטואליות */}
-            <section style={{ marginBottom: '15px' }}>
-              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>🔍 מודיעין:</p>
-              <p style={{ color: '#94a3b8', fontSize: '14px' }}>{currentMission.intel}</p>
-            </section>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <section>
+                  <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>🔍 מודיעין:</p>
+                  <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>{currentMission.intel}</p>
+                </section>
 
-            <section style={{ marginBottom: '15px' }}>
-              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>⚠️ דגשים למשתתף:</p>
-              <p style={{ color: '#f8fafc', fontSize: '14px' }}>{currentMission.highlights}</p>
-            </section>
+                <section>
+                  <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>⚠️ דגשים למשתתף:</p>
+                  <p style={{ color: '#f8fafc', fontSize: '14px', margin: 0 }}>{currentMission.highlights}</p>
+                </section>
 
-            {currentMission.briefing && (
-              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '10px', borderRight: '3px solid #fbbf24' }}>
-                <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold' }}>🌳 דגשים לברוש:</p>
-                <p style={{ color: '#f8fafc', fontSize: '14px', fontStyle: 'italic' }}>{currentMission.briefing}</p>
-              </div>
-            )}
+                {currentMission.briefing && (
+                  <div style={{ background: 'rgba(251, 191, 36, 0.03)', padding: '12px', borderRadius: '10px', borderRight: '3px solid #fbbf24', marginTop: '5px' }}>
+                    <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>🌳 דגשים לברוש:</p>
+                    <p style={{ color: '#f8fafc', fontSize: '14px', fontStyle: 'italic', margin: 0 }}>{currentMission.briefing}</p>
+                  </div>
+                )}
+            </div>
+
           </main>
         </div>
       </div>
