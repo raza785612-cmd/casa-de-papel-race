@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login'; // וודא שהנתיב לקובץ הלוגין נכון
 import Station from './components/Station'; // וודא שהנתיב לקובץ התחנה נכון
+import Mentor from './components/Mentor'
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         
         {/* בונוס: אם מישהו מקליד כתובת לא קיימת, שלח אותו ללוגין */}
         <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/mentor/:id" element={<Mentor />} />
+        
       </Routes>
     </Router>
   );
