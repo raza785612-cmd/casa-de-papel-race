@@ -9,7 +9,7 @@ const AdminPanel = () => {
   const ADMIN_PASSWORD = "1234"; 
 
   useEffect(() => {
-    const password = prompt("נא להזין סיסמת חמ''ל:");
+    const password = prompt("נא להזין סיסמה:");
     
     if (password === ADMIN_PASSWORD) {
       setIsAuthenticated(true);
@@ -79,8 +79,8 @@ const AdminPanel = () => {
         marginBottom: '20px'
       }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '24px' }}>🛰️ חמ"ל מבצע - סטטוס צוותים</h1>
-          <p style={{ margin: '5px 0 0', color: '#94a3b8', fontSize: '14px' }}>מעקב בזמן אמת אחרי התקדמות בשטח</p>
+          <h1 style={{ margin: 0, fontSize: '24px' }}>🛰️סטטוס משתתפים</h1>
+          <p style={{ margin: '5px 0 0', color: '#94a3b8', fontSize: '14px' }}>מעקב זמן אמת אחר משתתפים</p>
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <button onClick={clearAllReports} style={{ background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>
@@ -97,7 +97,7 @@ const AdminPanel = () => {
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'right' }}>
           <thead>
             <tr style={{ background: '#1e293b' }}>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>שם הצוות</th>
+              <th style={{ padding: '15px', color: '#94a3b8' }}>שם</th>
               <th style={{ padding: '15px', color: '#94a3b8' }}>תחנה אחרונה</th>
               <th style={{ padding: '15px', color: '#94a3b8' }}>זמן עדכון</th>
               <th style={{ padding: '15px', color: '#94a3b8' }}>סטטוס</th>
