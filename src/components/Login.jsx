@@ -36,42 +36,36 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-6" dir="rtl">
-      <div className="w-full max-w-[360px] mx-auto">
-        <div className="text-center mb-8">
-          <div className="text-6xl mb-4 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]">🎭</div>
-          <h1 className="text-white text-4xl font-black italic tracking-tighter uppercase">
-            THE <span className="text-red-600">RACE</span>
-          </h1>
-          <p className="text-slate-500 text-[10px] mt-2 font-mono tracking-[0.3em] uppercase">Authorized_Personnel_Only</p>
-        </div>
-
-        <form onSubmit={handleLogin} className="bg-slate-900/50 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/5 shadow-2xl space-y-5">
+  <div className="login-page">
+    <div className="app-container">
+      <div className="card">
+        <div style={{ fontSize: '4rem', marginBottom: '10px' }}>🎭</div>
+        <h1>THE <span style={{ color: 'white' }}>RACE</span></h1>
+        <p style={{ color: '#64748b', fontSize: '10px', letterSpacing: '2px', marginBottom: '30px' }}>AUTHORIZED PERSONNEL ONLY</p>
+        
+        <form onSubmit={handleLogin}>
           <input 
             type="text" 
+            placeholder="שם סוכן" 
             value={username} 
             onChange={(e) => setUsername(e.target.value)} 
-            className="w-full bg-black/40 border border-slate-800 text-white p-4 rounded-2xl focus:border-red-600 outline-none text-center font-bold placeholder:text-slate-700" 
-            placeholder="שם משתמש" 
+            required 
           />
           <input 
             type="password" 
+            placeholder="קוד גישה" 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
-            className="w-full bg-black/40 border border-slate-800 text-white p-4 rounded-2xl focus:border-red-600 outline-none text-center font-bold placeholder:text-slate-700" 
-            placeholder="קוד גישה" 
+            required 
           />
-          <button className="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black uppercase shadow-lg shadow-red-900/40 active:scale-95 transition-all italic tracking-widest">
-            {loading ? 'מבצע אימות...' : 'כניסה למערכת'}
+          <button type="submit">
+            {loading ? 'מאמת זהות...' : 'כניסה למערכת'}
           </button>
         </form>
-        
-        <div className="mt-8 text-center opacity-20">
-          <p className="text-slate-500 text-[8px] font-mono tracking-widest uppercase">Node_ID: {idFromUrl}</p>
-        </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Login;
