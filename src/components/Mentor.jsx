@@ -7,12 +7,11 @@ const Mentor = () => {
   const [mentor, setMentor] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // סה"כ תחנות לניווט
   const totalStations = 8; 
 
-  // --- כאן מדביקים את אובייקט הנתונים (DataBank) ---
   const mentorDataBank = {
-   "מאור": {
+    // כאן תשאיר את האובייקט שלך כפי שהוא
+    "מאור": {
       "1": { 
         taskName: "משימה: סיוש לטובת זיהוי וראי 8",
         intel: "סבב א': פרנקל בחנות קדמת עדן אלנבי 93, יוני בסטימצקי באלנבי / רוטשילד, סבב ב': דותן מיני מרקט מלצט 5, אדרי סטימצקי אלנבי/רוטשילד",
@@ -154,14 +153,10 @@ const Mentor = () => {
       // תוסיף כאן את שאר התחנות...
     }
   };
-  // ------------------------------------------------
 
   useEffect(() => {
     const savedUser = localStorage.getItem('race_user');
-    
-    // 1. אם אין משתמש בזיכרון - שלח ללוגין
     if (!savedUser) {
-      console.log("No user found in localStorage, redirecting...");
       navigate(`/login?s=${id}`);
       return;
     }
@@ -169,19 +164,15 @@ const Mentor = () => {
     const userData = JSON.parse(savedUser);
     const role = userData.role ? userData.role.toLowerCase().trim() : '';
 
-    // 2. אם המשתמש הוא לא חונך - שלח אותו לדף התחנה הרגיל
     if (role !== 'mentor') {
-      console.log("User is not a mentor, redirecting to station page");
       navigate(`/station/${id}`);
       return;
     }
 
-    // 3. אם הכל תקין
     setMentor(userData);
     setLoading(false);
   }, [id, navigate]);
 
-  // פונקציות ניווט בין תחנות
   const goToNext = () => {
     const nextId = parseInt(id) + 1;
     if (nextId <= totalStations) navigate(`/mentor/${nextId}`);
@@ -194,139 +185,96 @@ const Mentor = () => {
 
   if (loading) return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center">
-      <div className="text-blue-500 font-mono animate-pulse uppercase tracking-[0.2em]">Authenticating_Mentor...</div>
+      <div className="text-blue-500 font-mono animate-pulse tracking-widest">LOADING_INTERFACE...</div>
     </div>
   );
 
-  // שליפת המידע הספציפי
   const currentMentorInfo = mentorDataBank[mentor?.username]?.[id];
 
-  // הגנה: אם החונך מחובר אבל השם שלו לא קיים באובייקט או התחנה חסרה
-  if (!currentMentorInfo) {
-    return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
-        <div className="text-red-600 text-6xl mb-4 italic">🎭</div>
-        <h2 className="text-white text-xl font-black mb-2 italic uppercase">User Not Synced</h2>
-        <p className="text-slate-500 text-sm mb-6 leading-relaxed">
-          המשתמש <span className="text-blue-500 font-bold underline">{mentor?.username}</span> מחובר למערכת, <br/>
-          אך לא נמצאו נתונים תואמים עבור <span className="text-white">תחנה {id}</span> באובייקט הקוד.
-        </p>
-        <button 
-          onClick={() => navigate('/login')}
-          className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-blue-900/40"
-        >
-          חזרה למסך הזיהוי
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 pb-24 font-sans" dir="rtl">
+    <div className="min-h-screen bg-black text-slate-100 p-4 pb-24" dir="rtl">
       <div className="max-w-md mx-auto pt-2">
         
-        {/* סרגל ניווט עליון - חצים */}
-        <nav className="flex justify-between items-center mb-8 bg-slate-900/80 backdrop-blur-sm p-4 rounded-3xl border border-slate-800 shadow-2xl sticky top-2 z-50">
+        {/* סרגל ניווט טקטי */}
+        <nav className="flex justify-between items-center mb-8 bg-zinc-900/50 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-2xl sticky top-2 z-50">
           <button 
             onClick={goToPrev}
             disabled={parseInt(id) === 1}
-            className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${parseInt(id) === 1 ? 'opacity-20 grayscale' : 'bg-slate-800 text-blue-500 hover:bg-blue-600 hover:text-white'}`}
+            className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${parseInt(id) === 1 ? 'opacity-10' : 'bg-zinc-800 text-blue-400 active:scale-90 hover:bg-blue-500/20'}`}
           >
-            <span className="text-2xl font-bold">→</span>
+            <span className="text-xl">➔</span>
           </button>
 
           <div className="text-center">
-            <span className="block text-[10px] text-blue-500 font-mono font-bold uppercase tracking-widest mb-1 italic">Tactical View</span>
-            <span className="text-2xl font-black text-white">תחנה {id}</span>
+            <span className="block text-[9px] text-blue-500 font-mono uppercase tracking-[0.3em] mb-1">Sector_Control</span>
+            <span className="text-xl font-black tracking-tighter">תחנה {id}</span>
           </div>
 
           <button 
             onClick={goToNext}
             disabled={parseInt(id) === totalStations}
-            className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${parseInt(id) === totalStations ? 'opacity-20 grayscale' : 'bg-slate-800 text-blue-500 hover:bg-blue-600 hover:text-white'}`}
+            className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${parseInt(id) === totalStations ? 'opacity-10' : 'bg-zinc-800 text-blue-400 active:scale-90 hover:bg-blue-500/20'}`}
           >
-            <span className="text-2xl font-bold">←</span>
+            <span className="text-xl">←</span>
           </button>
         </nav>
 
-        {/* תוכן הדף המרכזי */}
+        {/* תוכן המשימה */}
         <div className="space-y-6">
           
-          {/* תמונה מבצעית */}
-          {currentMentorInfo.image && (
-            <div className="rounded-3xl overflow-hidden border-2 border-blue-600/20 shadow-2xl group">
-              <img 
-                src={currentMentorInfo.image} 
-                alt="Intel" 
-                className="w-full h-52 object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
-              />
-              <div className="bg-slate-900 py-2 text-center text-[10px] text-blue-500 font-mono uppercase tracking-[0.3em]">
-                Field_Intel_Visual
-              </div>
+          {/* תמונה עם אפקט זכוכית */}
+          {currentMentorInfo?.image && (
+            <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-900/20">
+              <img src={currentMentorInfo.image} alt="Intel" className="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+              <div className="bg-zinc-900/80 py-1.5 text-center text-[9px] text-blue-500 font-mono uppercase tracking-widest">Visual_Intelligence_Sync</div>
             </div>
           )}
 
-          {/* שם המשימה */}
-          <section className="bg-slate-900 rounded-2xl p-6 border border-slate-800 relative shadow-lg">
-            <div className="absolute top-0 right-0 w-1.5 h-full bg-blue-600"></div>
-            <h3 className="text-blue-500 font-black text-[11px] mb-2 uppercase tracking-widest italic">המשימה:</h3>
-            <p className="text-2xl font-black text-white leading-tight italic">
-              {currentMentorInfo.taskName}
+          {/* משימה - כרטיס בולט */}
+          <section className="bg-gradient-to-br from-zinc-900 to-black rounded-2xl p-6 border border-zinc-800 shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-1 h-full bg-blue-600"></div>
+            <h3 className="text-blue-500 font-bold text-[10px] mb-2 uppercase tracking-widest italic">Mission_Objective:</h3>
+            <p className="text-2xl font-black text-white leading-tight">
+              {currentMentorInfo?.taskName || "מידע חסר"}
             </p>
           </section>
 
-          {/* ה"נ - הערות נוספות */}
-          <section className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-lg border-b-2 border-b-slate-800">
-            <h3 className="text-blue-500 font-black text-[11px] mb-3 uppercase tracking-widest italic underline decoration-blue-900 underline-offset-4">ה"נ (מידע פנימי):</h3>
+          {/* מידע פנימי - רקע כחול עדין */}
+          <section className="bg-blue-600/5 rounded-2xl p-6 border border-blue-900/20 shadow-lg">
+            <h3 className="text-blue-400 font-bold text-[10px] mb-3 uppercase tracking-widest italic">ה"נ (Intelligence):</h3>
             <p className="text-slate-300 font-medium leading-relaxed">
-              {currentMentorInfo.intel || "אין מידע מודיעיני נוסף לתחנה זו."}
+              {currentMentorInfo?.intel || "אין הערות נוספות."}
             </p>
           </section>
 
-          {/* דגשי חניכה */}
-          <section className="bg-blue-900/10 rounded-2xl p-6 border border-blue-900/20 shadow-inner">
-            <h3 className="text-blue-400 font-black text-[11px] mb-4 uppercase tracking-widest italic">דגשי חניכה:</h3>
+          {/* דגשים - רשימה עם בולטים מעוצבים */}
+          <section className="bg-zinc-900/30 rounded-2xl p-6 border border-zinc-800">
+            <h3 className="text-zinc-500 font-bold text-[10px] mb-4 uppercase tracking-widest italic underline underline-offset-8">דגשי חניכה:</h3>
             <ul className="space-y-4">
-              {currentMentorInfo.highlights?.split(',').map((item, index) => (
-                <li key={index} className="flex items-start text-slate-300 text-sm">
-                  <span className="w-6 h-6 flex-shrink-0 bg-blue-600 text-white rounded-lg flex items-center justify-center text-[10px] font-mono font-bold ml-3 mt-0.5 shadow-lg shadow-blue-900/50">
-                    {index + 1}
-                  </span>
-                  <span className="leading-relaxed">{item.trim()}</span>
+              {currentMentorInfo?.highlights?.split(',').map((item, index) => (
+                <li key={index} className="flex items-start text-sm">
+                  <span className="w-5 h-5 bg-blue-600/20 text-blue-400 rounded-md flex items-center justify-center text-[10px] font-mono ml-3 mt-0.5">0{index + 1}</span>
+                  <span className="text-slate-300">{item.trim()}</span>
                 </li>
-              )) || <li className="text-slate-600 italic">אין דגשים מוגדרים.</li>}
+              ))}
             </ul>
           </section>
 
-          {/* תדריך לחניכים */}
-          <section className="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 border-dashed">
-            <h3 className="text-slate-500 font-black text-[11px] mb-3 uppercase tracking-widest italic">תדריך לצוותים:</h3>
-            <div className="relative">
-              <p className="text-slate-400 italic text-[15px] leading-relaxed pr-2 border-r-2 border-slate-700 font-serif">
-                "{currentMentorInfo.briefing || "המשך לפי הנחיות הפרויקט."}"
-              </p>
-            </div>
+          {/* תדריך - ציטוט */}
+          <section className="bg-zinc-900/80 rounded-2xl p-6 border-l-4 border-zinc-700 italic">
+            <h3 className="text-zinc-600 font-bold text-[9px] mb-2 uppercase tracking-widest">Briefing_Script:</h3>
+            <p className="text-slate-400 text-sm leading-relaxed font-serif">
+              "{currentMentorInfo?.briefing}"
+            </p>
           </section>
 
-          {/* כפתור יציאה מאובטח */}
-          <div className="pt-6">
-            <button 
-              onClick={() => {
-                if(window.confirm("בטוח שברצונך להתנתק?")) {
-                  localStorage.clear();
-                  navigate('/login');
-                }
-              }}
-              className="w-full py-4 text-slate-700 text-[10px] font-mono font-bold uppercase tracking-[0.5em] hover:text-red-500 transition-colors"
-            >
-              [ Terminate_Authorized_Session ]
-            </button>
-          </div>
+          <button 
+            onClick={() => { localStorage.clear(); navigate('/login'); }}
+            className="w-full mt-10 py-4 text-zinc-700 text-[9px] font-mono uppercase tracking-[0.4em] hover:text-red-500 transition-colors border-t border-zinc-900"
+          >
+            [ Terminate_Authorized_Session ]
+          </button>
         </div>
-
-        <footer className="mt-10 text-center opacity-20">
-          <p className="text-[8px] text-slate-500 font-mono tracking-[0.2em] uppercase">Sector_{id}_Control_Log // Node_Active</p>
-        </footer>
       </div>
     </div>
   );
@@ -341,3 +289,4 @@ export default Mentor;
 
 
 //########################################################
+  
