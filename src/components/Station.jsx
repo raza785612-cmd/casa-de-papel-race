@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { allMissionsData, STATION_PASSWORDS, groupsData } from '../missionsData';
-
+import { allMissionsData, STATION_PASSWORDS, groupsData } from "../missionsData";
+import { supabase } from '../supabaseClient';
 
 
 const Station = () => {
@@ -81,7 +81,26 @@ const Station = () => {
       </div>
     );
   }
+const reportExecution = async () => {
+  try {
+    // אנחנו מוודאים שהערכים נשלחים כטקסט נקי
+    const { error } = await supabase
+      .from('mission_reports')
+      .insert([
+        { 
+          username: String(team?.username), // המרה לטקסט ליתר ביטחון
+          station_id: String(id),           // המרה לטקסט שתתאים לטבלה
+          status: 'completed'               // הוספת סטטוס כפי שמופיע בטבלה
+        }
+      ]);
 
+    if (error) throw error;
+    alert('✅ הדיווח התקבל במפקדה!');
+  } catch (error) {
+    console.error('Supabase Error:', error.message);
+    alert('❌ תקלה בדיווח: ' + error.message);
+  }
+};
   // --- תצוגת התוכן המלאה ---
   return (
     <div className="station-page" dir="rtl">
@@ -191,11 +210,22 @@ const Station = () => {
           </main>
           
           <button 
-            style={{ marginTop: '25px', width: '100%', padding: '15px', borderRadius: '12px', background: '#dc2626', color: 'white', fontWeight: 'bold', border: 'none' }}
-            onClick={() => alert('דיווח ביצוע נשלח למפקדה')}
-          >
-            CONFIRM_EXECUTION
-          </button>
+  style={{ 
+    marginTop: '25px', 
+    width: '100%', 
+    padding: '15px', 
+    borderRadius: '12px', 
+    background: '#dc2626', 
+    color: 'white', 
+    fontWeight: 'bold', 
+    border: 'none',
+    cursor: 'pointer', // מוסיף סימן של יד במעבר עכבר
+    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' // קצת עומק לעיצוב
+  }}
+  onClick={reportExecution}
+>
+  CONFIRM_EXECUTION
+</button>
         </div>
       </div>
     </div>

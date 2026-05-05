@@ -3,6 +3,7 @@ import Login from './components/Login';
 import Station from './components/Station'; 
 import Mentor from './components/Mentor';
 
+
 function App() {
   return (
     <Router>
@@ -18,6 +19,9 @@ function App() {
         
         {/* 4. דף הבית מפנה ללוגין */}
         <Route path="/" element={<Navigate to="/login" />} />
+        
+        {/*דף מנהל שרואה נתונים של כולם */}
+        <Route path="/hq-control-room" element={<AdminPanel />} />
         
         {/* 5. דף שגיאה/כל דבר אחר - תמיד אחרון בתור */}
         <Route path="*" element={<Navigate to="/login" />} />
