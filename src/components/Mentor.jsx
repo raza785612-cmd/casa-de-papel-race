@@ -4,49 +4,32 @@ import { useParams, useNavigate } from 'react-router-dom';
 const Mentor = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [mentorData, setMentorData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // אובייקט הנתונים של המנטור (לפי המבנה שביקשת)
+  // --- נתוני קבוצות (זהה לסטיישן לסנכרון) ---
+  const groupsData = {
+    "צוות אדום": {
+      "7": { groupLocation: "חניון המגדל קומה 2-", participants: "פרנקל, כהן, לוי" }
+    }
+  };
+
+  // --- נתוני מנטור (המבנה שביקשת) ---
   const allMentorMissions = {
     "אביה": {
-      "1": { 
-        taskName: "פריצת קו ההגנה הראשון", 
-        intel: "ישנם מאבטחים בסיבוב של רחוב הירקון. הצוות צריך להגיע בסימטאות.",
-        highlights: "לשים לב שהם לא רצים לכביש, לוודא שהם משתמשים בפנסים.",
-        briefing: "תדרוך ברוש: לוודא שהם חתמו על טפסי בטיחות בתחילת התחנה.",
-        location: "צומת הרחובות הירקון-אלנבי",
-        participants: "צוות אדום + צוות כחול",
-        image: "" 
-      },
-      "2": { 
-        taskName: "איסוף רכיבי הקוד", 
-        intel: "הקוד מפוצל ל-3 חלקים בתוך המעטפה.",
-        highlights: "לא לעזור להם בפתרון החידה, רק לכוון אם הם נתקעים מעל 5 דקות.",
-        briefing: "דגשים לברוש: לבדוק דופק קבוצתי.",
-        location: "חניון המגדל",
-        participants: "צוות ירוק",
-        image: "" 
-      },
-      // המשך התחנות באותו פורמט...
+      "7": { 
+        taskName: "מבצע סגירה", 
+        intel: "הצוותים מגיעים מנקודות שונות.",
+        highlights: "לוודא הגעה שקטה ללא חשיפה.",
+        briefing: "ברוש: לוודא שכולם בתוך החניון ב-22:00.",
+        location: "חניון המגדל", 
+        group: "צוות אדום" 
+      }
     }
   };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('race_user');
-    if (!savedUser) {
-      navigate(`/login?s=${id}`);
-      return;
-    }
-    const user = JSON.parse(savedUser);
-    
-    // בדיקה שהמשתמש הוא אכן מנטור או אביה
-    if (user.role?.toLowerCase() !== 'mentor' && user.username !== 'אביה') {
-      navigate(`/station/${id}`);
-      return;
-    }
-
-    setMentorData(user);
+    if (!savedUser) { navigate(`/login?s=${id}`); return; }
     setLoading(false);
   }, [id, navigate]);
 
@@ -56,80 +39,64 @@ const Mentor = () => {
   if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">טוען נתוני בקרה...</div>;
 
   const currentMission = allMentorMissions["אביה"]?.[id] || {};
+  const groupDetail = currentMission.group ? groupsData[currentMission.group]?.[id] : null;
 
   return (
     <div className="mentor-page">
       <div className="app-container">
-        <div className="card" style={{ textAlign: 'right' }}>
+        <div className="card" style={{ textAlign: 'right', borderTop: '4px solid #ef4444' }}>
           
-          {/* ניווט בין תחנות */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <button onClick={goToPrev} disabled={id === "1"} style={{ width: '45px', padding: '10px', background: '#1e293b' }}>➔</button>
-            <div style={{ textAlign: 'center' }}>
-               <h1 style={{ fontSize: '1.2rem', margin: 0 }}>בקרה: תחנה {id}</h1>
-               <p style={{ fontSize: '10px', color: '#ef4444', fontWeight: 'bold' }}>MENTOR_MODE</p>
-            </div>
-            <button onClick={goToNext} disabled={id === "8"} style={{ width: '45px', padding: '10px', background: '#1e293b' }}>←</button>
+            <button onClick={goToPrev} disabled={id === "1"} style={{ width: '40px', padding: '10px', background: '#1e293b', borderRadius: '10px' }}>➔</button>
+            <h1 style={{ fontSize: '1.4rem', margin: 0 }}>תחנה {id}</h1>
+            <button onClick={goToNext} disabled={id === "8"} style={{ width: '40px', padding: '10px', background: '#1e293b', borderRadius: '10px' }}>←</button>
           </div>
 
-          <main style={{ textAlign: 'right' }}>
-            
-            {/* שם המשימה */}
-            <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '12px', borderRight: '4px solid #dc2626', marginBottom: '20px' }}>
-              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', marginBottom: '5px' }}>משימה:</p>
-              <p style={{ fontSize: '1.2rem', fontWeight: '800' }}>{currentMission.taskName || "אין משימה מוגדרת"}</p>
+          <main>
+            <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '15px', borderRight: '5px solid #dc2626', marginBottom: '20px' }}>
+              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>משימה:</p>
+              <p style={{ fontSize: '1.2rem', fontWeight: '900' }}>{currentMission.taskName || "משימה כללית"}</p>
             </div>
 
-            {/* פרטי מיקום ומשתתפים בקטן */}
+            {/* מיקומים ומשתתפים */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
                <div style={{ background: '#020617', padding: '10px', borderRadius: '10px' }}>
-                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>מיקום</p>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>📍 מיקום תחנה</p>
                   <p style={{ fontSize: '12px', fontWeight: 'bold' }}>{currentMission.location || "-"}</p>
                </div>
-               <div style={{ background: '#020617', padding: '10px', borderRadius: '10px' }}>
-                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>משתתפים</p>
-                  <p style={{ fontSize: '12px', fontWeight: 'bold' }}>{currentMission.participants || "-"}</p>
-               </div>
+               {groupDetail && (
+                 <div style={{ background: 'rgba(251, 191, 36, 0.1)', padding: '10px', borderRadius: '10px', border: '1px solid #fbbf24' }}>
+                    <p style={{ color: '#fbbf24', fontSize: '10px', margin: 0 }}>👥 קבוצה: {currentMission.group}</p>
+                    <p style={{ fontSize: '11px', fontWeight: 'bold' }}>{groupDetail.groupLocation}</p>
+                 </div>
+               )}
             </div>
 
-            {/* סעיפי תוכן */}
-            <div style={{ spaceY: '15px' }}>
-              {currentMission.intel && (
-                <section style={{ marginBottom: '15px' }}>
-                  <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>🔍 מודיעין:</p>
-                  <p style={{ color: '#94a3b8', fontSize: '14px' }}>{currentMission.intel}</p>
-                </section>
-              )}
+            {groupDetail?.participants && (
+              <div style={{ marginBottom: '20px', padding: '10px', background: '#0f172a', borderRadius: '10px' }}>
+                 <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>סוכנים פעילים בתחנה:</p>
+                 <p style={{ fontSize: '13px', color: '#f8fafc' }}>{groupDetail.participants}</p>
+              </div>
+            )}
 
-              {currentMission.highlights && (
-                <section style={{ marginBottom: '15px', borderTop: '1px solid #1e293b', paddingTop: '10px' }}>
-                  <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>⚠️ דגשים למשתתף:</p>
-                  <p style={{ color: '#f8fafc', fontSize: '14px' }}>{currentMission.highlights}</p>
-                </section>
-              )}
+            {/* הנחיות טקסטואליות */}
+            <section style={{ marginBottom: '15px' }}>
+              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>🔍 מודיעין:</p>
+              <p style={{ color: '#94a3b8', fontSize: '14px' }}>{currentMission.intel}</p>
+            </section>
 
-              {currentMission.briefing && (
-                <section style={{ marginBottom: '15px', background: 'rgba(255,255,255,0.05)', padding: '10px', borderRadius: '8px' }}>
-                  <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold' }}>🌳 דגשים לברוש:</p>
-                  <p style={{ color: '#f8fafc', fontSize: '14px', fontStyle: 'italic' }}>{currentMission.briefing}</p>
-                </section>
-              )}
-            </div>
+            <section style={{ marginBottom: '15px' }}>
+              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>⚠️ דגשים למשתתף:</p>
+              <p style={{ color: '#f8fafc', fontSize: '14px' }}>{currentMission.highlights}</p>
+            </section>
 
-            {/* הצגת תמונה אם קיימת */}
-            {currentMission.image && (
-              <div style={{ marginTop: '20px', borderRadius: '12px', overflow: 'hidden' }}>
-                <img src={currentMission.image} alt="Task" style={{ width: '100%' }} />
+            {currentMission.briefing && (
+              <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '10px', borderRight: '3px solid #fbbf24' }}>
+                <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold' }}>🌳 דגשים לברוש:</p>
+                <p style={{ color: '#f8fafc', fontSize: '14px', fontStyle: 'italic' }}>{currentMission.briefing}</p>
               </div>
             )}
           </main>
-
-          <button 
-            onClick={() => { localStorage.clear(); navigate('/login'); }} 
-            style={{ marginTop: '30px', background: 'transparent', border: '1px solid #334155', color: '#64748b', fontSize: '12px', padding: '10px' }}
-          >
-            התנתק מהמערכת
-          </button>
         </div>
       </div>
     </div>
@@ -137,7 +104,6 @@ const Mentor = () => {
 };
 
 export default Mentor;
-
 
 
 
