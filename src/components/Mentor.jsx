@@ -93,6 +93,10 @@ const Mentor = () => {
           </div>
 
           <main>
+            <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '15px', borderRight: '5px solid #dc2626', marginBottom: '20px' }}>
+              <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>מודיעין 🔍:</p>
+              <p style={{ fontSize: '1.2rem', fontWeight: '900', margin: 0 }}>{currentMission.taskName || "משימה כללית"}</p>
+            </div>
             {/* כותרת המשימה */}
             <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '15px', borderRight: '5px solid #dc2626', marginBottom: '20px' }}>
               <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>משימה:</p>
@@ -108,7 +112,7 @@ const Mentor = () => {
                
                {currentMission.group && (
                  <div style={{ background: 'rgba(251, 191, 36, 0.05)', padding: '12px', borderRadius: '10px', border: '1px solid rgba(251, 191, 36, 0.3)' }}>
-                    <p style={{ color: '#fbbf24', fontSize: '10px', margin: '0 0 4px 0' }}>👥 שיוך קבוצתי</p>
+                    <p style={{ color: '#fbbf24', fontSize: '10px', margin: '0 0 4px 0' }}>👥 קבוצה</p>
                     <p style={{ fontSize: '13px', fontWeight: 'bold', margin: 0 }}>{currentMission.group}</p>
                  </div>
                )}
@@ -124,10 +128,7 @@ const Mentor = () => {
 
             {/* הנחיות טקסטואליות */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                <section>
-                  <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>🔍 מודיעין:</p>
-                  <p style={{ color: '#94a3b8', fontSize: '14px', margin: 0 }}>{currentMission.intel}</p>
-                </section>
+                
 
                 <section>
                   <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', margin: '0 0 5px 0' }}>⚠️ דגשים למשתתף:</p>
