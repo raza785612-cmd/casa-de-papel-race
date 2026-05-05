@@ -159,21 +159,24 @@ const Mentor = () => {
   useEffect(() => {
     const savedUser = localStorage.getItem('race_user');
     
-    // בדיקה אם מחובר בכלל
+    // 1. אם אין משתמש בזיכרון - שלח ללוגין
     if (!savedUser) {
+      console.log("No user found in localStorage, redirecting...");
       navigate(`/login?s=${id}`);
       return;
     }
 
     const userData = JSON.parse(savedUser);
-    
-    // בדיקה אם הוא חונך (Mentor)
-    if (userData.role !== 'mentor') {
-      alert("גישה חסומה: דף זה מיועד לחונכים בלבד.");
+    const role = userData.role ? userData.role.toLowerCase().trim() : '';
+
+    // 2. אם המשתמש הוא לא חונך - שלח אותו לדף התחנה הרגיל
+    if (role !== 'mentor') {
+      console.log("User is not a mentor, redirecting to station page");
       navigate(`/station/${id}`);
       return;
     }
 
+    // 3. אם הכל תקין
     setMentor(userData);
     setLoading(false);
   }, [id, navigate]);
