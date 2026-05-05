@@ -197,12 +197,12 @@ const Mentor = () => {
       <div className="card" style={{ textAlign: 'right' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <button onClick={goToPrev} disabled={id === "1"} style={{ width: '50px', padding: '10px' }}>➔</button>
-          <h1 style={{ fontSize: '1.5rem', margin: 0 }}>מנטור - תחנה {id}</h1>
+          <h1 style={{ fontSize: '1.5rem', margin: 0 }}>מדריך{id}</h1>
           <button onClick={goToNext} disabled={id === "8"} style={{ width: '50px', padding: '10px' }}>←</button>
         </div>
 
         <div className="mission-info" style={{ background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '12px', marginBottom: '20px' }}>
-           <h3 style={{ color: '#ef4444', fontSize: '14px' }}>שם המשימה:</h3>
+           <h3 style={{ color: '#ef4444', fontSize: '14px' }}> המשימה:</h3>
            <p style={{ fontWeight: 'bold', fontSize: '18px' }}>{currentMentorInfo.taskName}</p>
         </div>
 

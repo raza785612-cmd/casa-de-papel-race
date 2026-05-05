@@ -59,7 +59,7 @@ const Station = () => {
             {/* משימה ראשית */}
             {mission.task && (
               <div style={{ marginBottom: '20px', background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '12px', borderRight: '4px solid #dc2626' }}>
-                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', marginBottom: '5px' }}>הטלת משימה:</p>
+                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', marginBottom: '5px' }}> המשימה:</p>
                 <p style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>{mission.task}</p>
               </div>
             )}
@@ -67,7 +67,7 @@ const Station = () => {
             {/* פרטי מודיעין */}
             {mission.intel && (
               <div style={{ marginBottom: '20px' }}>
-                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>מודיעין שטח (INTEL):</p>
+                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>מודיעין:</p>
                 <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: '1.5' }}>{mission.intel}</p>
               </div>
             )}
@@ -100,7 +100,7 @@ const Station = () => {
               )}
               {mission.escort && (
                 <div>
-                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>ליווי</p>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>מדריך מלווה</p>
                   <p style={{ fontSize: '13px', fontWeight: 'bold' }}>{mission.escort}</p>
                 </div>
               )}
