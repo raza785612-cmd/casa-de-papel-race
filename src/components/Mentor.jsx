@@ -192,92 +192,32 @@ const Mentor = () => {
   const currentMentorInfo = mentorDataBank[mentor?.username]?.[id];
 
   return (
-    <div className="min-h-screen bg-black text-slate-100 p-4 pb-24" dir="rtl">
-      <div className="max-w-md mx-auto pt-2">
-        
-        {/* סרגל ניווט טקטי */}
-        <nav className="flex justify-between items-center mb-8 bg-zinc-900/50 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-2xl sticky top-2 z-50">
-          <button 
-            onClick={goToPrev}
-            disabled={parseInt(id) === 1}
-            className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${parseInt(id) === 1 ? 'opacity-10' : 'bg-zinc-800 text-blue-400 active:scale-90 hover:bg-blue-500/20'}`}
-          >
-            <span className="text-xl">➔</span>
-          </button>
-
-          <div className="text-center">
-            <span className="block text-[9px] text-blue-500 font-mono uppercase tracking-[0.3em] mb-1">Sector_Control</span>
-            <span className="text-xl font-black tracking-tighter">תחנה {id}</span>
-          </div>
-
-          <button 
-            onClick={goToNext}
-            disabled={parseInt(id) === totalStations}
-            className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${parseInt(id) === totalStations ? 'opacity-10' : 'bg-zinc-800 text-blue-400 active:scale-90 hover:bg-blue-500/20'}`}
-          >
-            <span className="text-xl">←</span>
-          </button>
-        </nav>
-
-        {/* תוכן המשימה */}
-        <div className="space-y-6">
-          
-          {/* תמונה עם אפקט זכוכית */}
-          {currentMentorInfo?.image && (
-            <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-900/20">
-              <img src={currentMentorInfo.image} alt="Intel" className="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-              <div className="bg-zinc-900/80 py-1.5 text-center text-[9px] text-blue-500 font-mono uppercase tracking-widest">Visual_Intelligence_Sync</div>
-            </div>
-          )}
-
-          {/* משימה - כרטיס בולט */}
-          <section className="bg-gradient-to-br from-zinc-900 to-black rounded-2xl p-6 border border-zinc-800 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1 h-full bg-blue-600"></div>
-            <h3 className="text-blue-500 font-bold text-[10px] mb-2 uppercase tracking-widest italic">Mission_Objective:</h3>
-            <p className="text-2xl font-black text-white leading-tight">
-              {currentMentorInfo?.taskName || "מידע חסר"}
-            </p>
-          </section>
-
-          {/* מידע פנימי - רקע כחול עדין */}
-          <section className="bg-blue-600/5 rounded-2xl p-6 border border-blue-900/20 shadow-lg">
-            <h3 className="text-blue-400 font-bold text-[10px] mb-3 uppercase tracking-widest italic">ה"נ (Intelligence):</h3>
-            <p className="text-slate-300 font-medium leading-relaxed">
-              {currentMentorInfo?.intel || "אין הערות נוספות."}
-            </p>
-          </section>
-
-          {/* דגשים - רשימה עם בולטים מעוצבים */}
-          <section className="bg-zinc-900/30 rounded-2xl p-6 border border-zinc-800">
-            <h3 className="text-zinc-500 font-bold text-[10px] mb-4 uppercase tracking-widest italic underline underline-offset-8">דגשי חניכה:</h3>
-            <ul className="space-y-4">
-              {currentMentorInfo?.highlights?.split(',').map((item, index) => (
-                <li key={index} className="flex items-start text-sm">
-                  <span className="w-5 h-5 bg-blue-600/20 text-blue-400 rounded-md flex items-center justify-center text-[10px] font-mono ml-3 mt-0.5">0{index + 1}</span>
-                  <span className="text-slate-300">{item.trim()}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* תדריך - ציטוט */}
-          <section className="bg-zinc-900/80 rounded-2xl p-6 border-l-4 border-zinc-700 italic">
-            <h3 className="text-zinc-600 font-bold text-[9px] mb-2 uppercase tracking-widest">Briefing_Script:</h3>
-            <p className="text-slate-400 text-sm leading-relaxed font-serif">
-              "{currentMentorInfo?.briefing}"
-            </p>
-          </section>
-
-          <button 
-            onClick={() => { localStorage.clear(); navigate('/login'); }}
-            className="w-full mt-10 py-4 text-zinc-700 text-[9px] font-mono uppercase tracking-[0.4em] hover:text-red-500 transition-colors border-t border-zinc-900"
-          >
-            [ Terminate_Authorized_Session ]
-          </button>
+  <div className="mentor-page">
+    <div className="app-container">
+      <div className="card" style={{ textAlign: 'right' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+          <button onClick={goToPrev} disabled={id === "1"} style={{ width: '50px', padding: '10px' }}>➔</button>
+          <h1 style={{ fontSize: '1.5rem', margin: 0 }}>מנטור - תחנה {id}</h1>
+          <button onClick={goToNext} disabled={id === "8"} style={{ width: '50px', padding: '10px' }}>←</button>
         </div>
+
+        <div className="mission-info" style={{ background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '12px', marginBottom: '20px' }}>
+           <h3 style={{ color: '#ef4444', fontSize: '14px' }}>שם המשימה:</h3>
+           <p style={{ fontWeight: 'bold', fontSize: '18px' }}>{currentMentorInfo.taskName}</p>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <h3 style={{ color: '#ef4444', fontSize: '14px' }}>דגשי חניכה:</h3>
+          <p style={{ color: '#94a3b8', fontSize: '14px' }}>{currentMentorInfo.intel}</p>
+        </div>
+
+        <button onClick={() => { localStorage.clear(); navigate('/login'); }} style={{ background: 'transparent', border: '1px solid #334155', color: '#64748b', fontSize: '12px' }}>
+          ניתוק מהמערכת
+        </button>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Mentor;

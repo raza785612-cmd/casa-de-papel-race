@@ -13,7 +13,7 @@ const Station = () => {
 
   // --- כאן מזינים את כל הנתונים ---
   const allMissionsData = {
-    "אמסלם": {
+    "פרנקל": {
       "1": { hint: "ברוך הבא! עליך להגיע למלון בו הכל מתחיל. הכתובת היא 13 ירקות 22", escort: "מאור" },
       "2": { address: " קדמת עדן, אלנבי 93", intel: "הגיע גזר שמעשיו לא ברורים, מיצים רוצים לדעת א.ב. עתיד להגיע לכתובת שקיבלת בין השעות 13:30 - 14:00",task:"סיוש בעוגן", escort: "מאור", budget: "50", hours: "10:00 - 11:30", img: "URL_TO_IMAGE" },
       "3": { address: "קדמת עדן, אלנבי 93", intel:"המשך המשימה",task:"זיהוי וראי 8 (ללא דוד)", escort: "מאור", budget: "50", hours: "13:30-14:00", img: "URL_TO_IMAGE" },
@@ -56,118 +56,32 @@ const Station = () => {
 
   // ה-Return הארוך - זהו העיצוב של התצוגה
   return (
-    <div className="min-h-screen bg-zinc-950 text-white p-4 pb-12" dir="rtl">
-      <div className="max-w-md mx-auto pt-4">
-        
-        {/* כותרת עליונה */}
-        <header className="mb-6 border-b border-red-600 pb-2 flex justify-between items-end">
-          <div>
-            <p className="text-red-600 font-bold text-sm italic">סוכן: {user} 🎭</p>
-            <h1 className="text-2xl font-black italic text-zinc-100">תחנה {id}</h1>
-          </div>
-          <div className="text-zinc-600 text-[10px] font-mono tracking-tighter uppercase">Mission_Auth_Secure</div>
+  <div className="station-page">
+    <div className="app-container">
+      <div className="card" style={{ textAlign: 'right' }}>
+        <header style={{ borderBottom: '1px solid #1e293b', marginBottom: '20px', paddingBottom: '10px' }}>
+          <p style={{ color: '#ef4444', fontSize: '12px', fontWeight: 'bold' }}>סוכן בפעולה: {team?.username}</p>
+          <h1 style={{ fontSize: '1.8rem' }}>תחנה {id}</h1>
         </header>
 
-        {/* כרטיס המשימה המרכזי */}
-        <div className="bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-800 overflow-hidden">
+        <main>
+          <h2 style={{ color: 'white', marginBottom: '15px', fontStyle: 'italic' }}>{currentMission.title}</h2>
+          <p style={{ color: '#94a3b8', lineHeight: '1.6', marginBottom: '30px', whiteSpace: 'pre-line' }}>
+            {currentMission.description}
+          </p>
           
-          {/* תמונת משימה */}
-          {currentData.img && (
-            <div className="w-full h-48 overflow-hidden border-b border-zinc-800">
-              <img src={currentData.img} alt="Mission" className="w-full h-full object-cover" />
-            </div>
-          )}
-
-          <div className="p-6 space-y-6">
-            
-            {/* רמז (יופיע רק אם מולא) */}
-            {currentData.hint && (
-              <div className="bg-red-600/10 p-4 rounded-xl border border-red-600/30">
-                <h3 className="text-red-500 font-bold text-xs mb-1 uppercase tracking-wider">רמז למיקום:</h3>
-                <p className="text-xl font-medium text-red-50">{currentData.hint}</p>
-              </div>
-            )}
-
-            {/* שותף או קבוצה */}
-            {(currentData.partner || currentData.group) && (
-              <div className="bg-zinc-800 p-4 rounded-xl border border-zinc-700">
-                <h3 className="text-zinc-500 font-bold text-xs mb-1 uppercase">
-                  {currentData.partner ? "שותף למשימה:" : "חברי הקבוצה:"}
-                </h3>
-                <p className="text-lg font-bold text-white">
-                  {currentData.partner || currentData.group}
-                </p>
-              </div>
-            )}
-
-            {/* כתובת */}
-            {currentData.address && (
-              <div>
-                <h3 className="text-red-600 font-bold text-xs mb-1 uppercase italic">כתובת יעד:</h3>
-                <p className="text-2xl font-black text-zinc-100 leading-tight">{currentData.address}</p>
-              </div>
-            )}
-
-            {/* אינטל (מודיעין) */}
-            {currentData.intel && (
-              <div className="bg-zinc-800/50 p-4 rounded-xl border-r-4 border-zinc-600">
-                <h3 className="text-zinc-500 font-bold text-xs mb-1 uppercase tracking-tighter">מידע מודיעיני (Intel):</h3>
-                <p className="text-zinc-200 leading-relaxed font-medium">{currentData.intel}</p>
-              </div>
-            )}
-
-            {/* משימה */}
-            {currentData.task && (
-              <div>
-                <h3 className="text-red-600 font-bold text-xs mb-1 uppercase italic">המשימה:</h3>
-                <p className="text-lg text-zinc-300 leading-relaxed">{currentData.task}</p>
-              </div>
-            )}
-
-            {/* שורת נתונים נוספים */}
-            {(currentData.escort || currentData.budget || currentData.hours) && (
-              <div className="grid grid-cols-2 gap-4 pt-6 border-t border-zinc-800">
-                {currentData.escort && (
-                  <div>
-                    <h4 className="text-zinc-600 text-[10px] uppercase font-bold">מלווה:</h4>
-                    <p className="text-sm font-bold text-zinc-300">{currentData.escort}</p>
-                  </div>
-                )}
-                {currentData.budget && (
-                  <div>
-                    <h4 className="text-zinc-600 text-[10px] uppercase font-bold">תקציב:</h4>
-                    <p className="text-sm font-bold text-green-500">{currentData.budget}</p>
-                  </div>
-                )}
-                {currentData.hours && (
-                  <div className="col-span-2">
-                    <h4 className="text-zinc-600 text-[10px] uppercase font-bold">חלון זמנים:</h4>
-                    <p className="text-sm font-bold text-zinc-300">{currentData.hours}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-  <button 
-  onClick={() => {
-    localStorage.removeItem('race_user'); // מוחק הכל
-    alert('דיווח נשלח. המערכת ננעלה!');
-    navigate('/login');
-  }}
-  className="..."
->
-  אישור ביצוע משימה
-</button>
-
-          </div>
-        </div>
+          <button onClick={() => alert('המשימה הושלמה! עברו לתחנה הבאה.')}>
+            סיימתי את המשימה
+          </button>
+        </main>
         
-        <footer className="mt-8 text-center text-zinc-700 text-[10px] font-mono tracking-widest uppercase">
-          Transmission Secure // End of File_{id}
+        <footer style={{ marginTop: '20px', opacity: 0.3, fontSize: '8px', textAlign: 'center' }}>
+          MISSION_STATION_{id}_CONTROL
         </footer>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default Station;

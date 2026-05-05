@@ -11,29 +11,45 @@ const Login = () => {
   const idFromUrl = searchParams.get('s') || '1';
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    if (password !== import.meta.env.VITE_GENERIC_PASSWORD) {
-      alert('קוד גישה שגוי');
+  e.preventDefault();
+  setLoading(true);
+  
+  if (password !== import.meta.env.VITE_GENERIC_PASSWORD) {
+    alert('קוד גישה שגוי');
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const { data: team, error } = await supabase
+      .from('teams')
+      .select('*')
+      .eq('username', username.trim())
+      .single();
+
+    if (error || !team) {
+      alert('משתמש לא נמצא במערכת');
       setLoading(false);
       return;
     }
-    const { data: team } = await supabase.from('teams').select('*').eq('username', username.trim()).single();
-    if (!team) {
-      alert('משתמש לא נמצא');
-      setLoading(false);
-      return;
-    }
+
+    // שמירה ב-LocalStorage
     localStorage.setItem('race_user', JSON.stringify(team));
     localStorage.setItem('active_station', idFromUrl);
-    
-    if (team.role?.toLowerCase().trim() === 'mentor' || team.username === 'אביה') {
+
+    // ניתוב חכם: בודק אם זה מנטור, כל השאר הם משתתפים
+    const role = (team.role || '').toLowerCase().trim();
+    if (role === 'mentor') {
       navigate(`/mentor/${idFromUrl}`);
     } else {
       navigate(`/station/${idFromUrl}`);
     }
+  } catch (err) {
+    alert('שגיאת חיבור');
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   return (
   <div className="login-page">
