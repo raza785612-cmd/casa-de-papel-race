@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -8,7 +7,7 @@ const Station = () => {
   const [team, setTeam] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // הנתונים שלך (השארתי את המבנה כפי ששלחת)
+  // האובייקט שלך (הנתונים ששלחת)
   const allMissionsData = {
     "פרנקל": {
       "1": { hint: "ברוך הבא! עליך להגיע למלון בו הכל מתחיל. הכתובת היא 13 ירקות 22", escort: "מאור" },
@@ -20,77 +19,105 @@ const Station = () => {
       "7": { group: "פרנקל, אגם, יוני, מתן", address: "חניון לוריא", intel: "הנדון התחלה חומוס את הבורוכב שמנת חומוס לוריא",task: "סוף רווק תוכי לבן בורוכב",escort:"מאור + אליקו", hours: "22:00 - 02:00",img: "" },
       "8": { group: "פרנקל, אגם, יוני, מתן", address: "סדין סינמה", intel: "הנדון התבטא כי יעשה את הציר הבא בשעה 12:00: זמנהוף, המלך ג'ורג' עד כיכר מסריק",task: "מול מדריך מלווה",escort: "אביה", hours: "08:00 - 13:00",img: "" }
     },
+    // כאן אפשר להוסיף עוד צוותים באותו פורמט
   };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('race_user');
-    
     if (!savedUser) {
-      // אם אין משתמש בכלל, שלח ללוגין עם מספר התחנה הנוכחי
       navigate(`/login?s=${id}`);
       return;
     }
-
-    const userData = JSON.parse(savedUser);
-
-    // --- התיקון כאן ---
-    // במקום לחסום, אנחנו פשוט מוודאים שהמשתמש מחובר. 
-    // אם אתה רוצה לאפשר לו לצפות בכל תחנה שהוא סורק, פשוט נגדיר את הצוות.
-    setTeam(userData);
+    setTeam(JSON.parse(savedUser));
     setLoading(false);
-    
   }, [id, navigate]);
 
-  if (loading) return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center text-red-600 font-bold font-mono">
-      SCANNING_IDENTITY...
-    </div>
-  );
+  if (loading) return <div className="min-h-screen bg-slate-950 text-red-600 flex items-center justify-center font-mono">LOADING_MISSION...</div>;
 
-  // חילוץ הנתונים הספציפיים למשתמש ולתחנה
-  const user = team?.username;
-  const missionInfo = allMissionsData[user]?.[id] || { 
-    title: "משימה סודית", 
-    description: "פרטי המשימה יחשפו בקרוב..." 
-  };
+  const username = team?.username;
+  const mission = allMissionsData[username]?.[id] || {};
 
   return (
     <div className="station-page">
       <div className="app-container">
-        <div className="card" style={{ textAlign: 'right' }}>
-          <header style={{ borderBottom: '1px solid #1e293b', marginBottom: '20px', paddingBottom: '10px' }}>
-            <p style={{ color: '#ef4444', fontSize: '12px', fontWeight: 'bold', margin: 0 }}>
-              סוכן בפעולה: {user}
-            </p>
-            <h1 style={{ fontSize: '1.8rem', margin: '5px 0' }}>תחנה {id}</h1>
-          </header>
+        <div className="card" style={{ textAlign: 'right', borderTop: '4px solid #dc2626' }}>
+          
+          {/* כותרת תחנה */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+             <div>
+                <h1 style={{ fontSize: '2.5rem', margin: 0, lineHeight: 1 }}>{id}</h1>
+                <p style={{ color: '#ef4444', fontWeight: 'bold', fontSize: '12px' }}>STATION_ID</p>
+             </div>
+             <div style={{ textAlign: 'left' }}>
+                <p style={{ margin: 0, fontSize: '14px', fontWeight: 'bold' }}>{username}</p>
+                <p style={{ margin: 0, fontSize: '10px', color: '#64748b' }}>ACTIVE_AGENT</p>
+             </div>
+          </div>
 
-          <main>
-            {/* שימוש בנתונים מתוך האובייקט שלך */}
-            <h2 style={{ color: 'white', marginBottom: '15px', fontStyle: 'italic' }}>
-              {missionInfo.title || `משימה לתחנה ${id}`}
-            </h2>
+          <div style={{ spaceY: '20px' }}>
             
-            <div style={{ color: '#94a3b8', lineHeight: '1.6', marginBottom: '30px' }}>
-              {/* כאן אתה יכול להציג שדות ספציפיים מהאובייקט שלך */}
-              <p style={{ whiteSpace: 'pre-line' }}>{missionInfo.description || missionInfo.task}</p>
-              
-              {missionInfo.address && (
-                <p style={{ fontSize: '0.9rem', color: '#ef4444' }}>📍 מיקום: {missionInfo.address}</p>
+            {/* משימה ראשית */}
+            {mission.task && (
+              <div style={{ marginBottom: '20px', background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '12px', borderRight: '4px solid #dc2626' }}>
+                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', marginBottom: '5px' }}>הטלת משימה:</p>
+                <p style={{ fontSize: '1.2rem', fontWeight: '800', color: 'white' }}>{mission.task}</p>
+              </div>
+            )}
+
+            {/* פרטי מודיעין */}
+            {mission.intel && (
+              <div style={{ marginBottom: '20px' }}>
+                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>מודיעין שטח (INTEL):</p>
+                <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: '1.5' }}>{mission.intel}</p>
+              </div>
+            )}
+
+            {/* טבלת נתונים טכנית */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '25px', background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '15px' }}>
+              {mission.address && (
+                <div>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>מיקום</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold' }}>{mission.address}</p>
+                </div>
               )}
-              {missionInfo.hours && (
-                <p style={{ fontSize: '0.9rem', color: '#64748b' }}>🕒 זמן: {missionInfo.hours}</p>
+              {mission.hours && (
+                <div>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>חלון זמנים</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold' }}>{mission.hours}</p>
+                </div>
+              )}
+              {mission.budget && (
+                <div>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>תקציב</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#22c55e' }}>₪ {mission.budget}</p>
+                </div>
+              )}
+              {mission.escort && (
+                <div>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>ליווי</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold' }}>{mission.escort}</p>
+                </div>
               )}
             </div>
-            
-            <button onClick={() => alert('המשימה הושלמה! עברו לתחנה הבאה.')}>
-              סיימתי את המשימה
-            </button>
-          </main>
-          
-          <footer style={{ marginTop: '20px', opacity: 0.3, fontSize: '8px', textAlign: 'center', letterSpacing: '1px' }}>
-            AGENT_{user?.toUpperCase()}_STATION_{id}_ACCESS_GRANTED
-          </footer>
+
+            {/* הצגת רמז לתחנה 1 בנפרד אם קיים */}
+            {mission.hint && (
+              <div style={{ marginTop: '20px', padding: '10px', border: '1px dashed #334155', borderRadius: '10px' }}>
+                <p style={{ color: '#94a3b8', fontSize: '12px' }}>💡 רמז: {mission.hint}</p>
+              </div>
+            )}
+          </div>
+
+          <button 
+            onClick={() => alert('המשימה נרשמה כבוצעה במערכת.')}
+            style={{ marginTop: '30px', letterSpacing: '2px' }}
+          >
+            CONFIRM_MISSION
+          </button>
+
+          <p style={{ marginTop: '20px', fontSize: '8px', color: '#334155', textAlign: 'center' }}>
+            SECURE_CONNECTION_ESTABLISHED // STATION_{id}
+          </p>
         </div>
       </div>
     </div>
@@ -98,4 +125,15 @@ const Station = () => {
 };
 
 export default Station;
+// "פרנקל": {
+//       "1": { hint: "", escort: "" },
+//       "2": { address: "  ,  , intel: "", escort: "", budget: "", hours: "", img: "URL_TO_IMAGE" },
+//       "3": { address: "", intel:"",task:"", escort: "", budget: "", hours: "", img: "URL_TO_IMAGE" },
+//       "4": { address: "", intel: "", task: "",escort:"", budget: " ", hours: "", img: "" },
+//       "5": { address: "", intel: "", task: "",escort:"", budget: " ", hours: "", img: "" },
+//       "6": { partner: "", address: "", intel:"",task:"",escort:"", hours: "", img: "" },
+//       "7": { group: "", address: " ", intel: "",task: " ",escort:"", hours: "",img: "" },
+//       "8": { group: " ", address: " ", intel: "  ",task: "",escort: "", hours: "",img: "" }
+//     }
 
+//###########################################//
