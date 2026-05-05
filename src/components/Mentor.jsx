@@ -9,7 +9,7 @@ const Mentor = () => {
   // --- נתוני קבוצות (זהה לסטיישן לסנכרון) ---
   const groupsData = {
     "צוות אדום": {
-      "7": { groupLocation: "חניון המגדל קומה 2-", participants: "פרנקל, כהן, לוי" }
+      "7": { groupLocation: "משימה קבוצתית", participants: "פרנקל, כהן, לוי" }
     }
   };
 
@@ -61,7 +61,7 @@ const Mentor = () => {
             {/* מיקומים ומשתתפים */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
                <div style={{ background: '#020617', padding: '10px', borderRadius: '10px' }}>
-                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>📍 מיקום תחנה</p>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>📍 מיקום </p>
                   <p style={{ fontSize: '12px', fontWeight: 'bold' }}>{currentMission.location || "-"}</p>
                </div>
                {groupDetail && (
@@ -74,7 +74,7 @@ const Mentor = () => {
 
             {groupDetail?.participants && (
               <div style={{ marginBottom: '20px', padding: '10px', background: '#0f172a', borderRadius: '10px' }}>
-                 <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>סוכנים פעילים בתחנה:</p>
+                 <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}> צוות: </p>
                  <p style={{ fontSize: '13px', color: '#f8fafc' }}>{groupDetail.participants}</p>
               </div>
             )}

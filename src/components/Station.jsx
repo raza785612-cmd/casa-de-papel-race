@@ -42,7 +42,6 @@ const Station = () => {
   return (
     
     <div className="station-page">
-        <p style={{color: 'yellow'}}>גרסת קוד: 3.0 - בדיקת סנכרון</p>
       <div className="app-container">
         <div className="card" style={{ textAlign: 'right', borderTop: '4px solid #dc2626' }}>
           
@@ -61,7 +60,7 @@ const Station = () => {
             {/* משימה אישית */}
             {mission.task && (
               <div style={{ background: 'rgba(220,38,38,0.1)', padding: '15px', borderRadius: '12px', borderRight: '4px solid #dc2626', marginBottom: '20px' }}>
-                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>המשימה שלך:</p>
+                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold' }}>המשימה:</p>
                 <p style={{ fontSize: '1.2rem', fontWeight: '800' }}>{mission.task}</p>
               </div>
             )}
@@ -69,10 +68,10 @@ const Station = () => {
             {/* בלוק קבוצתי - בולט בצהוב */}
             {groupInfo && (
               <div style={{ background: 'rgba(251, 191, 36, 0.1)', padding: '15px', borderRadius: '12px', border: '1px solid #fbbf24', marginBottom: '20px' }}>
-                <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold' }}>🤝 מפגש קבוצתי:</p>
+                <p style={{ color: '#fbbf24', fontSize: '11px', fontWeight: 'bold' }}>🤝הקבוצה:</p>
                 <p style={{ fontSize: '1.1rem', fontWeight: 'bold', margin: '5px 0' }}>{groupInfo.groupLocation}</p>
                 <p style={{ fontSize: '12px', color: '#94a3b8', borderTop: '1px solid rgba(251,191,36,0.2)', paddingTop: '5px' }}>
-                   סוכנים בנקודה: {groupInfo.participants}
+                  הצוות: {groupInfo.participants}
                 </p>
               </div>
             )}
@@ -81,7 +80,7 @@ const Station = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', background: 'rgba(0,0,0,0.2)', padding: '15px', borderRadius: '15px' }}>
               {mission.address && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>📍 מיקום</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.address}</p></div>)}
               {mission.hours && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>🕒 זמן</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.hours}</p></div>)}
-              {mission.escort && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>👤 ליווי</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.escort}</p></div>)}
+              {mission.escort && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>👤 מדריך מלווה</p><p style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.escort}</p></div>)}
               {mission.budget && (<div><p style={{ color: '#64748b', fontSize: '10px' }}>💰 תקציב</p><p style={{ fontSize: '12px', fontWeight: 'bold', color: '#22c55e' }}>{mission.budget}</p></div>)}
             </div>
           </main>
