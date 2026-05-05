@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { allMissionsData, STATION_PASSWORDS, groupsData } from './missionsData';
 
-// --- הגדרת סיסמאות גלובלית לכל תחנה ---
-const STATION_PASSWORDS = {
-  "1": "התחלה",
-  "2": "7766",
-  "3": "מפתח",
-  "4": "סנטר",
-  "5": "שרונה",
-  "6": "קפה",
-  "7": "מבצע",
-  "8": "סיום"
-};
+
 
 const Station = () => {
   const { id } = useParams();
@@ -23,38 +14,6 @@ const Station = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [error, setError] = useState(false);
 
-  // --- נתוני קבוצות ---
-  const groupsData = {
-    "צוות אדום": {
-      "6": { participants: "פרנקל, אברהם, משה" },
-      "7": { participants: "פרנקל, אברהם, משה" },
-      "8": { participants: "כל הצוותים" }
-    }
-  };
-
-  // --- נתוני המשימות (המבנה החדש שלך) ---
-  const allMissionsData = {
-    "פרנקל": {
-      "1": { hint: "חפשו ליד השער הכחול", escort: "מפקד תורן" },
-      "7": { 
-        group: "צוות אדום", 
-        address: "חניון המגדל קומה 2-", 
-        intel: "קוד כניסה לשרת: 1234. יש להמתין לאות מהמנטור.", 
-        task: "פריצה למערכת הנתונים", 
-        escort: "טכנאי שטח", 
-        hours: "22:00", 
-        img: "/missions/hisin.png", 
-        map: "מגדל עזריאלי שרונה" 
-      },
-      "8": { 
-        group: "צוות אדום", 
-        address: "פארק הירקון - נקודת הסיום", 
-        task: "סיכום המבצע וחלוקת פרסים", 
-        hours: "08:00",
-        map: "32.0515135, 34.7616870"
-      }
-    }
-  };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('race_user');
