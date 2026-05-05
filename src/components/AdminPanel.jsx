@@ -36,6 +36,24 @@ const AdminPanel = () => {
     }
   }, []);
 
+  const clearAllReports = async () => {
+  const confirmDelete = window.confirm("האם אתה בטוח שברצונך למחוק את כל הדיווחים? פעולה זו אינה ניתנת לביטול.");
+  
+  if (confirmDelete) {
+    const { error } = await supabase
+      .from('mission_reports')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000'); // טריק למחיקת כל השורות
+
+    if (error) {
+      alert("שגיאה במחיקה: " + error.message);
+    } else {
+      setReports([]); // עדכון התצוגה אצלך
+      alert("הטבלה נוקתה בהצלחה!");
+    }
+  }
+};
+
   const fetchReports = async () => {
     const { data, error } = await supabase
       .from('mission_reports')

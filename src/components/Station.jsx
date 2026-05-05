@@ -83,22 +83,22 @@ const Station = () => {
   }
 const reportExecution = async () => {
   try {
-    // אנחנו מוודאים שהערכים נשלחים כטקסט נקי
     const { error } = await supabase
       .from('mission_reports')
-      .insert([
+      .upsert(
         { 
-          username: String(team?.username), // המרה לטקסט ליתר ביטחון
-          station_id: String(id),           // המרה לטקסט שתתאים לטבלה
-          status: 'completed'               // הוספת סטטוס כפי שמופיע בטבלה
-        }
-      ]);
+          username: String(team?.username), 
+          station_id: String(id),
+          status: 'completed'
+        }, 
+        { onConflict: 'username' } // אומר לסופבייס: אם השם כבר קיים, תעדכן את השורה שלו במקום ליצור חדשה
+      );
 
     if (error) throw error;
-    alert('✅ הדיווח התקבל במפקדה!');
+    alert('✅ המיקום עודכן בחמ"ל!');
   } catch (error) {
-    console.error('Supabase Error:', error.message);
-    alert('❌ תקלה בדיווח: ' + error.message);
+    console.error('Error:', error.message);
+    alert('❌ תקלה בדיווח');
   }
 };
   // --- תצוגת התוכן המלאה ---
