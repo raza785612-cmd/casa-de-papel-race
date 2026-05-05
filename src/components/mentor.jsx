@@ -7,11 +7,12 @@ const Mentor = () => {
   const [mentor, setMentor] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // סה"כ תחנות במשחק (עדכן אם יש יותר או פחות)
+  // סה"כ תחנות לניווט
   const totalStations = 8; 
 
+  // --- כאן מדביקים את אובייקט הנתונים (DataBank) ---
   const mentorDataBank = {
-    "מאור": {
+   "מאור": {
       "1": { 
         taskName: "משימה: סיוש לטובת זיהוי וראי 8",
         intel: "סבב א': פרנקל בחנות קדמת עדן אלנבי 93, יוני בסטימצקי באלנבי / רוטשילד, סבב ב': דותן מיני מרקט מלצט 5, אדרי סטימצקי אלנבי/רוטשילד",
@@ -153,11 +154,12 @@ const Mentor = () => {
       // תוסיף כאן את שאר התחנות...
     }
   };
+  // ------------------------------------------------
 
   useEffect(() => {
     const savedUser = localStorage.getItem('race_user');
     
-    // חסימת כניסה למי שלא מחובר
+    // בדיקה אם מחובר בכלל
     if (!savedUser) {
       navigate(`/login?s=${id}`);
       return;
@@ -165,8 +167,9 @@ const Mentor = () => {
 
     const userData = JSON.parse(savedUser);
     
-    // בדיקה שהוא אכן חונך
+    // בדיקה אם הוא חונך (Mentor)
     if (userData.role !== 'mentor') {
+      alert("גישה חסומה: דף זה מיועד לחונכים בלבד.");
       navigate(`/station/${id}`);
       return;
     }
@@ -175,7 +178,7 @@ const Mentor = () => {
     setLoading(false);
   }, [id, navigate]);
 
-  // פונקציות ניווט
+  // פונקציות ניווט בין תחנות
   const goToNext = () => {
     const nextId = parseInt(id) + 1;
     if (nextId <= totalStations) navigate(`/mentor/${nextId}`);
@@ -186,93 +189,152 @@ const Mentor = () => {
     if (prevId >= 1) navigate(`/mentor/${prevId}`);
   };
 
-  if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-blue-500 font-mono">LOADING_COMMAND_CENTER...</div>;
+  if (loading) return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="text-blue-500 font-mono animate-pulse uppercase tracking-[0.2em]">Authenticating_Mentor...</div>
+    </div>
+  );
 
-  const currentMentorInfo = mentorDataBank[mentor?.username]?.[id] || {};
+  // שליפת המידע הספציפי
+  const currentMentorInfo = mentorDataBank[mentor?.username]?.[id];
+
+  // הגנה: אם החונך מחובר אבל השם שלו לא קיים באובייקט או התחנה חסרה
+  if (!currentMentorInfo) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-center" dir="rtl">
+        <div className="text-red-600 text-6xl mb-4 italic">🎭</div>
+        <h2 className="text-white text-xl font-black mb-2 italic uppercase">User Not Synced</h2>
+        <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+          המשתמש <span className="text-blue-500 font-bold underline">{mentor?.username}</span> מחובר למערכת, <br/>
+          אך לא נמצאו נתונים תואמים עבור <span className="text-white">תחנה {id}</span> באובייקט הקוד.
+        </p>
+        <button 
+          onClick={() => navigate('/login')}
+          className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl active:scale-95 transition-all shadow-lg shadow-blue-900/40"
+        >
+          חזרה למסך הזיהוי
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 pb-24" dir="rtl">
-      <div className="max-w-md mx-auto pt-4">
+    <div className="min-h-screen bg-slate-950 text-slate-100 p-4 pb-24 font-sans" dir="rtl">
+      <div className="max-w-md mx-auto pt-2">
         
         {/* סרגל ניווט עליון - חצים */}
-        <nav className="flex justify-between items-center mb-6 bg-slate-900 p-3 rounded-2xl border border-slate-800 shadow-lg">
+        <nav className="flex justify-between items-center mb-8 bg-slate-900/80 backdrop-blur-sm p-4 rounded-3xl border border-slate-800 shadow-2xl sticky top-2 z-50">
           <button 
             onClick={goToPrev}
             disabled={parseInt(id) === 1}
-            className={`p-2 rounded-lg transition-all ${parseInt(id) === 1 ? 'text-slate-700' : 'text-blue-500 hover:bg-blue-500/10 active:scale-90'}`}
+            className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${parseInt(id) === 1 ? 'opacity-20 grayscale' : 'bg-slate-800 text-blue-500 hover:bg-blue-600 hover:text-white'}`}
           >
-            <span className="text-2xl">➔</span> {/* חץ ימינה לתחנה קודמת */}
+            <span className="text-2xl font-bold">→</span>
           </button>
 
           <div className="text-center">
-            <span className="block text-[10px] text-slate-500 font-mono uppercase tracking-widest">Current Sector</span>
-            <span className="text-xl font-black text-white">תחנה {id}</span>
+            <span className="block text-[10px] text-blue-500 font-mono font-bold uppercase tracking-widest mb-1 italic">Tactical View</span>
+            <span className="text-2xl font-black text-white">תחנה {id}</span>
           </div>
 
           <button 
             onClick={goToNext}
             disabled={parseInt(id) === totalStations}
-            className={`p-2 rounded-lg transition-all ${parseInt(id) === totalStations ? 'text-slate-700' : 'text-blue-500 hover:bg-blue-500/10 active:scale-90'}`}
+            className={`w-12 h-12 flex items-center justify-center rounded-2xl transition-all ${parseInt(id) === totalStations ? 'opacity-20 grayscale' : 'bg-slate-800 text-blue-500 hover:bg-blue-600 hover:text-white'}`}
           >
-            <span className="text-2xl">←</span> {/* חץ שמאלה לתחנה הבאה */}
+            <span className="text-2xl font-bold">←</span>
           </button>
         </nav>
 
-        {/* תוכן הדף */}
+        {/* תוכן הדף המרכזי */}
         <div className="space-y-6">
-          {/* תמונה */}
+          
+          {/* תמונה מבצעית */}
           {currentMentorInfo.image && (
-            <div className="rounded-2xl overflow-hidden border-2 border-blue-600/30 shadow-xl">
-              <img src={currentMentorInfo.image} alt="Intel" className="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all" />
+            <div className="rounded-3xl overflow-hidden border-2 border-blue-600/20 shadow-2xl group">
+              <img 
+                src={currentMentorInfo.image} 
+                alt="Intel" 
+                className="w-full h-52 object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+              />
+              <div className="bg-slate-900 py-2 text-center text-[10px] text-blue-500 font-mono uppercase tracking-[0.3em]">
+                Field_Intel_Visual
+              </div>
             </div>
           )}
 
-          {/* משימה */}
-          <section className="bg-slate-900 rounded-2xl p-5 border border-slate-800 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-1 h-full bg-blue-600"></div>
-            <h3 className="text-blue-400 font-bold text-[10px] mb-2 uppercase tracking-widest text-shadow">המשימה:</h3>
-            <p className="text-xl font-bold text-white leading-tight">{currentMentorInfo.taskName || "טרם הוזן שם משימה"}</p>
+          {/* שם המשימה */}
+          <section className="bg-slate-900 rounded-2xl p-6 border border-slate-800 relative shadow-lg">
+            <div className="absolute top-0 right-0 w-1.5 h-full bg-blue-600"></div>
+            <h3 className="text-blue-500 font-black text-[11px] mb-2 uppercase tracking-widest italic">המשימה:</h3>
+            <p className="text-2xl font-black text-white leading-tight italic">
+              {currentMentorInfo.taskName}
+            </p>
           </section>
 
-          {/* ה"נ */}
-          <section className="bg-slate-900 rounded-2xl p-5 border border-slate-800 shadow-xl">
-            <h3 className="text-blue-400 font-bold text-[10px] mb-2 uppercase tracking-widest">ה"נ (מידע פנימי):</h3>
-            <p className="text-slate-300 font-medium">{currentMentorInfo.intel || "אין הערות."}</p>
+          {/* ה"נ - הערות נוספות */}
+          <section className="bg-slate-900 rounded-2xl p-6 border border-slate-800 shadow-lg border-b-2 border-b-slate-800">
+            <h3 className="text-blue-500 font-black text-[11px] mb-3 uppercase tracking-widest italic underline decoration-blue-900 underline-offset-4">ה"נ (מידע פנימי):</h3>
+            <p className="text-slate-300 font-medium leading-relaxed">
+              {currentMentorInfo.intel || "אין מידע מודיעיני נוסף לתחנה זו."}
+            </p>
           </section>
 
-          {/* דגשים */}
-          <section className="bg-blue-600/5 rounded-2xl p-5 border border-blue-900/30">
-            <h3 className="text-blue-500 font-bold text-[10px] mb-3 uppercase tracking-widest">דגשי חניכה:</h3>
-            <ul className="space-y-2 text-slate-300 text-sm">
+          {/* דגשי חניכה */}
+          <section className="bg-blue-900/10 rounded-2xl p-6 border border-blue-900/20 shadow-inner">
+            <h3 className="text-blue-400 font-black text-[11px] mb-4 uppercase tracking-widest italic">דגשי חניכה:</h3>
+            <ul className="space-y-4">
               {currentMentorInfo.highlights?.split(',').map((item, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="text-blue-600 ml-2 font-mono italic">{index + 1}.</span>
-                  {item.trim()}
+                <li key={index} className="flex items-start text-slate-300 text-sm">
+                  <span className="w-6 h-6 flex-shrink-0 bg-blue-600 text-white rounded-lg flex items-center justify-center text-[10px] font-mono font-bold ml-3 mt-0.5 shadow-lg shadow-blue-900/50">
+                    {index + 1}
+                  </span>
+                  <span className="leading-relaxed">{item.trim()}</span>
                 </li>
-              )) || <li>אין דגשים.</li>}
+              )) || <li className="text-slate-600 italic">אין דגשים מוגדרים.</li>}
             </ul>
           </section>
 
-          {/* תדריך */}
-          <section className="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
-            <h3 className="text-slate-500 font-bold text-[10px] mb-2 uppercase tracking-widest">תדריך לחניכים:</h3>
-            <p className="text-slate-400 italic text-sm italic">"{currentMentorInfo.briefing || "המשך כרגיל."}"</p>
+          {/* תדריך לחניכים */}
+          <section className="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 border-dashed">
+            <h3 className="text-slate-500 font-black text-[11px] mb-3 uppercase tracking-widest italic">תדריך לצוותים:</h3>
+            <div className="relative">
+              <p className="text-slate-400 italic text-[15px] leading-relaxed pr-2 border-r-2 border-slate-700 font-serif">
+                "{currentMentorInfo.briefing || "המשך לפי הנחיות הפרויקט."}"
+              </p>
+            </div>
           </section>
+
+          {/* כפתור יציאה מאובטח */}
+          <div className="pt-6">
+            <button 
+              onClick={() => {
+                if(window.confirm("בטוח שברצונך להתנתק?")) {
+                  localStorage.clear();
+                  navigate('/login');
+                }
+              }}
+              className="w-full py-4 text-slate-700 text-[10px] font-mono font-bold uppercase tracking-[0.5em] hover:text-red-500 transition-colors"
+            >
+              [ Terminate_Authorized_Session ]
+            </button>
+          </div>
         </div>
 
-        {/* כפתור יציאה בתחתית */}
-        <button 
-          onClick={() => {
-            localStorage.clear();
-            navigate('/login');
-          }}
-          className="w-full mt-10 py-3 text-slate-600 text-xs font-mono uppercase tracking-[0.2em] border border-slate-800 rounded-xl hover:bg-red-950/20 hover:text-red-500 transition-all"
-        >
-          Terminate Session // Logout
-        </button>
+        <footer className="mt-10 text-center opacity-20">
+          <p className="text-[8px] text-slate-500 font-mono tracking-[0.2em] uppercase">Sector_{id}_Control_Log // Node_Active</p>
+        </footer>
       </div>
     </div>
   );
 };
 
 export default Mentor;
+
+
+
+
+
+
+
+//########################################################
