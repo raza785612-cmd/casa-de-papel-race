@@ -148,13 +148,11 @@ const Station = () => {
               </div>
             )}
 
-            <button 
+  <button 
   onClick={() => {
-    // מוחק את פרטי ההתחברות מהמכשיר
-    localStorage.removeItem('race_user'); 
-    alert('המשימה הושלמה ודווחה! המערכת ננעלת עד לסריקת התחנה הבאה.');
-    // שולח אותם חזרה ללוגין (ריק)
-    navigate('/login'); 
+    localStorage.removeItem('race_user'); // מוחק הכל
+    alert('דיווח נשלח. המערכת ננעלה!');
+    navigate('/login');
   }}
   className="..."
 >

@@ -72,7 +72,7 @@ localStorage.setItem('race_user', JSON.stringify({
         <form onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="שם הצוות"
+            placeholder="כינוי"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
