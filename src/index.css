@@ -1,85 +1,30 @@
-/* עיצוב גלובלי לכל האפליקציה */
-body, html {
+/* הגדרות בסיס של טיילווינד */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* עיצוב משלים שלא מתנגש */
+:root {
+  color-scheme: dark;
+}
+
+body {
   margin: 0;
   padding: 0;
-  background-color: #000;
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #020617; /* Slate 950 */
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
   direction: rtl;
-}
-
-.login-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
-.login-container {
-  background: #111;
-  border: 2px solid #e50914;
-  padding: 30px;
-  border-radius: 15px;
+#root {
   width: 100%;
-  max-width: 350px;
-  text-align: center;
-  box-shadow: 0 0 25px rgba(229, 9, 20, 0.4);
+  margin: 0;
 }
 
-.mask-icon { font-size: 4rem; margin-bottom: 10px; }
-
-h1 { color: #e50914; font-size: 1.8rem; margin: 0; letter-spacing: 2px; }
-.subtitle { color: #888; margin-bottom: 25px; font-weight: bold; }
-
-input {
-  width: 100% !important;
-  height: 50px;
-  background: #222 !important;
-  border: 1px solid #444 !important;
-  color: #fff !important;
-  margin-bottom: 15px;
-  padding: 0 15px;
-  border-radius: 8px;
-  font-size: 16px !important; /* מונע זום באייפון */
-  box-sizing: border-box;
-}
-
-button {
-  width: 100%;
-  height: 50px;
-  background: #e50914;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.error-message { color: #ff4d4d; margin-top: 10px; font-size: 14px; }
-.station-badge { 
-  margin-top: 20px; 
-  display: inline-block; 
-  background: #333; 
-  padding: 5px 15px; 
-  border-radius: 20px; 
-  font-size: 0.8rem;
-}
-
-/* התאמה למסכים קטנים מאוד */
-@media (max-width: 480px) {
-  .login-container { padding: 20px; }
-  h1 { font-size: 1.5rem; }
-}
-.password-hint {
-  color: #666;
-  font-size: 0.8rem;
-  margin-top: -10px;
-  margin-bottom: 15px;
-  font-style: italic;
-  text-align: right;
-  padding: 0 5px;
+/* ביטול עיצובים קודמים של Vite שעלולים להפריע למירכוז */
+#root {
+  display: block;
 }
