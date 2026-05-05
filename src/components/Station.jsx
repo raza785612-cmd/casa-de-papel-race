@@ -20,21 +20,25 @@ const Station = () => {
       "4": { address: "ס.פ 9ד חיסין", intel: "עלה בש.ש. שהנדון התחלה רווק טעמי לבן אילן", task: "סיוש לטובת טלפרינטר",escort:"מאור", budget: "50 שח", hours: "14:30 - 15:30", img: "" },
       "5": { address: "ס.פ 9ד חיסין", intel: "המשך המשימה", task: "טלפרינטר לבן הטעמי, סוף אילן מושב טעמי סוף דוד לעוגן",escort:"מאור", budget: "50 שח", hours: "16:30 - 17:30", img: "" },
       "6": { partner: "ענבר", address: "מסעדת ראמה, המלך ג'ורג' 38", intel:"ניפגש ב20:00",task:"",escort:"מאור", hours: "20:00 - 21:00", img: "" },
-      "7": { group: "פרנקל, אגם, יוני, מתן", address: "חניון לוריא", intel: "הנדון התחלה חומוס את הבורוכס שמנת חומוס לוריא",task: "סוף רווק תוכי לבן בורוכב",escort:"מאור + אליקו", hours: "22:00 - 02:00",img: "" },
+      "7": { group: "פרנקל, אגם, יוני, מתן", address: "חניון לוריא", intel: "הנדון התחלה חומוס את הבורוכב שמנת חומוס לוריא",task: "סוף רווק תוכי לבן בורוכב",escort:"מאור + אליקו", hours: "22:00 - 02:00",img: "" },
       "8": { group: "פרנקל, אגם, יוני, מתן", address: "סדין סינמה", intel: "הנדון התבטא כי יעשה את הציר הבא בשעה 12:00: זמנהוף, המלך ג'ורג' עד כיכר מסריק",task: "מול מדריך מלווה",escort: "אביה", hours: "08:00 - 13:00",img: "" }
     },
     // כאן תוכל להוסיף "שם_משתמש": { ... } עבור שאר המשתתפים
   };
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('race_user');
-    if (!savedUser) {
-      navigate('/login');
-      return;
-    }
-    setTeam(JSON.parse(savedUser));
-    setLoading(false);
-  }, [navigate]);
+  const savedUser = localStorage.getItem('race_user');
+  
+  if (!savedUser) {
+    // אם אין משתמש בזיכרון, שלח אותו ללוגין
+    // אנחנו מוסיפים את ה-ID כדי שהלוגין ידע לאן להחזיר אותו
+    navigate(`/login?s=${id}`); 
+    return;
+  }
+  
+  setTeam(JSON.parse(savedUser));
+  setLoading(false);
+}, [id, navigate]);
 
   if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-red-600 font-bold">טוען נתוני משימה...</div>;
 
@@ -136,11 +140,17 @@ const Station = () => {
             )}
 
             <button 
-              onClick={() => alert('המשימה דווחה בהצלחה. המשך ליעד הבא!')}
-              className="w-full mt-4 py-4 bg-red-600 hover:bg-red-700 text-white font-black rounded-xl shadow-lg transition-all active:scale-95"
-            >
-              אישור ביצוע
-            </button>
+  onClick={() => {
+    // מוחק את פרטי ההתחברות מהמכשיר
+    localStorage.removeItem('race_user'); 
+    alert('המשימה הושלמה ודווחה! המערכת ננעלת עד לסריקת התחנה הבאה.');
+    // שולח אותם חזרה ללוגין (ריק)
+    navigate('/login'); 
+  }}
+  className="..."
+>
+  אישור ביצוע משימה
+</button>
 
           </div>
         </div>
