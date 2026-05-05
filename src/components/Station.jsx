@@ -30,13 +30,22 @@ const Station = () => {
   const savedUser = localStorage.getItem('race_user');
   
   if (!savedUser) {
-    // אם אין משתמש בזיכרון, שלח אותו ללוגין
-    // אנחנו מוסיפים את ה-ID כדי שהלוגין ידע לאן להחזיר אותו
-    navigate(`/login?s=${id}`); 
+    navigate(`/login?s=${id}`);
     return;
   }
-  
-  setTeam(JSON.parse(savedUser));
+
+  const userData = JSON.parse(savedUser);
+
+  // --- הבדיקה הקריטית ---
+  // אם התחנה ב-URL לא זהה לתחנה שהמשתמש סרק בלוגין
+  if (userData.authorizedStation !== id) {
+    alert("גישה חסומה! עליך לסרוק את ה-QR של התחנה כדי לצפות בתוכן.");
+    localStorage.removeItem('race_user'); // מנתק אותו ליתר ביטחון
+    navigate(`/login?s=${id}`);
+    return;
+  }
+
+  setTeam(userData);
   setLoading(false);
 }, [id, navigate]);
 

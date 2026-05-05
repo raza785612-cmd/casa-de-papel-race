@@ -46,7 +46,11 @@ const Login = () => {
       }
 
       // 3. שמירה בלוקאל סטורג'
-      localStorage.setItem('race_user', JSON.stringify(team));
+     // שמירת פרטי המשתמש + התחנה הספציפית שהוא סרק עכשיו
+localStorage.setItem('race_user', JSON.stringify({
+  ...team,
+  authorizedStation: idFromUrl // נועל את המשתמש לתחנה הזו בלבד
+}));
 
       // 4. ניווט
       navigate(`/station/${idFromUrl}`);
