@@ -1,110 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
+// --- בנק הנתונים הגדול ---
+  const allMissionsData = {
+    // כאן תכניס את שמות המשתמשים בדיוק כפי שהם ב-Supabase
+    "אמסלם": {
+      "1": { hint: "ברוך הבא! עליך להגיע למלון בו הכל מתחיל. הכתובת היא 13 ירקות 22", escort: "הודעות מול מאור" },
+      "2": { address: "קמת עדן, אלנבי 93", task: "המשימה:סיוש בעוגן",intel:"הגיע גזר, מעשיו לא ברורים, מיצים רוצים לדעת א.ב הגזר", escort: "חונך: מאור", budget: "50 שח למשימה", hours: "10:00 - 11:30", img: "URL_TO_IMAGE" },
+      "3": { address: "קמת עדן, אלנבי 93", task: "המשימה: זיהוי וראי 8 של ברוש",intel:"הגזר עתיד להגיע לכתובת שקיבלת בין השעות 12:30 - 13:00", escort: "חונך: מאור", budget: "50 שח למשימה", hours: "12:30 - 13:00", img: "URL_TO_IMAGE" },
+      "4": { address: "ס.פ 9ד חיסין", task: "סיוש לנק' טעמי", escort: "חונך: מאור", budget: "50 שח", hours: "14:30 - 15:30", img: "" },
+      "5": { address: "ס.פ 9ד חיסין", task: "טלפרינטר לבן הטעמי, סוף דוד אילן לעוגן", escort: "חונך: מאור", budget: "50 שח", hours: "16:30 - 17:30", img: "" },
+      "6": { partner: "ענבר", address: "ראמה, המלך ג'ורג' 38", task:"סוף רווק ש.ש לבן ברוש סיוש וביצוע",intel:"עפ ש.ש ברוש ואילן סוף מושב שמנת הטיח חניכיים",escort:"מאור", hours: "20:00 - 21:00" },
+      "7": { group: "פרנקל, אגם, יוני, מתן", address: "חניון לוריא", task: "סוף רווק תוכי לבן בורוכב סיוש וביצוע",intel: "הנדון התחלה חומוס שמנת חומוס לוריא", hours: "22:00 - 02:00" },
+      "8": { group: "  פרנקל, אגם, יוני, מתן", address: "כתובת קבוצתית", task: "דנא",escort: "מאור + אליקו",intel: "ציר הנדון: 258 לבן ירדן, 6 לבן סידי עד עוגה 6 הנדון סוף אוזן את סדין סינמה בעגולה 12:00", hours: "08:00 - 13:00" }
 
-const Station = () => {
-  const { id } = useParams(); // שואב את מספר התחנה מה-URL
-  const navigate = useNavigate();
-  
-  const [team, setTeam] = useState(null);
-  const [loading, setLoading] = useState(true);
+    },
+    
+    // שכפל את המבנה הזה לכל 17 המשתתפים (8 של יום א' ו-9 של יום ב')
+  };
 
-  // --- כאן אתה ממלא את התוכן של המשימות בעברית ---
-  const localMissions = {
-    "1": {
-      title: "המשימה הראשונה: הפריצה למרתף",
-      description: `שלום לסוכנים של פרופסור. המשימה הראשונה שלכם מתחילה כאן.
-      עליכם למצוא את המעטפה האדומה המסתתרת באזור...
-      לאחר שתמצאו את הקוד, הזינו אותו והמשיכו לתחנה הבאה.`
-    },
-    "2": {
-      title: "משימה 2: נטרול האזעקה",
-      description: "כאן תכתוב את המלל של משימה 2. למשל: פתרו את החידה הבאה..."
-    },
-    "3": {
-      title: "משימה 3: חדר הבקרה",
-      description: "כאן תכתוב את המלל של משימה 3..."
-    },
-    "4": {
-      title: "משימה 4: הכספת הראשית",
-      description: "כאן תכתוב את המלל של משימה 4..."
-    },
-    "5": {
-      title: "משימה 5: הבריחה הגדולה",
-      description: "כאן תכתוב את המלל של משימה 5..."
+  const getMission = () => {
+    const user = team?.username;
+    const missionData = allMissionsData[user]?.[id];
+
+    if (!missionData) {
+      return { title: "אין נתונים", content: "המשימה טרם הוזנה במערכת." };
     }
+    return missionData;
   };
 
-  useEffect(() => {
-    const checkUser = () => {
-      const savedUser = localStorage.getItem('race_user');
-      if (!savedUser) {
-        navigate('/login');
-        return;
-      }
-      setTeam(JSON.parse(savedUser));
-      setLoading(false);
-    };
-
-    checkUser();
-  }, [navigate]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-black text-red-600 flex items-center justify-center font-bold">
-        טוען נתונים מהמפקדה...
-      </div>
-    );
-  }
-
-  // בחירת המשימה להצגה (לפי ה-ID בכתובת)
-  const currentMission = localMissions[id] || {
-    title: "תחנה לא מזוהה",
-    description: "נראה שסרקתם קוד QR לא תקין או שהתחנה טרם הוגדרה במערכת."
-  };
-
-  return (
-    <div className="min-h-screen bg-zinc-950 text-white p-6" dir="rtl">
-      <div className="max-w-md mx-auto pt-8">
-        
-        {/* כותרת הצוות */}
-        <header className="mb-10 text-center">
-          <div className="text-red-600 text-sm font-bold tracking-widest mb-1">סוכן בפעולה: {team?.username}</div>
-          <div className="h-1 w-20 bg-red-600 mx-auto"></div>
-        </header>
-
-        {/* כרטיס המשימה */}
-        <main className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
-          {/* אפקט דקורטיבי של "בית הנייר" */}
-          <div className="absolute top-0 right-0 p-2 opacity-10 text-4xl">🎭</div>
-          
-          <h1 className="text-3xl font-black mb-6 text-zinc-100 italic border-r-4 border-red-600 pr-4">
-            תחנה {id}: <br/>
-            <span className="text-red-600 not-italic">{currentMission.title}</span>
-          </h1>
-
-          <div className="space-y-4 text-zinc-300 text-lg leading-relaxed mb-10">
-            {/* whitespace-pre-line שומר על ירידות שורה מהטקסט שכתבת למעלה */}
-            <p className="whitespace-pre-line">
-              {currentMission.description}
-            </p>
-          </div>
-
-          {/* כפתור סיום */}
-          <button 
-            onClick={() => alert('המשימה הושלמה! עברו לתחנה הבאה וסרקו את ה-QR שלה.')}
-            className="w-full py-5 bg-red-600 hover:bg-red-700 text-white font-black text-xl rounded-xl shadow-lg shadow-red-900/40 transition-all active:scale-95"
-          >
-            סיימתי את המשימה
-          </button>
-        </main>
-
-        <footer className="mt-12 text-center text-zinc-600 text-xs uppercase tracking-tighter">
-          CASA DE PAPEL • MISSION CONTROL SYSTEM • STATION_{id}
-        </footer>
-      </div>
-    </div>
-  );
-};
-
-export default Station;
+  const currentData = getMission();
