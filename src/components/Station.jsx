@@ -87,7 +87,7 @@ const reportExecution = async () => {
       .from('mission_reports')
       .upsert(
         { 
-          username: String(team?.username), 
+          username: team?.username, 
           station_id: String(id),
           status: 'completed'
         }, 
