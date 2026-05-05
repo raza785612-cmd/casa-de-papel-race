@@ -56,7 +56,7 @@ const Login = () => {
       setError(err.message);
     } finally {
       setLoading(false);
-    }
+    }}
 
   return (
     <div className="login-wrapper">
