@@ -3,24 +3,37 @@ import { supabase } from '../supabaseClient';
 
 const AdminPanel = () => {
   const [reports, setReports] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // הגדרת הסיסמה שלך כאן
+  const ADMIN_PASSWORD = "1234"; 
 
   useEffect(() => {
-    fetchReports();
+    // בקשת סיסמה מיד עם טעינת הדף
+    const password = prompt("נא להזין סיסמת חמ''ל:");
+    
+    if (password === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      fetchReports();
+      
+      // הפעלת ה-Realtime רק אם המשתמש מורשה
+      const subscription = supabase
+        .channel('schema-db-changes')
+        .on('postgres_changes', 
+          { event: 'INSERT', schema: 'public', table: 'mission_reports' }, 
+          (payload) => {
+            setReports(current => [payload.new, ...current]);
+          }
+        )
+        .subscribe();
 
-    const subscription = supabase
-      .channel('schema-db-changes')
-      .on('postgres_changes', 
-        { event: 'INSERT', schema: 'public', table: 'mission_reports' }, 
-        (payload) => {
-          // שיפור 1: שימוש ב-Functional Update כדי להבטיח סדר נכון
-          setReports(current => [payload.new, ...current]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(subscription);
-    };
+      return () => {
+        supabase.removeChannel(subscription);
+      };
+    } else {
+      alert("סיסמה שגויה!");
+      window.location.href = "/"; // מחזיר לדף הבית אם הסיסמה שגויה
+    }
   }, []);
 
   const fetchReports = async () => {
@@ -29,9 +42,14 @@ const AdminPanel = () => {
       .select('*')
       .order('created_at', { ascending: false });
     
-    if (error) console.error("Error fetching reports:", error);
+    if (error) console.error("Error:", error);
     setReports(data || []);
   };
+
+  // אם לא עבר אימות, לא מציגים כלום (או מציגים הודעת טעינה)
+  if (!isAuthenticated) {
+    return <div style={{ background: '#020617', minHeight: '100vh' }} />;
+  }
 
   return (
     <div style={{ padding: '20px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui, sans-serif' }}>
@@ -42,7 +60,7 @@ const AdminPanel = () => {
         </span>
       </div>
 
-      <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse', borderRadius: '8px', overflow: 'hidden' }}>
+      <table style={{ width: '100%', marginTop: '20px', borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ background: '#1e293b' }}>
             <th style={{ padding: '15px', textAlign: 'right' }}>משתתף</th>
@@ -51,29 +69,19 @@ const AdminPanel = () => {
           </tr>
         </thead>
         <tbody>
-          {reports.length === 0 ? (
-            <tr>
-              <td colSpan="3" style={{ textAlign: 'center', padding: '40px', color: '#94a3b8' }}>אין דיווחים עדיין... המתן לתחילת המבצע</td>
+          {reports.map((report) => (
+            <tr key={report.id} style={{ borderBottom: '1px solid #1e293b' }}>
+              <td style={{ padding: '15px', fontWeight: 'bold', color: '#fbbf24' }}>{report.username}</td>
+              <td style={{ padding: '15px' }}>
+                <span style={{ background: '#334155', padding: '4px 10px', borderRadius: '6px' }}>
+                  תחנה {report.station_id}
+                </span>
+              </td>
+              <td style={{ padding: '15px', fontSize: '14px', color: '#94a3b8' }}>
+                {new Date(report.created_at).toLocaleTimeString('he-IL')}
+              </td>
             </tr>
-          ) : (
-            reports.map((report) => (
-              <tr key={report.id} style={{ borderBottom: '1px solid #1e293b', transition: 'background 0.3s' }}>
-                <td style={{ padding: '15px', fontWeight: 'bold', color: '#fbbf24' }}>
-                  {report.username || 'אנונימי'}
-                </td>
-                <td style={{ padding: '15px' }}>
-                   {/* שיפור 2: וידוא שהתחנה מוצגת יפה גם אם היא מספר או טקסט */}
-                   <span style={{ background: '#334155', padding: '4px 10px', borderRadius: '6px' }}>
-                     תחנה {report.station_id}
-                   </span>
-                </td>
-                <td style={{ padding: '15px', fontSize: '14px', color: '#94a3b8' }}>
-                  {/* שיפור 3: פורמט זמן קצת יותר קריא לישראל */}
-                  {new Date(report.created_at).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                </td>
-              </tr>
-            ))
-          )}
+          ))}
         </tbody>
       </table>
     </div>

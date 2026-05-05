@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login'; 
 import Station from './components/Station'; 
 import Mentor from './components/Mentor';
+import AdminPanel from './components/AdminPanel'; // וודא שהנתיב והשם מדויקים
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
         
         {/* 4. דף הבית מפנה ללוגין */}
         <Route path="/" element={<Navigate to="/login" />} />
-        
+
         {/*דף מנהל שרואה נתונים של כולם */}
         <Route path="/hq-control-room" element={<AdminPanel />} />
         
