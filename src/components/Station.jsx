@@ -43,7 +43,7 @@ const Station = () => {
         task: "פריצה למערכת הנתונים", 
         escort: "טכנאי שטח", 
         hours: "22:00", 
-        img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000", 
+        img: "/missions/hisin.png", 
         map: "מגדל עזריאלי שרונה" 
       },
       "8": { 
