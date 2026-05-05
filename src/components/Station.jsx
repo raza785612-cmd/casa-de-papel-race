@@ -92,6 +92,12 @@ const Station = () => {
                   <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#22c55e' }}>₪ {mission.budget}</p>
                 </div>
               )}
+              {mission.group && (
+                <div>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>תקציב</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#22c55e' }}>₪ {mission.budget}</p>
+                </div>
+              )}
               {mission.escort && (
                 <div>
                   <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>ליווי</p>
