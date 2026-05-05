@@ -94,8 +94,8 @@ const Station = () => {
               )}
               {mission.group && (
                 <div>
-                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>תקציב</p>
-                  <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#22c55e' }}>₪ {mission.budget}</p>
+                  <p style={{ color: '#64748b', fontSize: '10px', margin: 0 }}>קבוצה</p>
+                  <p style={{ fontSize: '13px', fontWeight: 'bold', color: '#22c55e' }}>₪ {mission.group}</p>
                 </div>
               )}
               {mission.escort && (
@@ -113,6 +113,11 @@ const Station = () => {
               </div>
             )}
           </div>
+          {mission.img && mission.img !== "URL_TO_IMAGE" && (
+  <div style={{ marginTop: '20px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #334155' }}>
+    <img src={mission.img} alt="Mission Intel" style={{ width: '100%', display: 'block' }} />
+  </div>
+)}
 
           <button 
             onClick={() => alert('המשימה נרשמה כבוצעה במערכת.')}
