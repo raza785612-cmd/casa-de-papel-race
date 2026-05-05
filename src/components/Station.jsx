@@ -224,7 +224,7 @@ const reportExecution = async () => {
   }}
   onClick={reportExecution}
 >
-  CONFIRM_EXECUTION
+  סיימתי את המשימה
 </button>
         </div>
       </div>
