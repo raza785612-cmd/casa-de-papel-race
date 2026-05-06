@@ -11,10 +11,18 @@ const Station = () => {
   const team = JSON.parse(localStorage.getItem('race_user'));
 
   useEffect(() => {
-    setIsUnlocked(false);
-    setInputPass("");
-    window.scrollTo(0, 0);
-  }, [id]);
+  const user = JSON.parse(localStorage.getItem('race_user'));
+  if (user) {
+    if (user.is_mentor) {
+      navigate('/mentor');
+    } else {
+      // רק אם הוא לא מנטור והוא בדף הבית, שלח לתחנה 1
+      if (window.location.pathname === '/') {
+        navigate('/station/1');
+      }
+    }
+  }
+}, []);
 
   const handleUnlock = () => {
     if (inputPass === STATION_PASSWORDS[id]) {
