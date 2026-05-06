@@ -19,7 +19,8 @@ export const allMissionsData = {
       escort: "מאור", 
       hours: "09:00 - 10:00", 
       img: "/missions/depapel.png", 
-      map: "32.062940,34.771376" 
+      map: "32.062940,34.771376" ,
+      tree: "ברוש"
     },
     "2": { // סיוש בעוגן
       group: "", 

@@ -70,7 +70,7 @@ const Mentor = () => {
                       </div>
 
                       <div style={{ marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' }}>
-                        <div style={{ color: '#059669', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>🌳 נתון "עץ" (מידע פנימי):</div>
+                        <div style={{ color: '#059669', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>🌳 עץ:</div>
                         <div style={{ color: '#064e3b', fontSize: '18px', fontWeight: '900' }}>
                             {data.tree || "⚠️ לא הוזן"}
                         </div>
