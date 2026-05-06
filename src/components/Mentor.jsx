@@ -32,6 +32,7 @@ const MentorPage = () => {
 
   // שליפת רשימת הצוותים מהג'ייסון
   const allTeams = Object.keys(allMissionsData);
+  console.log("Teams found:", allTeams); // תוסיף את זה כדי לראות כמה צוותים המערכת באמת מזהה
 
   return (
     <div style={{ 
