@@ -1,112 +1,59 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [searchParams] = useSearchParams();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  
-  // חילוץ מספר התחנה או ברירת מחדל לתחנה 1
-  const idFromUrl = searchParams.get('s') || '1';
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    // 1. בדיקת סיסמה (מוודא שהיא תואמת למה שהגדרת ב-Vite)
-    if (password !== import.meta.env.VITE_GENERIC_PASSWORD) {
-      alert('קוד גישה שגוי');
-      setLoading(false);
-      return;
-    }
+  const handleLogin = async () => {
+    // שליפת המשתמש לפי שם וסיסמת לוגין מהדאטאבייס
+    const { data, error } = await supabase
+      .from('teams')
+      .select('*')
+      .eq('username', username)
+      .eq('login_password', password)
+      .maybeSingle();
 
-    try {
-      // 2. חיפוש הצוות ב-Database
-      const { data: team, error } = await supabase
-        .from('teams')
-        .select('*')
-        .eq('username', username.trim())
-        .single();
-
-      if (error || !team) {
-        alert('סוכן לא מזוהה. בדוק את שם הצוות ונסה שנית.');
-        setLoading(false);
-        return;
-      }
-
-      // 3. שמירת נתונים מקומית
-      localStorage.setItem('race_user', JSON.stringify(team));
-      localStorage.setItem('active_station', idFromUrl);
-
-      // 4. ניתוב לפי תפקיד
-      const role = (team.role || '').toLowerCase().trim();
-      if (role === 'mentor' || team.username === 'אביה') {
-        navigate(`/mentor/${idFromUrl}`);
-      } else {
-        navigate(`/station/${idFromUrl}`);
-      }
-    } catch (err) {
-      console.error(err);
-      alert('תקלת תקשורת עם השרת');
-    } finally {
-      setLoading(false);
+    if (data) {
+      // שומרים את כל האובייקט (כולל secret_password ו-secret_message)
+      localStorage.setItem('race_user', JSON.stringify(data));
+      navigate('/station/1');
+    } else {
+      alert("שם משתמש או סיסמה שגויים. נסה שנית.");
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="app-container">
-        <div className="card">
-          <div style={{ fontSize: '4.5rem', marginBottom: '15px' }}>🎭</div>
-          <h1>THE <span className="red-text">RACE</span></h1>
-          <p style={{ color: '#64748b', fontSize: '10px', letterSpacing: '3px', marginBottom: '35px', fontWeight: 'bold' }}>
-            CLASSIFIED SYSTEM ACCESS
-          </p>
-          
-          <form onSubmit={handleLogin}>
-            <div style={{ marginBottom: '15px' }}>
-              <input 
-                type="text" 
-                placeholder="כינוי" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-                required 
-              />
-            </div>
-
-            <div style={{ marginBottom: '5px' }}>
-              <input 
-                type="password" 
-                placeholder="קוד גישה" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                required 
-              />
-            </div>
-            
-            {/* הרמז שביקשת */}
-            <p style={{ 
-              color: '#475569', 
-              fontSize: '11px', 
-              fontStyle: 'italic', 
-              textAlign: 'right', 
-              margin: '0 5px 20px 0' 
-            }}>
-              * רמז: דיזינגוף דיזינגוף הירקון בן יהודה
-            </p>
-
-            <button type="submit" disabled={loading}>
-              {loading ? 'מאמת נתונים...' : 'כניסה למערכת'}
-            </button>
-          </form>
-
-          <div style={{ marginTop: '25px', opacity: 0.2 }}>
-            <p style={{ fontSize: '9px', fontMono: 'true' }}>STATION_OPE_ID: {idFromUrl}</p>
-          </div>
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6" dir="rtl">
+      <div className="bg-slate-900 p-8 rounded-3xl shadow-2xl border-t-4 border-red-600 w-full max-w-sm">
+        <h1 className="text-white text-3xl font-black mb-8 text-center italic tracking-tighter">CASA DE PAPEL</h1>
+        
+        <div className="space-y-4">
+          <input 
+            type="text" 
+            placeholder="שם צוות" 
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full p-4 bg-black border border-slate-800 rounded-xl text-white text-center focus:border-red-600 outline-none transition-colors"
+          />
+          <input 
+            type="password" 
+            placeholder="סיסמה" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full p-4 bg-black border border-slate-800 rounded-xl text-white text-center focus:border-red-600 outline-none transition-colors"
+          />
+          <button 
+            onClick={handleLogin}
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-bold text-xl active:scale-95 transition-all shadow-lg shadow-red-900/20"
+          >
+            התחבר למערכת
+          </button>
         </div>
+        
+        <p className="text-slate-500 text-xs text-center mt-6 uppercase tracking-widest">Authorized Personnel Only</p>
       </div>
     </div>
   );
