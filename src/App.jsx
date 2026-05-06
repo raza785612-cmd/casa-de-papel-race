@@ -17,8 +17,10 @@ function App() {
         <Route path="/mentor/" element={<Mentor />} />
         
         {/* 3. דף התחנה למשתתפים */}
-        <Route path="/station/:id" element={<Station />} />    
-        
+<Route 
+  path="/station/:id" 
+  element={<Station key={window.location.pathname} />} 
+/>        
         {/* 4. דף הבית מפנה ללוגין */}
         <Route path="/" element={<Navigate to="/login" />} />
 
