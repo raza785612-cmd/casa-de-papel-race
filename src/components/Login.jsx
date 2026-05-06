@@ -8,27 +8,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-  console.log("מנסה להתחבר עם:", username.trim(), password.trim());
+  // הסרת רווחים לפני ואחרי
+  const user = username.trim();
+  const pass = password.trim();
+
+  console.log("Checking for:", user, pass);
 
   const { data, error } = await supabase
     .from('teams')
     .select('*')
-    .eq('username', username.trim())
-    .eq('login_password', password.trim())
+    .eq('username', user)
+    .eq('login_password', pass)
     .maybeSingle();
 
   if (error) {
-    console.error("שגיאת Supabase:", error.message);
-    alert("שגיאת תקשורת: " + error.message);
+    console.error("Supabase Error:", error);
     return;
   }
 
   if (data) {
-    console.log("התחברות הצליחה! נתונים:", data);
     localStorage.setItem('race_user', JSON.stringify(data));
     navigate('/station/1');
   } else {
-    console.log("לא נמצא משתמש תואם בדאטאבייס");
+    // אם הגענו לכאן, סימן שבאמת אין כזה משתמש בטבלה
+    console.log("Database returned no match for:", user, pass);
     alert("שם משתמש או סיסמה שגויים");
   }
 };
