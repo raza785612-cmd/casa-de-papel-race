@@ -1,98 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '../supabaseClient'; // ייבוא הקליינט של סופבייס
-
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const handleLogin = async () => {
+const handleLogin = async () => {
     setLoading(true);
-    
-    // שליפת הצוות מהדאטאבייס לפי שם וסיסמה
-    const { data, error } = await supabase
-      .from('teams') // וודא שזה שם הטבלה שלך בסופבייס
-      .select('*')
-      .eq('username', username)
-      .eq('password', password)
-      .single();
+    console.log("מנסה להתחבר עם:", username, password); // בדיקה שהערכים עוברים
 
-    if (error || !data) {
-      alert("שם צוות או סיסמה שגויים");
+    try {
+      // שליפת הצוות
+      const { data, error } = await supabase
+        .from('teams') 
+        .select('*')
+        .eq('username', username.trim()) // trim מנקה רווחים מיותרים
+        .eq('password', password.trim());
+
+      if (error) {
+        console.error("שגיאת סופבייס:", error.message);
+        alert("שגיאת מערכת: " + error.message);
+      } else if (!data || data.length === 0) {
+        console.warn("לא נמצא צוות תואם במאגר");
+        alert("שם צוות או סיסמה שגויים");
+      } else {
+        // הצלחה!
+        const user = data[0]; // לוקחים את האיבר הראשון במערך
+        console.log("התחברות הצליחה:", user);
+        localStorage.setItem('race_user', JSON.stringify(user));
+        navigate('/station/1');
+      }
+    } catch (err) {
+      console.error("שגיאה לא צפויה:", err);
+      alert("משהו השתבש בחיבור לשרת");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // שמירת נתוני המשתמש ב-LocalStorage
-    localStorage.setItem('race_user', JSON.stringify(data));
-    navigate('/station/1');
-    setLoading(false);
   };
-
-  return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: '#020617', display: 'flex', justifyContent: 'center', 
-      alignItems: 'center', overflowY: 'auto', zIndex: 100
-    }} dir="rtl">
-      
-      <div style={{ width: '100%', maxWidth: '380px', padding: '20px' }}>
-        <div style={{
-          backgroundColor: '#0f172a', borderRadius: '2.5rem', padding: '40px 30px',
-          border: '1px solid #1e293b', textAlign: 'center'
-        }}>
-          
-          <div style={{ fontSize: '50px', marginBottom: '10px' }}>🏎️</div>
-
-          <h1 style={{ fontSize: '32px', fontWeight: '900', color: 'white', marginBottom: '5px', fontStyle: 'italic' }}>
-            THE AMAZING <span style={{ color: '#dc2626' }}>RACE</span>
-          </h1>
-          
-          <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '30px' }}>מערכת זיהוי צוותים</p>
-
-          <div style={{ marginBottom: '20px', textAlign: 'right' }}>
-            <input 
-              type="text" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="שם צוות"
-              style={{
-                width: '100%', background: '#020617', border: '1px solid #334155',
-                color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center'
-              }}
-            />
-          </div>
-
-          <div style={{ marginBottom: '30px', textAlign: 'right' }}>
-            <input 
-              type="password" 
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="סיסמה"
-              style={{
-                width: '100%', background: '#020617', border: '1px solid #334155',
-                color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center'
-              }}
-            />
-          </div>
-
-          <button 
-            onClick={handleLogin}
-            disabled={loading}
-            style={{
-              width: '100%', backgroundColor: loading ? '#555' : '#dc2626', color: 'white', 
-              padding: '18px', borderRadius: '1rem', border: 'none', 
-              fontSize: '18px', fontWeight: '900', cursor: loading ? 'not-allowed' : 'pointer'
-            }}
-          >
-            {loading ? "מתחבר..." : "START MISSION ⚡"}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Login;
