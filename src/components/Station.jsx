@@ -34,10 +34,11 @@ const Station = () => {
   const getGoogleMapsLink = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   const getEmbedMap = (query) => `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
+  // דף נעול (משתמש ב-CSS הקיים שלך ב-index.css שנראה טוב)
   if (!isUnlocked) {
     return (
-      <div className="centered-page">
-        <div className="card w-full max-w-[350px]">
+      <div className="app-container">
+        <div className="card">
           <h1>STATION <span className="red-text">{id}</span></h1>
           <p style={{ marginBottom: '20px', opacity: 0.7 }}>הזן קוד משימה לחשיפת הפרטים</p>
           <input 
@@ -51,93 +52,95 @@ const Station = () => {
     );
   }
 
+  // דף המשימה - משתמש בסטייל אגרסיבי כדי לא להימרח
   return (
-    <div className="min-h-screen py-6 px-4 flex justify-center bg-[#020617]">
-      {/* מגביל הרווח המרכזי - ה"טלפון" */}
-      <div className="w-full max-w-[400px] flex flex-col gap-4">
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+      backgroundColor: '#020617', overflowY: 'auto', display: 'block', zIndex: 100
+    }} dir="rtl">
+      
+      <div style={{
+        maxWidth: '400px', margin: '0 auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px'
+      }}>
         
-        {/* כרטיס ראשי המכיל את כל התוכן */}
-        <div className="bg-[#0f172a] border border-[#1e293b] rounded-[2rem] overflow-hidden shadow-2xl">
+        {/* כרטיס המשימה */}
+        <div style={{ backgroundColor: '#0f172a', borderRadius: '2rem', border: '1px solid #1e293b', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
           
-          {/* 1. תמונה - הגבלה קשיחה */}
+          {/* תמונה */}
           {mission.img && (
-            <div className="w-full h-[220px] bg-slate-800">
-              <img src={mission.img} alt="Mission" className="w-full h-full object-cover" />
+            <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
+              <img src={mission.img} alt="Mission" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           )}
 
-          <div className="p-6 space-y-6 text-right">
-            
-            {/* 2. משימה */}
-            <div>
-              <div className="text-red-500 text-[10px] font-bold uppercase tracking-widest mb-1">● משימה פעילה</div>
-              <h2 className="text-2xl font-black text-white italic leading-tight">{mission.task}</h2>
+          <div style={{ padding: '25px', textAlign: 'right' }}>
+            {/* כותרת */}
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימה פעילה</div>
+              <h2 style={{ fontSize: '24px', fontWeight: '900', color: 'white', margin: 0, lineHeight: '1.2' }}>{mission.task}</h2>
             </div>
 
-            {/* 3. מודיעין - מתוחם בבוקסה אדומה */}
+            {/* מודיעין */}
             {mission.intel && (
-              <div className="bg-red-600/10 border-r-4 border-red-600 p-4 rounded-xl">
-                <span className="text-red-500 font-bold text-xs block mb-1">מודיעין שטח:</span>
-                <p className="text-sm text-slate-300 italic">{mission.intel}</p>
+              <div style={{ backgroundColor: 'rgba(220, 38, 38, 0.1)', borderRight: '4px solid #dc2626', padding: '15px', borderRadius: '10px', marginBottom: '20px' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#fecaca', fontStyle: 'italic' }}>{mission.intel}</p>
               </div>
             )}
 
-            {/* 4. כתובת - מתוחם */}
+            {/* כתובת */}
             {mission.address && (
-              <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
-                <div className="text-slate-500 text-[10px] font-bold uppercase mb-1">מיקום היעד</div>
-                <div className="text-lg font-bold">{mission.address}</div>
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', padding: '15px', borderRadius: '15px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                <span style={{ fontSize: '20px' }}>📍</span>
+                <div>
+                  <div style={{ fontSize: '9px', color: '#64748b', fontWeight: 'bold' }}>מיקום היעד</div>
+                  <div style={{ fontSize: '16px', fontWeight: 'bold', color: 'white' }}>{mission.address}</div>
+                </div>
               </div>
             )}
 
-            {/* 5. מפה - הגבלה קשיחה */}
+            {/* מפה */}
             {mission.map && (
-              <div className="rounded-2xl overflow-hidden border border-white/5 bg-black">
-                <div className="w-full h-[180px]">
+              <div style={{ borderRadius: '15px', overflow: 'hidden', border: '1px solid #1e293b', marginBottom: '20px' }}>
+                <div style={{ width: '100%', height: '160px' }}>
                   <iframe
                     width="100%" height="100%" frameBorder="0"
                     src={getEmbedMap(mission.map)}
                     title="map"
-                    style={{ filter: 'grayscale(1) contrast(1.2) opacity(0.8)' }}
+                    style={{ filter: 'grayscale(1) contrast(1.2)' }}
                   ></iframe>
                 </div>
-                <a 
-                  href={getGoogleMapsLink(mission.map)} 
-                  target="_blank" rel="noopener noreferrer"
-                  className="block text-center py-3 bg-white/10 text-white text-[11px] font-bold uppercase tracking-wider"
-                >
-                  לחץ לניווט ב-Google Maps
+                <a href={getGoogleMapsLink(mission.map)} target="_blank" rel="noopener noreferrer"
+                   style={{ display: 'block', textAlign: 'center', padding: '10px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold' }}>
+                  ניווט ב-GOOGLE MAPS
                 </a>
               </div>
             )}
 
-            {/* 6. נתוני ליווי וזמן */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* ליווי וזמן */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {mission.escort && (
-                <div className="bg-white/5 p-3 rounded-xl border border-white/5">
-                  <div className="text-slate-500 text-[9px] font-bold mb-1">👤 ליווי</div>
-                  <div className="text-xs font-bold">{mission.escort}</div>
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>👤 ליווי</div>
+                  <div style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.escort}</div>
                 </div>
               )}
               {mission.hours && (
-                <div className="bg-white/5 p-3 rounded-xl border border-white/5">
-                  <div className="text-slate-500 text-[9px] font-bold mb-1">🕒 זמן יעד</div>
-                  <div className="text-xs font-bold text-red-500">{mission.hours}</div>
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>🕒 שעת יעד</div>
+                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
                 </div>
               )}
             </div>
-
           </div>
         </div>
 
-        {/* 7. כפתור אישור סופי */}
-        <button 
-          onClick={handleNext}
-          className="w-full py-5 bg-red-600 hover:bg-red-700 text-white rounded-[1.5rem] font-black text-xl shadow-lg transition-all active:scale-95"
-        >
-          CONFIRM & PROCEED ⚡
+        {/* כפתור אישור */}
+        <button onClick={handleNext} style={{
+          backgroundColor: '#dc2626', color: 'white', padding: '20px', borderRadius: '1.5rem', 
+          border: 'none', fontSize: '18px', fontWeight: '900', cursor: 'pointer', boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)'
+        }}>
+          סיימנו, המשך ⚡
         </button>
-
       </div>
     </div>
   );
