@@ -5,7 +5,6 @@ const AdminPanel = () => {
   const [reports, setReports] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // הגדרת הסיסמה לחמ"ל
   const ADMIN_PASSWORD = "1234"; 
 
   useEffect(() => {
@@ -15,13 +14,12 @@ const AdminPanel = () => {
       setIsAuthenticated(true);
       fetchReports();
       
-      // האזנה לכל שינוי (INSERT, UPDATE, DELETE) כדי שהלוח יתעדכן בזמן אמת
       const subscription = supabase
         .channel('admin-realtime')
         .on('postgres_changes', 
           { event: '*', schema: 'public', table: 'mission_reports' }, 
           () => {
-            fetchReports(); // רענון הרשימה מול בסיס הנתונים בכל שינוי
+            fetchReports();
           }
         )
         .subscribe();
@@ -35,18 +33,31 @@ const AdminPanel = () => {
     }
   }, []);
 
-  // פונקציה למשיכת הנתונים
   const fetchReports = async () => {
     const { data, error } = await supabase
       .from('mission_reports')
       .select('*')
       .order('created_at', { ascending: false });
     
-    if (error) console.error("Error fetching:", error);
-    setReports(data || []);
+    if (error) {
+      console.error("Error fetching:", error);
+      return;
+    }
+
+    // --- לוגיקת הסינון: רק התחנה האחרונה של כל משתמש ---
+    const latestReports = [];
+    const seenUsers = new Set();
+
+    data.forEach(report => {
+      if (!seenUsers.has(report.username)) {
+        seenUsers.add(report.username);
+        latestReports.push(report);
+      }
+    });
+
+    setReports(latestReports);
   };
 
-  // פונקציית איפוס (מחיקת כל הנתונים מהטבלה)
   const clearAllReports = async () => {
     const confirmDelete = window.confirm("⚠️ אזהרה: זה ימחק את כל התקדמות הצוותים. להמשיך?");
     if (!confirmDelete) return;
@@ -54,7 +65,7 @@ const AdminPanel = () => {
     const { error } = await supabase
       .from('mission_reports')
       .delete()
-      .neq('username', 'SYSTEM_RESERVED'); // מוחק הכל חוץ משורה שלא קיימת
+      .neq('username', 'SYSTEM_RESERVED');
 
     if (error) {
       alert("שגיאה במחיקה: " + error.message);
@@ -69,7 +80,6 @@ const AdminPanel = () => {
   return (
     <div style={{ padding: '20px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui, sans-serif' }}>
       
-      {/* Header */}
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -79,34 +89,33 @@ const AdminPanel = () => {
         marginBottom: '20px'
       }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: '24px' }}>🛰️סטטוס משתתפים</h1>
-          <p style={{ margin: '5px 0 0', color: '#94a3b8', fontSize: '14px' }}>מעקב זמן אמת אחר משתתפים</p>
+          <h1 style={{ margin: 0, fontSize: '24px' }}>🛰️ חמ"ל מעקב - המירוץ</h1>
+          <p style={{ margin: '5px 0 0', color: '#94a3b8', fontSize: '14px' }}>מציג תחנה אחרונה לכל צוות</p>
         </div>
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <button onClick={clearAllReports} style={{ background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>
             🗑️ איפוס מרוץ
           </button>
           <span style={{ background: '#dc2626', padding: '6px 15px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold' }}>
-            {reports.length} צוותים פעילים
+            {reports.length} צוותים בשטח
           </span>
         </div>
       </div>
 
-      {/* Table */}
       <div style={{ overflowX: 'auto', background: '#0f172a', borderRadius: '12px', border: '1px solid #1e293b' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'right' }}>
           <thead>
             <tr style={{ background: '#1e293b' }}>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>שם</th>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>תחנה אחרונה</th>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>זמן עדכון</th>
+              <th style={{ padding: '15px', color: '#94a3b8' }}>צוות</th>
+              <th style={{ padding: '15px', color: '#94a3b8' }}>מיקום נוכחי</th>
+              <th style={{ padding: '15px', color: '#94a3b8' }}>זמן הגעה</th>
               <th style={{ padding: '15px', color: '#94a3b8' }}>סטטוס</th>
             </tr>
           </thead>
           <tbody>
             {reports.length === 0 ? (
               <tr>
-                <td colSpan="4" style={{ padding: '40px', textAlign: 'center', color: '#475569' }}>ממתין לדיווחים ראשונים מהשטח...</td>
+                <td colSpan="4" style={{ padding: '40px', textAlign: 'center', color: '#475569' }}>אין דיווחים עדיין...</td>
               </tr>
             ) : (
               reports.map((report) => (
@@ -115,15 +124,18 @@ const AdminPanel = () => {
                     {report.username}
                   </td>
                   <td style={{ padding: '15px' }}>
-                    <span style={{ background: '#334155', padding: '5px 12px', borderRadius: '8px', border: '1px solid #475569' }}>
+                    <span style={{ background: '#dc2626', color: 'white', padding: '5px 12px', borderRadius: '8px', fontWeight: 'bold' }}>
                       תחנה {report.station_id}
                     </span>
                   </td>
                   <td style={{ padding: '15px', fontSize: '14px', color: '#94a3b8' }}>
-                    {new Date(report.created_at).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    {new Date(report.created_at).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}
                   </td>
                   <td style={{ padding: '15px' }}>
-                    <span style={{ color: '#22c55e', fontSize: '12px' }}>● מחובר</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#22c55e', fontSize: '12px' }}>
+                      <span style={{ width: '8px', height: '8px', background: '#22c55e', borderRadius: '50%' }}></span>
+                      פעיל
+                    </div>
                   </td>
                 </tr>
               ))
