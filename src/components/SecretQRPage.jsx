@@ -8,26 +8,27 @@ const SecretQRPage = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [userMessage, setUserMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [teamName, setTeamName] = useState("");
 
-  // שליפת שם המשתמש מה-localStorage (השם שהזינו בכניסה לאתר)
-  const currentUser = localStorage.getItem('username');
-
-  // --- ניהול התוכן האישי בקוד ---
   const personalMessages = {
-    "פרנקל": "המשימה שלך: מצא את המפתח המודבק מתחת לשולחן בלובי.",
-    "default": "כל הכבוד הגעת למשימה הסודית! פנה למלווה לקבלת הוראות."
+    "פרנקל": "המשימה המיוחדת שלך: חפש את המעטפה הכחולה מאחורי דלפק הקבלה.",
+    "default": "מצאתם משימה סודית! פנו למלווה הקרוב לקבלת המשך הוראות."
   };
 
   useEffect(() => {
-    const initMission = async () => {
-      // 1. הגנה: אם המשתמש לא "מחובר" (אין שם ב-storage), נשלח אותו לדף הבית
-      if (!currentUser) {
-        alert("נא להתחבר למערכת קודם!");
+    const initSecretMission = async () => {
+      // שליפת המשתמש מה-LocalStorage (מסונכרן עם הלוגין)
+      const savedUser = localStorage.getItem('race_user');
+      if (!savedUser) {
+        alert("עליך להתחבר למערכת כדי לצפות בתוכן זה.");
         navigate('/');
         return;
       }
 
-      // 2. משיכת ה"מפתח" (סיסמה ורמז) מהדאטאבייס
+      const userObj = JSON.parse(savedUser);
+      setTeamName(userObj.username);
+
+      // שליפת נתוני המשימה הסודית מ-Supabase
       const { data, error } = await supabase
         .from('secret_keys')
         .select('*')
@@ -35,88 +36,67 @@ const SecretQRPage = () => {
         .single();
 
       if (error || !data) {
-        console.error("Mission not found in DB");
+        console.error("Secret mission not found");
         navigate('/');
         return;
       }
 
       setLoading(false);
 
-      // 3. בקשת הסיסמה מהמשתמש
-      const entry = prompt(data.hint || "הזן סיסמה למשימה הסודית:");
+      // בקשת סיסמה
+      const entry = prompt(data.hint || "הזן סיסמת משימה סודית:");
       
       if (entry === data.password) {
-        // התאמת המסר האישי לפי השם
-        const msg = personalMessages[currentUser] || personalMessages["default"];
+        const msg = personalMessages[userObj.username] || personalMessages["default"];
         setUserMessage(msg);
         setUnlocked(true);
         
-        // 4. דיווח אוטומטי לחמ"ל (AdminPanel)
-        reportToAdmin();
+        // דיווח לחמ"ל על משימה סודית
+        await supabase.from('mission_reports').upsert({
+          username: userObj.username,
+          station_id: `SECRET_${slug}`,
+          status: 'unlocked'
+        }, { onConflict: 'username' });
+
       } else {
-        alert("סיסמה שגויה!");
+        alert("קוד גישה שגוי!");
         navigate('/');
       }
     };
 
-    initMission();
-  }, [slug, currentUser, navigate]);
+    initSecretMission();
+  }, [slug, navigate]);
 
-  const reportToAdmin = async () => {
-    await supabase.from('mission_reports').upsert({
-      username: currentUser,
-      station_id: `סודי: ${slug}`,
-      status: 'unlocked'
-    }, { onConflict: 'username' });
-  };
-
-  // בזמן הטעינה או לפני פתיחה - דף לבן נקי
   if (loading || !unlocked) {
-    return <div style={{ background: '#ffffff', minHeight: '100vh' }} />;
+    return <div style={{ background: 'white', minHeight: '100vh' }} />;
   }
 
   return (
     <div style={{ 
-      background: '#ffffff', 
-      minHeight: '100vh', 
-      display: 'flex', 
-      flexDirection: 'column', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      color: '#000000', 
-      direction: 'rtl',
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      padding: '20px',
-      textAlign: 'center'
+      background: '#ffffff', minHeight: '100vh', display: 'flex', 
+      flexDirection: 'column', justifyContent: 'center', alignItems: 'center', 
+      color: '#000000', direction: 'rtl', padding: '25px', textAlign: 'center'
     }}>
-      <div style={{ maxWidth: '500px' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '10px' }}>שלום {currentUser}</h1>
-        <p style={{ color: '#666', marginBottom: '30px' }}>מצאת משימה סודית!</p>
+      <div style={{ maxWidth: '450px', width: '100%' }}>
+        <h1 style={{ fontSize: '2.2rem', marginBottom: '5px' }}>סוכן {teamName}</h1>
+        <p style={{ color: '#666', marginBottom: '40px', fontWeight: 'bold', letterSpacing: '1px' }}>--- משימה סודית זוהתה ---</p>
         
         <div style={{ 
-          border: '3px solid #000', 
-          padding: '40px 20px', 
-          borderRadius: '0px', // עיצוב נקי וחד
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          lineHeight: '1.4',
-          boxShadow: '10px 10px 0px #eeeeee'
+          border: '4px solid #000', padding: '40px 20px', fontSize: '1.6rem',
+          fontWeight: '900', lineHeight: '1.4', boxShadow: '12px 12px 0px #eeeeee'
         }}>
           {userMessage}
         </div>
 
         <button 
-          onClick={() => navigate('/')}
+          onClick={() => navigate(-1)}
           style={{ 
-            marginTop: '40px', 
-            background: 'none', 
-            border: '1px solid #ccc', 
-            padding: '10px 20px', 
-            cursor: 'pointer',
-            fontSize: '0.9rem'
+            marginTop: '50px', background: 'black', color: 'white', 
+            border: 'none', padding: '15px 30px', cursor: 'pointer',
+            fontSize: '1rem', fontWeight: 'bold'
           }}
         >
-          חזרה למפה
+          חזור למשימות הרגילות
         </button>
       </div>
     </div>
