@@ -21,7 +21,7 @@ const Login = () => {
         console.error("שגיאה:", error.message);
         alert("שגיאת מערכת: " + error.message);
       } else if (!data || data.length === 0) {
-        alert("שם צוות או סיסמה שגויים");
+        alert("כינוי או סיסמה שגויים");
       } else {
         const user = data[0];
         localStorage.setItem('race_user', JSON.stringify(user));
@@ -50,14 +50,14 @@ const Login = () => {
           <h1 style={{ fontSize: '32px', fontWeight: '900', color: 'white', marginBottom: '5px', fontStyle: 'italic' }}>
             THE AMAZING <span style={{ color: '#dc2626' }}>RACE</span>
           </h1>
-          <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '30px' }}>מערכת זיהוי צוותים</p>
+          <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '30px' }}>מערכת זיהוי</p>
 
           <div style={{ marginBottom: '20px' }}>
             <input 
               type="text" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="שם צוות"
+              placeholder="כינוי"
               style={{
                 width: '100%', background: '#020617', border: '1px solid #334155',
                 color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center', boxSizing: 'border-box'

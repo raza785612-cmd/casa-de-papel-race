@@ -66,7 +66,7 @@ const SecretQrPage = () => {
           marginBottom: '30px', fontWeight: 'bold', fontSize: '20px', 
           letterSpacing: '2px', color: 'black', textAlign: 'center'
         }}>
-          כניסה לארכיון המודיעין
+         המירוץ
         </h2>
         
         <input 
@@ -93,7 +93,7 @@ const SecretQrPage = () => {
         </button>
         
         <p style={{ marginTop: '40px', color: '#9ca3af', fontSize: '14px', fontStyle: 'italic' }}>
-          רמז: הסיסמה נמצאת אצל המנטור
+         הסיסמה היא אבן גבירול אבן גבירול בן יהודה נמיר
         </p>
       </div>
     );

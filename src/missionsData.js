@@ -12,20 +12,20 @@ export const STATION_PASSWORDS = {
 export const allMissionsData = {
   "פרנקל": {
     "1": { 
-      group: "צוות אדום", 
-      address: "חניון המגדל קומה 2-", 
-      intel: "קוד כניסה לשרת: 1234. יש להמתין לאות מהמנטור.", 
-      task: "פריצה למערכת הנתונים", 
-      escort: "טכנאי שטח", 
-      hours: "22:00", 
-      img: "/missions/hisin.png", 
-      map: "מגדל עזריאלי שרונה" 
+      group: "", 
+      address: "  מלון רוטשילד 22", 
+      intel: "ברוך הבא למשימה האחרונה בפרק הפרט / מצומצם. לפניך יומיים מאתגרים. סומכים עליך. בהצלחה !", 
+      task: " תגיע למלון רוטשילד 22, תקבל מפתח מהמדריך המלווה, כנס לחדר תתארגן ותעבור למשימה הראשונה", 
+      escort: "מאור", 
+      hours: "09:00 - 10:00", 
+      img: "/missions/depapel.png", 
+      map: "34.771376, 32.062940" 
     },
     "2": { 
       group: "", 
-      address: "", 
       intel: "", 
       task: "", 
+      address: "", 
       escort: " ", 
       hours: "", 
       img: "", 
@@ -1403,7 +1403,7 @@ export const allMissionsData = {
 export const groupsData = {
     //זוגות..//
   "זוג 1": {
-    "4": { participants: "" },
+    "6": { participants: "" },
   }, 
   "זוג 2": {
     "6": { participants: ""},

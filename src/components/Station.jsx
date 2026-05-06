@@ -61,7 +61,7 @@ const Station = () => {
           boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
         }}>
           <h1 style={{ color: 'white', marginBottom: '10px' }}>STATION <span style={{ color: '#dc2626' }}>{id}</span></h1>
-          <p style={{ color: '#94a3b8', marginBottom: '25px', fontSize: '14px' }}>הזן קוד משימה לחשיפת הפרטים</p>
+          <p style={{ color: '#94a3b8', marginBottom: '25px', fontSize: '14px' }}> בקש קוד מהמדריך המלווה</p>
           
           <input 
             type="text" 
@@ -98,7 +98,7 @@ const Station = () => {
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
               }}
             >
-              <span>⬅️</span> חזרה לתחנה {Number(id) - 1}
+              <span>⬅️</span> חזרה למשימה {Number(id) - 1}
             </button>
           )}
         </div>
