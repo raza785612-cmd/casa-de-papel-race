@@ -8,10 +8,19 @@ const Login = () => {
   const navigate = useNavigate();
 
  const handleLogin = async () => {
+  // 1. בדיקה ראשונית - האם יש בכלל נתונים בטבלה?
+  const { data: allTeams, error: fetchError } = await supabase.from('teams').select('*');
+  console.log("כל הצוותים ב-DB:", allTeams);
+
+  if (fetchError) {
+    console.error("שגיאת תקשורת:", fetchError.message);
+    return;
+  }
+
+  // 2. ניסיון התחברות רגיל
   const user = username.trim();
   const pass = password.trim();
 
-  // שימוש ב-ilike במקום ב-eq כדי להתגבר על בעיות פורמט
   const { data, error } = await supabase
     .from('teams')
     .select('*')
@@ -19,18 +28,11 @@ const Login = () => {
     .eq('login_password', pass)
     .maybeSingle();
 
-  if (error) {
-    console.error("Supabase Error:", error);
-    return;
-  }
-
   if (data) {
-    console.log("Success! Data found:", data);
     localStorage.setItem('race_user', JSON.stringify(data));
     navigate('/station/1');
   } else {
-    console.log("No match found for:", user, "with pass:", pass);
-    alert("שם משתמש או סיסמה שגויים");
+    alert("לא נמצאה התאמה. בדוק את ה-Console");
   }
 };
 
