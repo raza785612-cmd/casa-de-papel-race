@@ -1,97 +1,112 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../supabaseClient';
+import { USERS } from '../missionsData';
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    setIsLoading(true);
-    const user = username.trim();
-    const pass = password.trim();
-
-    const { data, error } = await supabase
-      .from('teams')
-      .select('*')
-      .ilike('username', user)
-      .eq('login_password', pass)
-      .maybeSingle();
-
-    if (data) {
-      localStorage.setItem('race_user', JSON.stringify(data));
+  const handleLogin = () => {
+    const user = USERS.find(u => u.username === username && u.password === password);
+    if (user) {
+      localStorage.setItem('race_user', JSON.stringify(user));
       navigate('/station/1');
     } else {
-      alert("פרטי גישה שגויים. המערכת ננעלה.");
+      alert("שם צוות או סיסמה שגויים");
     }
-    setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 relative overflow-hidden" dir="rtl">
-      {/* רקע דקורטיבי עדין */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black"></div>
-
-      <div className="relative w-full max-w-md">
-        {/* כרטיס הלוגין */}
-        <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-[0_0_50px_-12px_rgba(220,38,38,0.3)]">
+    /* עטיפה שחוסמת את ה-Flex של ה-Body ויוצרת רקע נקי */
+    <div style={{
+      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+      backgroundColor: '#020617', display: 'flex', justifyContent: 'center', 
+      alignItems: 'center', overflowY: 'auto', zIndex: 100
+    }} dir="rtl">
+      
+      {/* הקונטיינר של ה"טלפון" */}
+      <div style={{
+        width: '100%', maxWidth: '380px', padding: '20px'
+      }}>
+        
+        <div style={{
+          backgroundColor: '#0f172a', borderRadius: '2.5rem', padding: '40px 30px',
+          border: '1px solid #1e293b', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+          textAlign: 'center'
+        }}>
           
-          {/* אמוג'י המסיכה והכותרת */}
-          <div className="text-center mb-8">
-            <div className="text-6xl mb-4 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)] animate-pulse">
-              👺
-            </div>
-            <h1 className="text-white text-3xl font-black tracking-tighter italic">
-              CASA DE PAPEL
-            </h1>
-            <p className="text-red-600 text-xs font-bold tracking-[0.3em] mt-2 uppercase">
-              The Amazing Race
-            </p>
+          {/* לוגו/אייקון */}
+          <div style={{ 
+            fontSize: '50px', marginBottom: '10px', 
+            filter: 'drop-shadow(0 0 10px rgba(220, 38, 38, 0.4))' 
+          }}>
+            🏎️
           </div>
 
-          <div className="space-y-6">
-            <div className="relative group">
-              <input 
-                type="text" 
-                placeholder="זהות הצוות" 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-4 bg-black/50 border border-slate-700 rounded-2xl text-white text-center focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all group-hover:border-slate-500"
-              />
-            </div>
+          <h1 style={{ 
+            fontSize: '32px', fontWeight: '900', color: 'white', 
+            marginBottom: '5px', fontStyle: 'italic', letterSpacing: '-1px' 
+          }}>
+            THE AMAZING <span style={{ color: '#dc2626' }}>RACE</span>
+          </h1>
+          
+          <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '30px', fontWeight: '500' }}>
+            הזדהות צוותים למערכת המשימות
+          </p>
 
-            <div className="relative group">
-              <input 
-                type="password" 
-                placeholder="קוד כניסה" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-4 bg-black/50 border border-slate-700 rounded-2xl text-white text-center focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition-all group-hover:border-slate-500"
-              />
-            </div>
-
-            <button 
-              onClick={handleLogin}
-              disabled={isLoading}
-              className={`w-full bg-red-600 hover:bg-red-700 text-white py-5 rounded-2xl font-black text-xl shadow-[0_4px_20px_-5px_rgba(220,38,38,0.5)] active:scale-[0.98] transition-all flex justify-center items-center gap-2 ${isLoading ? 'opacity-50' : ''}`}
-            >
-              {isLoading ? 'מתחבר למערכת...' : 'התחל מבצע'}
-            </button>
+          {/* שדות קלט */}
+          <div style={{ marginBottom: '20px', textAlign: 'right' }}>
+            <label style={{ color: '#94a3b8', fontSize: '12px', fontWeight: 'bold', marginRight: '10px' }}>שם צוות</label>
+            <input 
+              type="text" 
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="הזן שם צוות"
+              style={{
+                width: '100%', background: '#020617', border: '1px solid #334155',
+                color: 'white', padding: '16px', borderRadius: '1rem', marginTop: '5px',
+                textAlign: 'center', fontSize: '16px', outline: 'none', boxSizing: 'border-box'
+              }}
+            />
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-2">
-            <span className="h-px w-8 bg-slate-800"></span>
-            <p className="text-slate-500 text-[10px] uppercase tracking-widest font-mono">
-              Secure Connection Established
-            </p>
-            <span className="h-px w-8 bg-slate-800"></span>
+          <div style={{ marginBottom: '30px', textAlign: 'right' }}>
+            <label style={{ color: '#94a3b8', fontSize: '12px', fontWeight: 'bold', marginRight: '10px' }}>קוד סודי</label>
+            <input 
+              type="password" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••"
+              style={{
+                width: '100%', background: '#020617', border: '1px solid #334155',
+                color: 'white', padding: '16px', borderRadius: '1rem', marginTop: '5px',
+                textAlign: 'center', fontSize: '20px', outline: 'none', boxSizing: 'border-box',
+                letterSpacing: '5px'
+              }}
+            />
+          </div>
+
+          {/* כפתור כניסה */}
+          <button 
+            onClick={handleLogin}
+            style={{
+              width: '100%', backgroundColor: '#dc2626', color: 'white', 
+              padding: '18px', borderRadius: '1rem', border: 'none', 
+              fontSize: '18px', fontWeight: '900', cursor: 'pointer',
+              boxShadow: '0 10px 15px -3px rgba(220, 38, 38, 0.4)',
+              transition: 'transform 0.1s'
+            }}
+            onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.96)'}
+            onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            START MISSION ⚡
+          </button>
+
+          <div style={{ marginTop: '25px', color: '#334155', fontSize: '10px', fontWeight: 'bold' }}>
+            OPERATIONAL SYSTEM v3.0
           </div>
         </div>
-
-        {/* אפקט דקורטיבי תחתון */}
-        <div className="absolute -bottom-2 -left-2 -right-2 h-20 bg-red-600/10 blur-3xl -z-10"></div>
       </div>
     </div>
   );
