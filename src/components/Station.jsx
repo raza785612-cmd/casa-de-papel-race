@@ -46,6 +46,31 @@ const Station = () => {
     }
   };
 
+  const handleNext = async () => {
+  // 1. בדיקת הסיסמה ב-DB עבור התחנה הנוכחית
+  const { data } = await supabase
+    .from('station_keys')
+    .select('password')
+    .eq('station_id', String(currentId))
+    .single();
+
+  const userInput = prompt("סיסמת מלווה לסיום התחנה:");
+
+  if (userInput === data.password) {
+    // 2. דיווח הצלחה לחמ"ל
+    await supabase.from('mission_reports').upsert({
+      username: localStorage.getItem('username'),
+      station_id: String(currentId),
+      status: 'completed'
+    }, { onConflict: 'username' });
+
+    // 3. מעבר לתחנה הבאה (נתוני המפה וכו' יתחלפו אוטומטית לפי ה-ID)
+    navigate(`/station/${Number(currentId) + 1}`);
+  } else {
+    alert("קוד שגוי, המשימה עדיין לא הושלמה!");
+  }
+};
+
   if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-red-600 font-mono">INITIALIZING...</div>;
 
   const mission = allMissionsData[team?.username]?.[id] || {};

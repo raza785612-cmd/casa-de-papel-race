@@ -23,6 +23,9 @@ function App() {
 
         {/*דף מנהל שרואה נתונים של כולם */}
         <Route path="/hq-control-room" element={<AdminPanel />} />
+
+          {/*דף שמוביל למסעדה */}
+        <Route path="/secret-mission/:slug" element={<SecretQRPage />} />
         
         {/* 5. דף שגיאה/כל דבר אחר - תמיד אחרון בתור */}
         <Route path="*" element={<Navigate to="/login" />} />
