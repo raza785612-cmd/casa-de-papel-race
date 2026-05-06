@@ -128,7 +128,7 @@ const Station = () => {
 
           <div style={{ padding: '25px', textAlign: 'right' }}>
             <div style={{ marginBottom: '20px' }}>
-              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימה פעילה</div>
+              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימה </div>
               <h2 style={{ fontSize: '24px', fontWeight: '900', color: 'white', margin: 0, lineHeight: '1.2' }}>{mission.task}</h2>
             </div>
 
@@ -142,7 +142,7 @@ const Station = () => {
               <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', padding: '15px', borderRadius: '15px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <span style={{ fontSize: '20px' }}>📍</span>
                 <div>
-                  <div style={{ fontSize: '9px', color: '#64748b', fontWeight: 'bold' }}>מיקום היעד</div>
+                  <div style={{ fontSize: '9px', color: '#64748b', fontWeight: 'bold' }}>מיקום </div>
                   <div style={{ fontSize: '16px', fontWeight: 'bold', color: 'white' }}>{mission.address}</div>
                 </div>
               </div>
@@ -168,13 +168,13 @@ const Station = () => {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {mission.escort && (
                 <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
-                  <div style={{ fontSize: '9px', color: '#64748b' }}>👤 ליווי</div>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>👤 מדריך מלווה</div>
                   <div style={{ fontSize: '12px', fontWeight: 'bold' }}>{mission.escort}</div>
                 </div>
               )}
               {mission.hours && (
                 <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
-                  <div style={{ fontSize: '9px', color: '#64748b' }}>🕒 שעת יעד</div>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>🕒 שעות ביצוע </div>
                   <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
                 </div>
               )}

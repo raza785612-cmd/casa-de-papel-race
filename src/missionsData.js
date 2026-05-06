@@ -19,7 +19,7 @@ export const allMissionsData = {
       escort: "מאור", 
       hours: "09:00 - 10:00", 
       img: "/missions/depapel.png", 
-      map: "34.771376, 32.062940" 
+      map: "32.062940,34.771376" 
     },
     "2": { 
       group: "", 
