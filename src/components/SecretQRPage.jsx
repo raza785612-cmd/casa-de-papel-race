@@ -1,15 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabaseClient'; // הוספנו ייבוא של סופבייס
 
 const SecretQrPage = () => {
   const [pass, setPass] = useState("");
   const [auth, setAuth] = useState(false);
   const [team, setTeam] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('race_user');
-    if (storedUser) {
-      setTeam(JSON.parse(storedUser));
-    }
+    const fetchLatestTeamData = async () => {
+      const storedUser = JSON.parse(localStorage.getItem('race_user'));
+      
+      if (storedUser && storedUser.id) {
+        // משיכת הנתונים הכי עדכניים מהדאטאבייס לפי ה-ID
+        const { data, error } = await supabase
+          .from('teams')
+          .select('*')
+          .eq('id', storedUser.id)
+          .single();
+
+        if (data && !error) {
+          setTeam(data);
+          // מעדכנים גם את ה-localStorage שיהיה מעודכן להמשך
+          localStorage.setItem('race_user', JSON.stringify(data));
+        } else {
+          setTeam(storedUser); // fallback למה שיש בזיכרון
+        }
+      }
+      setLoading(false);
+    };
+
+    fetchLatestTeamData();
   }, []);
 
   const check = () => {
@@ -25,6 +46,8 @@ const SecretQrPage = () => {
     }
   };
 
+  if (loading) return <div style={{ background: 'white', minHeight: '100vh' }} />;
+
   if (!auth) {
     return (
       <div style={{
@@ -33,7 +56,6 @@ const SecretQrPage = () => {
         alignItems: 'center', justifyContent: 'center', padding: '20px', zIndex: 1000
       }} dir="rtl">
         
-        {/* פנייה אישית לצוות */}
         {team && (
           <div style={{ marginBottom: '10px', color: '#64748b', fontSize: '16px' }}>
             שלום, <span style={{ fontWeight: 'bold', color: 'black' }}>{team.username}</span>
@@ -42,8 +64,7 @@ const SecretQrPage = () => {
 
         <h2 style={{ 
           marginBottom: '30px', fontWeight: 'bold', fontSize: '20px', 
-          letterSpacing: '2px', color: 'black', textAlign: 'center',
-          textTransform: 'uppercase'
+          letterSpacing: '2px', color: 'black', textAlign: 'center'
         }}>
           כניסה לארכיון המודיעין
         </h2>
@@ -65,10 +86,8 @@ const SecretQrPage = () => {
           style={{
             backgroundColor: 'black', color: 'white', padding: '15px 50px',
             borderRadius: '50px', fontWeight: 'bold', border: 'none',
-            cursor: 'pointer', fontSize: '18px', transition: 'transform 0.1s'
+            cursor: 'pointer', fontSize: '18px'
           }}
-          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-          onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
           אימות
         </button>
@@ -91,7 +110,7 @@ const SecretQrPage = () => {
         borderLeft: '3px solid black', borderRight: '3px solid black',
         padding: '20px 30px', lineHeight: '1.6', color: 'black', textAlign: 'center'
       }}>
-        {team?.secret_message || "לא נמצאה הודעה עבור צוות זה"}
+        {team?.secret_message}
       </h1>
     </div>
   );
