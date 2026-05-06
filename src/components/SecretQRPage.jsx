@@ -6,7 +6,6 @@ const SecretQrPage = () => {
   const [team, setTeam] = useState(null);
 
   useEffect(() => {
-    // טעינת נתוני הצוות שנשמרו בלוגין
     const storedUser = localStorage.getItem('race_user');
     if (storedUser) {
       setTeam(JSON.parse(storedUser));
@@ -19,7 +18,6 @@ const SecretQrPage = () => {
       return;
     }
 
-    // בדיקה מול העמודה secret_password מהתמונה ששלחת
     if (pass.trim() === team.secret_password) {
       setAuth(true);
     } else {
@@ -27,7 +25,6 @@ const SecretQrPage = () => {
     }
   };
 
-  // דף כניסה - סטייל ארכיון נקי
   if (!auth) {
     return (
       <div style={{
@@ -35,9 +32,18 @@ const SecretQrPage = () => {
         backgroundColor: 'white', display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center', padding: '20px', zIndex: 1000
       }} dir="rtl">
+        
+        {/* פנייה אישית לצוות */}
+        {team && (
+          <div style={{ marginBottom: '10px', color: '#64748b', fontSize: '16px' }}>
+            שלום, <span style={{ fontWeight: 'bold', color: 'black' }}>{team.username}</span>
+          </div>
+        )}
+
         <h2 style={{ 
           marginBottom: '30px', fontWeight: 'bold', fontSize: '20px', 
-          letterSpacing: '2px', color: 'black', textAlign: 'center' 
+          letterSpacing: '2px', color: 'black', textAlign: 'center',
+          textTransform: 'uppercase'
         }}>
           כניסה לארכיון המודיעין
         </h2>
@@ -74,7 +80,6 @@ const SecretQrPage = () => {
     );
   }
 
-  // דף ההודעה הסודית - מוצג לאחר אימות
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -86,7 +91,6 @@ const SecretQrPage = () => {
         borderLeft: '3px solid black', borderRight: '3px solid black',
         padding: '20px 30px', lineHeight: '1.6', color: 'black', textAlign: 'center'
       }}>
-        {/* מציג את ההודעה הייחודית מהעמודה secret_message */}
         {team?.secret_message || "לא נמצאה הודעה עבור צוות זה"}
       </h1>
     </div>
