@@ -236,7 +236,7 @@ export const allMissionsData = {
       hours: "", 
       img: "", 
       map: "" 
-    },
+    },},
      //################NEWUSER####################//
     "ענבר": {
     "1": { 
@@ -1395,10 +1395,7 @@ export const allMissionsData = {
     },
   },
    
-  },
-  
-  
-};
+  };
 
 
  
