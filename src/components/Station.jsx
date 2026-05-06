@@ -134,13 +134,61 @@ const Station = () => {
           </div>
         </div>
 
-        {/* כפתור אישור */}
-        <button onClick={handleNext} style={{
-          backgroundColor: '#dc2626', color: 'white', padding: '20px', borderRadius: '1.5rem', 
-          border: 'none', fontSize: '18px', fontWeight: '900', cursor: 'pointer', boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)'
-        }}>
-          סיימנו, המשך ⚡
-        </button>
+        {/* 7. כפתורי ניווט (סיום וחזרה) */}
+<div style={{ 
+  display: 'flex', 
+  flexDirection: 'column', 
+  gap: '12px', 
+  marginTop: '10px' 
+}}>
+  
+  {/* כפתור סיום משימה */}
+  <button 
+    onClick={handleNext}
+    style={{
+      width: '100%', 
+      py: '20px', // אם אתה משתמש ב-inline style השתמש ב-padding: '20px'
+      padding: '20px',
+      backgroundColor: '#dc2626', 
+      color: 'white', 
+      borderRadius: '1.5rem', 
+      border: 'none', 
+      fontSize: '18px', 
+      fontWeight: '900', 
+      cursor: 'pointer', 
+      boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)',
+      transition: 'transform 0.1s'
+    }}
+    onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+    onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
+  >
+    סיימנו, המשימה הבאה ⚡
+  </button>
+
+  {/* כפתור חזרה - יופיע רק מתחנה 2 ומעלה */}
+  {Number(id) > 1 && (
+    <button 
+      onClick={() => navigate(`/station/${Number(id) - 1}`)}
+      style={{
+        width: '100%', 
+        padding: '12px',
+        backgroundColor: 'transparent', 
+        color: '#94a3b8', 
+        borderRadius: '1rem', 
+        border: '1px solid #334155', 
+        fontSize: '14px', 
+        fontWeight: 'bold', 
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px'
+      }}
+    >
+      <span>⬅️</span> חזרה למשימה הקודמת
+    </button>
+  )}
+</div>
       </div>
     </div>
   );
