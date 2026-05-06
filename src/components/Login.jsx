@@ -9,40 +9,27 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('teams')
-        .select('*')
-        .eq('username', username.trim())
-        .eq('login_password', password.trim());
+  const { data, error } = await supabase
+    .from('teams')
+    .select('*')
+    .eq('username', username)
+    .eq('login_password', password)
+    .single();
 
-      if (error) {
-        console.error("שגיאה:", error.message);
-        alert("שגיאת מערכת: " + error.message);
-      } else if (!data || data.length === 0) {
-        alert("כינוי או סיסמה שגויים");
-      } else {
-        if (data) {
-    // שמירת המשתמש בזיכרון המכשיר
+  if (data && !error) {
     localStorage.setItem('race_user', JSON.stringify(data));
-    
-    // בדיקה: לאן לשלוח את המשתמש?
+
     if (data.is_mentor) {
-      // אם זה אדמין - שלח אותו ישירות לרשימת המשתתפים (דף מנטור)
-      navigate('/mentor'); 
+      // חשוב: ניתוב לנתיב הסטטי של המנטור
+      navigate('/mentor', { replace: true });
     } else {
-      // אם זה משתמש רגיל - שלח אותו לתחנה הראשונה
-      navigate('/station/1');
+      // משתמש רגיל הולך לתחנה 1
+      navigate('/station/1', { replace: true });
     }
+  } else {
+    alert("שם משתמש או סיסמה שגויים");
   }
-      }
-    } catch (err) {
-      alert("משהו השתבש בחיבור");
-    } finally {
-      setLoading(false);
-    }
-  };
+};
 
   return (
     <div style={{
