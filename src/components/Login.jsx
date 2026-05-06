@@ -7,17 +7,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-  // הסרת רווחים לפני ואחרי
+ const handleLogin = async () => {
   const user = username.trim();
   const pass = password.trim();
 
-  console.log("Checking for:", user, pass);
-
+  // שימוש ב-ilike במקום ב-eq כדי להתגבר על בעיות פורמט
   const { data, error } = await supabase
     .from('teams')
     .select('*')
-    .eq('username', user)
+    .ilike('username', user)
     .eq('login_password', pass)
     .maybeSingle();
 
@@ -27,11 +25,11 @@ const Login = () => {
   }
 
   if (data) {
+    console.log("Success! Data found:", data);
     localStorage.setItem('race_user', JSON.stringify(data));
     navigate('/station/1');
   } else {
-    // אם הגענו לכאן, סימן שבאמת אין כזה משתמש בטבלה
-    console.log("Database returned no match for:", user, pass);
+    console.log("No match found for:", user, "with pass:", pass);
     alert("שם משתמש או סיסמה שגויים");
   }
 };
