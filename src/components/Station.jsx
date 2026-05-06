@@ -60,7 +60,7 @@ const Station = () => {
           textAlign: 'center',
           boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
         }}>
-          <h1 style={{ color: 'white', marginBottom: '10px' }}>STATION <span style={{ color: '#dc2626' }}>{id}</span></h1>
+          <h1 style={{ color: 'white', marginBottom: '10px' }}>משימה <span style={{ color: '#dc2626' }}>{id}</span></h1>
           <p style={{ color: '#94a3b8', marginBottom: '25px', fontSize: '14px' }}> בקש קוד מהמדריך המלווה</p>
           
           <input 
