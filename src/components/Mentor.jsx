@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { allMissionsData } from '../missionsData';
+import { allMissionsData, STATION_PASSWORDS } from '../missionsData'; // ייבוא הסיסמאות
 
 const MentorPage = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const MentorPage = () => {
       <div style={{ maxWidth: '600px', margin: '0 auto' }}>
         
         <header style={{ textAlign: 'center', marginBottom: '30px' }}>
-            <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#0f172a' }}>📋 מרכז שליטה מנטורים</h1>
+            <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#0f172a' }}>📋 סגל</h1>
         </header>
 
         {teams.map((teamName) => (
@@ -42,12 +42,19 @@ const MentorPage = () => {
               <div style={{ padding: '0 20px 20px', backgroundColor: '#f8fafc' }}>
                 {Object.entries(allMissionsData[teamName]).map(([id, data]) => (
                   <div key={id} style={{ backgroundColor: 'white', padding: '15px', borderRadius: '12px', marginTop: '15px', border: '1px solid #e2e8f0' }}>
-                    <div style={{ backgroundColor: '#dc2626', color: 'white', display: 'inline-block', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold', marginBottom: '12px' }}>
-                        תחנה {id}
+                    
+                    {/* שורת כותרת תחנה + סיסמה */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                        <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>
+                            תחנה {id}
+                        </div>
+                        {/* הצגת הסיסמה מהג'ייסון הגלובלי */}
+                        <div style={{ fontSize: '12px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '2px 8px', borderRadius: '4px', fontWeight: 'bold' }}>
+                            🔑 קוד: {STATION_PASSWORDS[id] || "---"}
+                        </div>
                     </div>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* שליפה לפי המפתחות המדויקים ששלחת */}
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>🎯 משימה: </strong> {data.task || "---"}
                       </div>
@@ -57,21 +64,20 @@ const MentorPage = () => {
                       </div>
                       
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
-                        <strong style={{ color: '#64748b' }}>👤 מלווה: </strong> {data.escort || "---"}
+                        <strong style={{ color: '#64748b' }}>👤 מדריך מלווה: </strong> {data.escort || "---"}
                       </div>
                       
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>👥 קבוצה: </strong> {data.group || "---"}
                       </div>
 
-                      {/* נתון ה-tree שאתה מוסיף ידנית */}
                       <div style={{ 
                         marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', 
                         borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' 
                       }}>
                         <div style={{ color: '#059669', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>🌳 נתון "עץ" (מידע פנימי):</div>
                         <div style={{ color: '#064e3b', fontSize: '18px', fontWeight: '900' }}>
-                            {data.tree || "⚠️ לא הוזן נתון עץ"}
+                            {data.tree || "⚠️ לא הוזן"}
                         </div>
                       </div>
                     </div>

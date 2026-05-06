@@ -51,8 +51,8 @@ const Station = () => {
           padding: '30px', borderRadius: '2rem', border: '1px solid #1e293b', textAlign: 'center',
           boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
         }}>
-          <h1 style={{ color: 'white', fontSize: '24px', marginBottom: '10px' }}>תחנה <span style={{ color: '#dc2626' }}>{id}</span></h1>
-          <p style={{ color: '#94a3b8', marginBottom: '25px' }}>הזן קוד משימה לחשיפת הפרטים</p>
+          <h1 style={{ color: 'white', fontSize: '24px', marginBottom: '10px' }}>משימה <span style={{ color: '#dc2626' }}>{id}</span></h1>
+          <p style={{ color: '#94a3b8', marginBottom: '25px' }}>בקש קוד מהמדריך המלווה למשימה</p>
           
           <input 
             type="text" 
@@ -89,7 +89,7 @@ const Station = () => {
                 border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold'
               }}
             >
-              ⬅️ הקודמת
+              ⬅️ משימה קודמת
             </button>
             <span style={{ color: '#334155', fontSize: '12px' }}>|</span>
             <button 
@@ -99,7 +99,7 @@ const Station = () => {
                 border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold'
               }}
             >
-              הבאה ➡️
+              משימה הבאה ➡️
             </button>
           </div>
         </div>
@@ -124,7 +124,7 @@ const Station = () => {
 
           <div style={{ padding: '25px', textAlign: 'right' }}>
             <div style={{ marginBottom: '20px' }}>
-              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימת שטח</div>
+              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימה</div>
               <h2 style={{ fontSize: '24px', fontWeight: '900', color: 'white', margin: 0, lineHeight: '1.2' }}>{mission.task}</h2>
             </div>
 
@@ -136,7 +136,7 @@ const Station = () => {
 
             {mission.address && (
               <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', padding: '15px', borderRadius: '15px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <span style={{ fontSize: '20px' }}>📍</span>
+                <span style={{ fontSize: '20px' }}>📍מיקום</span>
                 <div>
                   <div style={{ fontSize: '9px', color: '#64748b', fontWeight: 'bold' }}>מיקום יעד</div>
                   <div style={{ fontSize: '16px', fontWeight: 'bold', color: 'white' }}>{mission.address}</div>
