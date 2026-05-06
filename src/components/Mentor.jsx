@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// ייבוא הקבצים והסיסמאות מהקובץ הנכון
 import { allMissionsData, STATION_PASSWORDS } from '../missionsData'; 
 
 const Mentor = () => {
@@ -9,6 +10,7 @@ const Mentor = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('race_user'));
+    // בדיקה אם המשתמש מחובר ואם הוא מנטור
     if (user && user.is_mentor) {
       setIsAuthorized(true);
     } else {
@@ -47,6 +49,7 @@ const Mentor = () => {
                         <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>
                             תחנה {id}
                         </div>
+                        {/* הצגת הקוד הסודי של התחנה */}
                         <div style={{ fontSize: '13px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold', border: '1px solid #cbd5e1' }}>
                             🔑 קוד: <span style={{ color: '#dc2626' }}>{STATION_PASSWORDS[id] || "---"}</span>
                         </div>
@@ -62,20 +65,11 @@ const Mentor = () => {
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>👤 מדריך מלווה: </strong> {data.escort || "---"}
                       </div>
-                      
-                      {/* הוספת שורת השעות כאן */}
-                      <div style={{ fontSize: '15px', color: '#1e293b' }}>
-                        <strong style={{ color: '#64748b' }}>🕒 שעות פעילות: </strong> {data.hours || "---"}
-                      </div>
-                      
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>👥 קבוצה: </strong> {data.group || "---"}
                       </div>
 
-                      <div style={{ 
-                        marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', 
-                        borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' 
-                      }}>
+                      <div style={{ marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' }}>
                         <div style={{ color: '#059669', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>🌳 עץ:</div>
                         <div style={{ color: '#064e3b', fontSize: '18px', fontWeight: '900' }}>
                             {data.tree || "⚠️ לא הוזן"}
@@ -93,4 +87,4 @@ const Mentor = () => {
   );
 };
 
-export default Mentor;
+export default Mentor; // ייצוא בשם הנכון
