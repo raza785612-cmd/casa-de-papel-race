@@ -23,9 +23,19 @@ const Login = () => {
       } else if (!data || data.length === 0) {
         alert("כינוי או סיסמה שגויים");
       } else {
-        const user = data[0];
-        localStorage.setItem('race_user', JSON.stringify(user));
-        navigate('/station/1');
+        if (data) {
+    // שמירת המשתמש בזיכרון המכשיר
+    localStorage.setItem('race_user', JSON.stringify(data));
+    
+    // בדיקה: לאן לשלוח את המשתמש?
+    if (data.is_mentor) {
+      // אם זה אדמין - שלח אותו ישירות לרשימת המשתתפים (דף מנטור)
+      navigate('/mentor'); 
+    } else {
+      // אם זה משתמש רגיל - שלח אותו לתחנה הראשונה
+      navigate('/station/1');
+    }
+  }
       }
     } catch (err) {
       alert("משהו השתבש בחיבור");
