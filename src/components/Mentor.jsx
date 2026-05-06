@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { allMissionsData, STATION_PASSWORDS } from '../missionsData';
+// ייבוא הקבצים והסיסמאות מהקובץ הנכון
+import { allMissionsData, STATION_PASSWORDS } from '../missionsData'; 
 
-const MentorPage = () => {
+const Mentor = () => {
   const navigate = useNavigate();
   const [activeTeam, setActiveTeam] = useState(null);
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('race_user'));
+    // בדיקה אם המשתמש מחובר ואם הוא מנטור
     if (user && user.is_mentor) {
       setIsAuthorized(true);
     } else {
@@ -42,12 +44,14 @@ const MentorPage = () => {
               <div style={{ padding: '0 20px 20px', backgroundColor: '#f8fafc' }}>
                 {Object.entries(allMissionsData[teamName]).map(([id, data]) => (
                   <div key={id} style={{ backgroundColor: 'white', padding: '15px', borderRadius: '12px', marginTop: '15px', border: '1px solid #e2e8f0' }}>
+                    
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                         <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>
                             תחנה {id}
                         </div>
-                        <div style={{ fontSize: '12px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '2px 8px', borderRadius: '4px', fontWeight: 'bold' }}>
-                            🔑 קוד: {STATION_PASSWORDS[id] || "---"}
+                        {/* הצגת הקוד הסודי של התחנה */}
+                        <div style={{ fontSize: '13px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold', border: '1px solid #cbd5e1' }}>
+                            🔑 קוד: <span style={{ color: '#dc2626' }}>{STATION_PASSWORDS[id] || "---"}</span>
                         </div>
                     </div>
                     
@@ -83,4 +87,4 @@ const MentorPage = () => {
   );
 };
 
-export default MentorPage;
+export default Mentor; // ייצוא בשם הנכון
