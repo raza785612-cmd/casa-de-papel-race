@@ -177,6 +177,11 @@ const Station = () => {
                   <div style={{ fontSize: '9px', color: '#64748b' }}>🕒 שעות ביצוע </div>
                   <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
                 </div>
+              )}{mission.group && (
+                <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>קבוצה</div>
+                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
+                </div>
               )}
             </div>
           </div>
