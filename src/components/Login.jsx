@@ -8,22 +8,25 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    // שליפת המשתמש לפי שם וסיסמת לוגין מהדאטאבייס
-    const { data, error } = await supabase
-      .from('teams')
-      .select('*')
-      .eq('username', username)
-      .eq('login_password', password)
-      .maybeSingle();
+  // .trim() מסיר רווחים מיותרים שהמשתמש הקליד בטעות
+  const cleanUsername = username.trim();
+  const cleanPassword = password.trim();
 
-    if (data) {
-      // שומרים את כל האובייקט (כולל secret_password ו-secret_message)
-      localStorage.setItem('race_user', JSON.stringify(data));
-      navigate('/station/1');
-    } else {
-      alert("שם משתמש או סיסמה שגויים. נסה שנית.");
-    }
-  };
+  const { data, error } = await supabase
+    .from('teams')
+    .select('*')
+    .eq('username', cleanUsername)
+    .eq('login_password', cleanPassword)
+    .maybeSingle();
+
+  if (data) {
+    localStorage.setItem('race_user', JSON.stringify(data));
+    navigate('/station/1');
+  } else {
+    console.log("Error or No Data:", error); // זה יעזור לנו לראות ב-Console אם יש בעיה אחרת
+    alert("שם משתמש או סיסמה שגויים. נסה שנית.");
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6" dir="rtl">
