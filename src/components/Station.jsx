@@ -4,18 +4,18 @@ import { allMissionsData, STATION_PASSWORDS, groupsData } from "../missionsData"
 import { supabase } from '../supabaseClient';
 
 const Station = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // מזהה התחנה מה-URL
   const navigate = useNavigate();
-  const currentId = parseInt(id);
-
+  
+  // State management
   const [team, setTeam] = useState(null);
   const [loading, setLoading] = useState(true);
   const [inputPass, setInputPass] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [error, setError] = useState(false);
 
-  // 1. טעינת נתוני משתמש ובדיקת סטטוס נעילה
   useEffect(() => {
+    // 1. אימות כניסה - משיכת המשתמש מהלוגין
     const savedUser = localStorage.getItem('race_user');
     if (!savedUser) { 
       navigate(`/login?s=${id}`); 
@@ -25,56 +25,62 @@ const Station = () => {
     const user = JSON.parse(savedUser);
     setTeam(user);
 
+    // 2. בדיקה האם התחנה כבר נפתחה בעבר (בדיקה מקומית)
     const unlockedStations = JSON.parse(localStorage.getItem('unlocked_stations') || "[]");
-    if (unlockedStations.includes(`station_${id}`)) {
+    if (unlockedStations.includes(String(id))) {
       setIsUnlocked(true);
     }
     
     setLoading(false);
   }, [id, navigate]);
 
-  // 2. פתיחת התחנה עם קוד גישה (מתוך missionsData)
+  // פונקציה לפתיחת התחנה (קוד גישה ראשוני מהקוד המקומי)
   const handleUnlock = () => {
     if (inputPass === STATION_PASSWORDS[id]) {
       const unlocked = JSON.parse(localStorage.getItem('unlocked_stations') || "[]");
-      if (!unlocked.includes(`station_${id}`)) {
-        unlocked.push(`station_${id}`);
+      if (!unlocked.includes(String(id))) {
+        unlocked.push(String(id));
         localStorage.setItem('unlocked_stations', JSON.stringify(unlocked));
       }
       setIsUnlocked(true);
       setError(false);
     } else {
       setError(true);
-      setTimeout(() => setError(false), 2000);
+      setTimeout(() => setError(false), 2000); // אינדיקציה לשגיאה
     }
   };
 
-  // 3. סיום משימה ומעבר לתחנה הבאה (מול Supabase)
+  // פונקציה לסיום משימה ומעבר לתחנה הבאה (אימות מול Supabase)
   const handleNext = async () => {
     try {
+      // 1. שליפת הסיסמה מהדאטאבייס (טבלת station_keys כפי שמופיעה ב-image_9fce7b.png)
       const { data, error: dbError } = await supabase
         .from('station_keys')
         .select('password')
-        .eq('station_id', String(currentId))
-        .single();
+        .eq('station_id', String(id))
+        .maybeSingle();
 
       if (dbError || !data) {
-        alert("שגיאה: לא נמצאה סיסמת סיום לתחנה זו בבסיס הנתונים.");
+        alert(`שגיאה: לא נמצאה סיסמת סיום לתחנה ${id} בבסיס הנתונים.`);
         return;
       }
 
       const userInput = prompt("סיסמת מלווה לסיום התחנה:");
 
       if (userInput === data.password) {
-        // דיווח לחמ"ל
-        await supabase.from('mission_reports').upsert({
-          username: team?.username,
-          station_id: String(currentId),
-          status: 'completed'
-        }, { onConflict: 'username' });
+        // 2. דיווח לחמ"ל (טבלת mission_reports כפי שמופיעה ב-image_9fcf57.png)
+        // משתמשים ב-insert בגלל ה-UUID האוטומטי
+        await supabase.from('mission_reports').insert([
+          {
+            username: team?.username,
+            station_id: String(id),
+            status: 'completed'
+          }
+        ]);
 
-        // מעבר לתחנה הבאה
-        navigate(`/station/${currentId + 1}`);
+        // 3. מעבר לתחנה הבאה
+        const nextId = parseInt(id) + 1;
+        navigate(`/station/${nextId}`);
         window.scrollTo(0, 0);
       } else {
         alert("קוד שגוי! המשימה עדיין לא הושלמה.");
@@ -85,90 +91,106 @@ const Station = () => {
     }
   };
 
-  if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-red-600 font-mono italic">INITIALIZING...</div>;
+  if (loading) return (
+    <div className="min-h-screen bg-black flex items-center justify-center text-red-600 font-mono italic text-xl">
+      INITIALIZING SYSTEM...
+    </div>
+  );
 
+  // משיכת נתוני המשימה מתוך missionsData לפי שם הצוות וה-ID
   const mission = allMissionsData[team?.username]?.[id] || {};
-  const groupInfo = mission.group ? groupsData[mission.group]?.[id] : null;
 
-  // תצוגת מסך נעול
+  // מסך נעילה במידה והתחנה טרם נפתחה
   if (!isUnlocked && STATION_PASSWORDS[id]) {
     return (
-      <div className="station-page flex items-center justify-center bg-slate-950 min-h-screen p-4 text-right" dir="rtl">
-        <div className="card" style={{ textAlign: 'center', borderTop: '4px solid #fbbf24', width: '100%', maxWidth: '380px' }}>
-          <div style={{ fontSize: '3.5rem', marginBottom: '15px' }}>🔒</div>
-          <h2 style={{ color: '#fbbf24', marginBottom: '20px' }}>תחנה {id} נעולה</h2>
+      <div className="station-page flex items-center justify-center bg-slate-950 min-h-screen p-4" dir="rtl">
+        <div className="card text-center" style={{ borderTop: '4px solid #fbbf24', maxWidth: '400px', width: '100%' }}>
+          <div className="text-6xl mb-4">🔒</div>
+          <h2 className="text-amber-400 text-2xl font-bold mb-6">תחנה {id} נעולה</h2>
           <input 
             type="text" 
             value={inputPass}
             onChange={(e) => setInputPass(e.target.value)}
-            placeholder="הזן קוד גישה"
-            style={{ width: '100%', padding: '15px', borderRadius: '12px', border: error ? '2px solid #ef4444' : '1px solid #1e293b', background: '#020617', color: 'white', textAlign: 'center', marginBottom: '15px', outline: 'none' }}
+            placeholder="הזן קוד גישה לתחנה"
+            className="w-full p-4 rounded-xl mb-4 text-center bg-slate-900 border text-white"
+            style={{ borderColor: error ? '#ef4444' : '#1e293b' }}
           />
-          <button onClick={handleUnlock} style={{ width: '100%', background: '#fbbf24', color: 'black', fontWeight: '900', padding: '15px', borderRadius: '12px', cursor: 'pointer' }}>פתח משימה</button>
+          <button 
+            onClick={handleUnlock}
+            className="w-full bg-amber-400 text-black font-black py-4 rounded-xl hover:bg-amber-300 transition-colors"
+          >
+            פתח משימה
+          </button>
         </div>
       </div>
     );
   }
 
-  // תצוגת תוכן התחנה
+  // מסך התוכן של התחנה
   return (
-    <div className="station-page" dir="rtl">
-      <div className="app-container">
-        <div className="card" style={{ textAlign: 'right', borderTop: '4px solid #dc2626' }}>
+    <div className="station-page min-h-screen bg-slate-950 text-white p-4" dir="rtl">
+      <div className="max-w-md mx-auto">
+        <div className="card shadow-2xl p-6 rounded-2xl bg-slate-900 border-t-4 border-red-600">
           
-          <header style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px', alignItems: 'center' }}>
+          <header className="flex justify-between items-center mb-8">
              <div>
-                <h1 style={{ fontSize: '2.8rem', margin: 0, color: 'white' }}>{id}</h1>
-                <p style={{ color: '#ef4444', fontWeight: 'bold', fontSize: '10px', margin: 0 }}>STATION_ACCESS</p>
+                <h1 className="text-5xl font-black">{id}</h1>
+                <p className="text-red-600 text-xs font-bold tracking-widest">STATION_DATA</p>
              </div>
-             <div style={{ textAlign: 'left' }}>
-                <p style={{ margin: 0, fontWeight: 'bold', color: 'white', fontSize: '1.1rem' }}>{team?.username}</p>
-                {mission.group && <p style={{ margin: 0, fontSize: '12px', color: '#fbbf24' }}>{mission.group}</p>}
+             <div className="text-left">
+                <p className="font-bold text-lg">{team?.username}</p>
+                {mission.group && <p className="text-xs text-amber-400 italic">{mission.group}</p>}
              </div>
           </header>
 
-          <main>
+          <main className="space-y-4">
             {mission.task && (
-              <div style={{ background: 'rgba(220,38,38,0.1)', padding: '18px', borderRadius: '12px', borderRight: '4px solid #dc2626', marginBottom: '15px' }}>
-                <p style={{ color: '#ef4444', fontSize: '11px', fontWeight: 'bold', marginBottom: '5px' }}>המשימה הנוכחית:</p>
-                <p style={{ fontSize: '1.15rem', fontWeight: '800', color: 'white', margin: 0 }}>{mission.task}</p>
+              <div className="bg-red-600/10 p-4 rounded-xl border-r-4 border-red-600">
+                <p className="text-red-500 text-xs font-bold mb-1">המשימה:</p>
+                <p className="text-lg font-bold leading-tight">{mission.task}</p>
               </div>
             )}
 
             {mission.hint && (
-              <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '15px', borderRadius: '12px', borderRight: '4px solid #3b82f6', marginBottom: '15px' }}>
-                <p style={{ fontSize: '1rem', fontWeight: 'bold', color: 'white', margin: 0 }}>💡 {mission.hint}</p>
+              <div className="bg-blue-600/10 p-4 rounded-xl border-r-4 border-blue-600">
+                <p className="text-sm">💡 {mission.hint}</p>
               </div>
             )}
 
-            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '15px', borderRadius: '15px', fontSize: '13px', color: '#94a3b8' }}>
-              {mission.address && <p style={{ margin: '0 0 8px 0', color: 'white' }}>📍 <strong>מיקום:</strong> {mission.address}</p>}
-              {mission.intel && <p style={{ margin: 0 }}>🔍 <strong>מודיעין:</strong> {mission.intel}</p>}
+            <div className="bg-black/30 p-4 rounded-xl text-sm text-slate-400">
+              {mission.address && <p className="mb-2 text-white">📍 <strong>מיקום:</strong> {mission.address}</p>}
+              {mission.intel && <p>🔍 <strong>מודיעין:</strong> {mission.intel}</p>}
             </div>
 
             {mission.map && (
-              <div style={{ marginTop: '20px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #1e293b' }}>
-                <iframe title="map" width="100%" height="180" src={`https://maps.google.com/maps?q=${encodeURIComponent(mission.map)}&z=15&output=embed`} style={{ border: 0 }}></iframe>
+              <div className="mt-4 rounded-xl overflow-hidden border border-slate-800">
+                <iframe 
+                  title="map" 
+                  width="100%" 
+                  height="200" 
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(mission.map)}&z=15&output=embed`} 
+                  style={{ border: 0, filter: 'grayscale(1) invert(1)' }}
+                />
               </div>
             )}
           </main>
 
-          <div style={{ display: 'flex', gap: '12px', marginTop: '30px' }}>
-            {currentId > 1 && (
+          <footer className="flex gap-3 mt-8">
+            {parseInt(id) > 1 && (
               <button 
-                onClick={() => navigate(`/station/${currentId - 1}`)}
-                style={{ flex: 1, padding: '15px', borderRadius: '12px', background: '#1e293b', color: 'white', fontWeight: 'bold', border: 'none' }}
+                onClick={() => navigate(`/station/${parseInt(id) - 1}`)}
+                className="flex-1 py-4 rounded-xl bg-slate-800 font-bold hover:bg-slate-700 transition-colors"
               >
                 הקודם
               </button>
             )}
             <button 
               onClick={handleNext}
-              style={{ flex: 2, padding: '15px', borderRadius: '12px', background: '#dc2626', color: 'white', fontWeight: 'bold', border: 'none' }}
+              className="flex-[2] py-4 rounded-xl bg-red-600 font-bold hover:bg-red-500 transition-all shadow-lg shadow-red-600/20"
             >
               סיימתי / הבא
             </button>
-          </div>
+          </footer>
         </div>
       </div>
     </div>
