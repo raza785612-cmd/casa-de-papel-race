@@ -31,114 +31,120 @@ const Station = () => {
 
   const mission = allMissionsData[team?.username]?.[id] || {};
 
+  // פונקציות עזר למפה
   const getGoogleMapsLink = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   const getEmbedMap = (query) => `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
   if (!isUnlocked) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-6 text-white" dir="rtl">
-        <div className="bg-slate-900 border-t-4 border-red-600 p-8 rounded-3xl shadow-2xl w-full max-w-[350px] text-center">
-          <div className="text-4xl mb-4">🔐</div>
-          <h2 className="text-xl font-black mb-6">תחנה {id}</h2>
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6" dir="rtl">
+        <div className="bg-slate-900 border border-slate-800 p-8 rounded-[2rem] w-full max-w-[340px] shadow-2xl text-center">
+          <div className="text-4xl mb-4">🔑</div>
+          <h2 className="text-white text-xl font-black mb-6">זיהוי סוכן - תחנה {id}</h2>
           <input 
             type="text" inputMode="numeric" value={inputPass}
             onChange={(e) => setInputPass(e.target.value)}
-            className="w-full p-3 bg-black border border-slate-700 rounded-xl mb-6 text-center text-2xl font-mono text-white"
-            placeholder="קוד"
+            className="w-full p-4 bg-black border border-slate-700 rounded-2xl mb-6 text-center text-3xl text-white font-mono focus:border-red-600 outline-none"
+            placeholder="0000"
           />
-          <button onClick={handleUnlock} className="w-full bg-red-600 py-4 rounded-xl font-bold text-lg italic">UNSEAL MISSION</button>
+          <button onClick={handleUnlock} className="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg active:scale-95 transition-transform">כניסה למערכת</button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 pb-32 font-sans flex flex-col items-center" dir="rtl">
-      {/* Container שמגביל את הרווח - הופך את זה ל"מובייל" גם במחשב */}
-      <div className="w-full max-w-[400px] space-y-4">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center p-0 sm:p-4" dir="rtl">
+      
+      {/* Container מובייל קשיח */}
+      <div className="w-full max-w-[420px] bg-[#0f0f0f] min-h-screen sm:min-h-fit sm:rounded-[2.5rem] shadow-2xl overflow-hidden border-x border-slate-800 flex flex-col">
         
-        {/* כותרת עליונה */}
-        <div className="flex justify-between items-center px-2 py-1">
-          <h1 className="text-2xl font-black italic text-red-600 tracking-tighter">STATION {id}</h1>
-          <div className="text-[10px] text-slate-500 font-mono uppercase">{team?.username}</div>
-        </div>
-
-        {/* 1. כרטיס תמונה - מוגבל בגובה */}
+        {/* 1. תמונה - גובה קבוע, תמיד בראש */}
         {mission.img && (
-          <div className="w-full h-48 rounded-2xl overflow-hidden border border-slate-800 shadow-lg bg-slate-900">
-            <img src={mission.img} alt="Mission" className="w-full h-full object-cover opacity-90" />
+          <div className="w-full h-[220px] bg-slate-800 relative">
+            <img src={mission.img} alt="Mission" className="w-full h-full object-cover" />
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#0f0f0f] to-transparent"></div>
           </div>
         )}
 
-        {/* 2. כרטיס משימה (Task) */}
-        <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-sm">
-          <div className="flex items-center gap-2 mb-2 text-red-500 text-[10px] font-bold uppercase tracking-widest">
-            <span className="w-2 h-2 bg-red-600 rounded-full animate-ping"></span> משימה דחופה
-          </div>
-          <p className="text-2xl font-black leading-tight text-right">{mission.task}</p>
-        </div>
-
-        {/* 3. כרטיס מודיעין (Intel) */}
-        {mission.intel && (
-          <div className="bg-red-950/20 border border-red-900/30 p-4 rounded-2xl">
-            <div className="text-red-500 font-bold text-xs mb-1">⚠️ מודיעין שטח:</div>
-            <p className="text-sm text-red-100/80 leading-relaxed italic text-right">{mission.intel}</p>
-          </div>
-        )}
-
-        {/* 4. כרטיס מיקום (Address) */}
-        {mission.address && (
-          <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex items-start gap-3">
-            <span className="text-xl">📍</span>
+        <div className="p-5 space-y-5 flex-1">
+          
+          {/* 2. משימה */}
+          {mission.task && (
             <div className="text-right">
-              <div className="text-slate-500 text-[10px] font-bold uppercase">מיקום היעד:</div>
-              <p className="text-md font-bold">{mission.address}</p>
-            </div>
-          </div>
-        )}
-
-        {/* 5. כרטיס מפה - מוגבל בגובה */}
-        {mission.map && (
-          <div className="bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 p-2 space-y-2">
-            <div className="w-full h-40 rounded-xl overflow-hidden grayscale border border-slate-800">
-              <iframe
-                width="100%" height="100%" frameBorder="0"
-                src={getEmbedMap(mission.map)}
-              ></iframe>
-            </div>
-            <a 
-              href={getGoogleMapsLink(mission.map)} 
-              target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-2 bg-blue-600/10 text-blue-400 rounded-lg text-xs font-bold border border-blue-600/20"
-            >
-              פתח ניווט ב-Google Maps
-            </a>
-          </div>
-        )}
-
-        {/* 6. כרטיס פרטים (Escort & Time) */}
-        <div className="grid grid-cols-2 gap-3">
-          {mission.escort && (
-            <div className="bg-slate-900/50 p-3 rounded-xl border border-slate-800 text-right">
-              <div className="text-slate-500 text-[9px] font-bold">👤 ליווי:</div>
-              <div className="text-xs font-bold">{mission.escort}</div>
+              <div className="flex items-center gap-2 mb-1 text-red-500 font-bold text-[10px] tracking-tighter uppercase">
+                <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
+                משימה פעילה
+              </div>
+              <h1 className="text-2xl font-black leading-tight">{mission.task}</h1>
             </div>
           )}
-          {mission.hours && (
-            <div className="bg-slate-900/50 p-3 rounded-xl border border-slate-800 text-right">
-              <div className="text-slate-500 text-[9px] font-bold">🕒 שעת יעד:</div>
-              <div className="text-xs font-bold text-red-500">{mission.hours}</div>
+
+          {/* 3. מודיעין */}
+          {mission.intel && (
+            <div className="bg-red-600/10 border-r-4 border-red-600 p-4 rounded-xl">
+              <p className="text-sm text-red-100/90 leading-relaxed italic">{mission.intel}</p>
+            </div>
+          )}
+
+          {/* 4. כתובת */}
+          {mission.address && (
+            <div className="bg-white/5 p-4 rounded-2xl border border-white/10 flex items-center gap-3">
+              <div className="text-2xl bg-slate-800 w-10 h-10 flex items-center justify-center rounded-full">📍</div>
+              <div>
+                <div className="text-slate-500 text-[10px] font-bold uppercase">כתובת היעד</div>
+                <div className="text-md font-bold">{mission.address}</div>
+              </div>
+            </div>
+          )}
+
+          {/* 5. מפה - מוגבלת וברורה */}
+          {mission.map && (
+            <div className="rounded-2xl overflow-hidden border border-slate-800 bg-black">
+              <div className="w-full h-[160px]">
+                 <iframe
+                  width="100%" height="100%" frameBorder="0"
+                  src={getEmbedMap(mission.map)}
+                  title="map"
+                  className="grayscale invert-[0.1] opacity-80"
+                ></iframe>
+              </div>
+              <a 
+                href={getGoogleMapsLink(mission.map)} 
+                target="_blank" rel="noopener noreferrer"
+                className="block text-center py-3 bg-blue-600 text-white text-xs font-bold"
+              >
+                לחץ לניווט (Google Maps) 🚀
+              </a>
+            </div>
+          )}
+
+          {/* 6. פרטי צוות (הצגה בשורה) */}
+          {(mission.escort || mission.hours) && (
+            <div className="grid grid-cols-2 gap-3">
+              {mission.escort && (
+                <div className="bg-slate-800/40 p-3 rounded-xl border border-slate-700">
+                  <div className="text-slate-500 text-[9px] font-bold uppercase mb-1">👤 מלווה</div>
+                  <div className="text-xs font-bold truncate">{mission.escort}</div>
+                </div>
+              )}
+              {mission.hours && (
+                <div className="bg-slate-800/40 p-3 rounded-xl border border-slate-700">
+                  <div className="text-slate-500 text-[9px] font-bold uppercase mb-1">🕒 זמן יעד</div>
+                  <div className="text-xs font-bold text-red-500">{mission.hours}</div>
+                </div>
+              )}
             </div>
           )}
         </div>
 
-        {/* כפתור אישור - תמיד צף למטה בתוך הטווח */}
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-[400px] px-4">
+        {/* 7. כפתור אישור - דבוק למטה של ה-Container */}
+        <div className="p-5 bg-gradient-to-t from-black to-transparent">
           <button 
             onClick={handleNext}
-            className="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-black text-lg shadow-xl active:scale-95 transition-all uppercase italic"
+            className="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black text-xl shadow-xl active:scale-95 transition-all"
           >
-            Confirm & Proceed ⚡
+            סיימנו, המשך ⚡
           </button>
         </div>
 
