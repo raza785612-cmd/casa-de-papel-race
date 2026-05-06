@@ -25,3 +25,4 @@ const handleLogin = async () => {
       setLoading(false);
     }
   };
+  export default Login;
