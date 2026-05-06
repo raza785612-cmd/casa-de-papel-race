@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login'; 
 import Station from './components/Station'; 
 import Mentor from './components/Mentor';
-import AdminPanel from './components/AdminPanel'; // וודא שהנתיב והשם מדויקים
+import AdminPanel from './components/AdminPanel'; 
+import SecretQRPage from './components/SecretQRPage';
 
 
 function App() {
