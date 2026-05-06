@@ -6,16 +6,11 @@ import { supabase } from '../supabaseClient';
 const Station = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
-  // שינוי קטן: מתחילים כפתוח אם זה שלב שחזרנו אליו (אופציונלי)
-  // או פשוט נשנה את ה-useEffect שלא ינעל אם אנחנו בניווט פנימי
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [inputPass, setInputPass] = useState("");
   const team = JSON.parse(localStorage.getItem('race_user'));
 
   useEffect(() => {
-    // אם רוצים שהחזרה אחורה לא תנעל את הדף, אפשר לבדוק כאן תנאי.
-    // כרגע נשאיר איפוס, אבל נתקן את העיצוב של דף הסיסמה.
     setIsUnlocked(false);
     setInputPass("");
     window.scrollTo(0, 0);
@@ -43,21 +38,31 @@ const Station = () => {
   const getGoogleMapsLink = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   const getEmbedMap = (query) => `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
-  // דף נעול - תיקון מרכוז למחשב
+  // --- דף נעול (הזנת סיסמה) ---
   if (!isUnlocked) {
     return (
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         backgroundColor: '#020617', 
-        display: 'flex',          // מוסיף פלקס למרכוז
-        justifyContent: 'center', // מרכוז אופקי
-        alignItems: 'center',     // מרכוז אנכי
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
         zIndex: 1000,
         padding: '20px'
-      }}>
-        <div className="card" style={{ width: '100%', maxWidth: '350px' }}>
-          <h1 style={{ textAlign: 'center' }}>STATION <span className="red-text">{id}</span></h1>
-          <p style={{ marginBottom: '20px', opacity: 0.7, textAlign: 'center' }}>הזן קוד משימה לחשיפת הפרטים</p>
+      }} dir="rtl">
+        <div style={{ 
+          width: '100%', 
+          maxWidth: '350px',
+          backgroundColor: '#0f172a',
+          padding: '30px',
+          borderRadius: '2rem',
+          border: '1px solid #1e293b',
+          textAlign: 'center',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
+        }}>
+          <h1 style={{ color: 'white', marginBottom: '10px' }}>STATION <span style={{ color: '#dc2626' }}>{id}</span></h1>
+          <p style={{ color: '#94a3b8', marginBottom: '25px', fontSize: '14px' }}>הזן קוד משימה לחשיפת הפרטים</p>
+          
           <input 
             type="text" 
             inputMode="numeric" 
@@ -66,25 +71,42 @@ const Station = () => {
             placeholder="קוד סודי"
             style={{
                 width: '100%', background: '#020617', border: '1px solid #334155',
-                color: 'white', padding: '16px', borderRadius: '1rem', marginBottom: '12px',
-                textAlign: 'center', fontSize: '1rem', outline: 'none', boxSizing: 'border-box'
+                color: 'white', padding: '16px', borderRadius: '1rem', marginBottom: '15px',
+                textAlign: 'center', fontSize: '1.2rem', outline: 'none', boxSizing: 'border-box'
             }}
           />
+          
           <button 
             onClick={handleUnlock}
             style={{
                 width: '100%', background: '#dc2626', color: 'white', border: 'none',
-                padding: '18px', borderRadius: '1rem', fontSize: '1.1rem', fontWeight: '800', cursor: 'pointer'
+                padding: '18px', borderRadius: '1rem', fontSize: '1.1rem', fontWeight: '800', 
+                cursor: 'pointer', marginBottom: '15px'
             }}
           >
-            חשיפת משימה
+            חשיפת משימה ⚡
           </button>
+
+          {/* כפתור חזרה בדף הנעול */}
+          {Number(id) > 1 && (
+            <button 
+              onClick={() => navigate(`/station/${Number(id) - 1}`)}
+              style={{
+                width: '100%', background: 'transparent', color: '#64748b', 
+                border: '1px solid #334155', padding: '12px', borderRadius: '1rem', 
+                fontSize: '13px', fontWeight: 'bold', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+              }}
+            >
+              <span>⬅️</span> חזרה לתחנה {Number(id) - 1}
+            </button>
+          )}
         </div>
       </div>
     );
   }
 
-  // דף המשימה הפתוח
+  // --- דף המשימה הפתוח ---
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -160,8 +182,8 @@ const Station = () => {
           </div>
         </div>
 
-        {/* כפתורי ניווט */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '10px' }}>
+        {/* כפתורי ניווט בדף הפתוח */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <button 
             onClick={handleNext}
             style={{
@@ -175,12 +197,7 @@ const Station = () => {
 
           {Number(id) > 1 && (
             <button 
-              onClick={() => {
-                  // כשחוזרים אחורה, אנחנו רוצים שהדף הבא ידע שהוא כבר פתוח
-                  // בגלל המבנה הפשוט, נצטרך להזין קוד שוב אלא אם נשמור ב-state גלובלי.
-                  // אבל כרגע לפחות הכפתור ינווט אותך חזרה.
-                  navigate(`/station/${Number(id) - 1}`);
-              }}
+              onClick={() => navigate(`/station/${Number(id) - 1}`)}
               style={{
                 width: '100%', padding: '12px', backgroundColor: 'transparent', 
                 color: '#94a3b8', borderRadius: '1rem', border: '1px solid #334155', 
