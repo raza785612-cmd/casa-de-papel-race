@@ -8,23 +8,28 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-  // .trim() מסיר רווחים מיותרים שהמשתמש הקליד בטעות
-  const cleanUsername = username.trim();
-  const cleanPassword = password.trim();
+  console.log("מנסה להתחבר עם:", username.trim(), password.trim());
 
   const { data, error } = await supabase
     .from('teams')
     .select('*')
-    .eq('username', cleanUsername)
-    .eq('login_password', cleanPassword)
+    .eq('username', username.trim())
+    .eq('login_password', password.trim())
     .maybeSingle();
 
+  if (error) {
+    console.error("שגיאת Supabase:", error.message);
+    alert("שגיאת תקשורת: " + error.message);
+    return;
+  }
+
   if (data) {
+    console.log("התחברות הצליחה! נתונים:", data);
     localStorage.setItem('race_user', JSON.stringify(data));
     navigate('/station/1');
   } else {
-    console.log("Error or No Data:", error); // זה יעזור לנו לראות ב-Console אם יש בעיה אחרת
-    alert("שם משתמש או סיסמה שגויים. נסה שנית.");
+    console.log("לא נמצא משתמש תואם בדאטאבייס");
+    alert("שם משתמש או סיסמה שגויים");
   }
 };
 
