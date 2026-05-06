@@ -8,23 +8,19 @@ const Login = () => {
   const navigate = useNavigate();
 
  const handleLogin = async () => {
-  // 1. בדיקה ראשונית - האם יש בכלל נתונים בטבלה?
-  const { data: allTeams, error: fetchError } = await supabase.from('teams').select('*');
-  console.log("כל הצוותים ב-DB:", allTeams);
+  // בדיקה ישירה מול הטבלה ללא פילטרים
+  const { data: rawData, error: rawError } = await supabase.from('teams').select('*');
+  
+  console.log("Status check - Tables found:", rawData);
+  if (rawError) console.error("Database error:", rawError.message);
 
-  if (fetchError) {
-    console.error("שגיאת תקשורת:", fetchError.message);
-    return;
-  }
-
-  // 2. ניסיון התחברות רגיל
   const user = username.trim();
   const pass = password.trim();
 
   const { data, error } = await supabase
     .from('teams')
     .select('*')
-    .ilike('username', user)
+    .eq('username', user)
     .eq('login_password', pass)
     .maybeSingle();
 
@@ -32,7 +28,7 @@ const Login = () => {
     localStorage.setItem('race_user', JSON.stringify(data));
     navigate('/station/1');
   } else {
-    alert("לא נמצאה התאמה. בדוק את ה-Console");
+    alert("לא נמצאה התאמה. בדוק את ה-Console כדי לראות אם הטבלה נגישה.");
   }
 };
 
