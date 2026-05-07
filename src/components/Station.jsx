@@ -10,8 +10,14 @@ const Station = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [inputPass, setInputPass] = useState("");
   
-  const team = JSON.parse(localStorage.getItem('race_user'));
-  const mission = allMissionsData[team?.username]?.[id];
+ const team = JSON.parse(localStorage.getItem('race_user'));
+const fullMissionData = allMissionsData[team?.username]?.[id];
+
+// יצירת עותק נקי ללא המשתנה dest כדי למנוע קונפליקטים בסטיישן
+const mission = fullMissionData ? { ...fullMissionData } : null;
+if (mission && mission.dest) {
+    delete mission.dest; 
+}
 
   useEffect(() => {
     setIsUnlocked(false);

@@ -137,8 +137,8 @@ allMissionsData["פרנקל"]["4"].tree = ILAN;
 allMissionsData["פרנקל"]["4"].img = "/missions/hisin1.jpg";
 allMissionsData["פרנקל"]["4"].escort = "מאור";
 
-allMissionsData["פרנקל"]["4"].address = "גן חיסין";
-allMissionsData["פרנקל"]["4"].map = "32.07366599931782, 34.778004364620315";
+allMissionsData["פרנקל"]["5"].address = "גן חיסין";
+allMissionsData["פרנקל"]["5"].map = "32.07366599931782, 34.778004364620315";
 allMissionsData["פרנקל"]["5"].group = "";
 allMissionsData["פרנקל"]["5"].tree = ILAN;
 allMissionsData["פרנקל"]["5"].img = "/missions/hisin1.jpg";
@@ -146,7 +146,7 @@ allMissionsData["פרנקל"]["5"].escort = "מאור";
 allMissionsData["פרנקל"]["5"].dest = "אחד העם 116 תל אביב";
 
 allMissionsData["פרנקל"]["6"].address = "ראמה, המלך גורג 38";
-allMissionsData["פרנקל"]["6"].map = "32.073125200251646, 34.7748640451862";
+allMissionsData["פרנקל"]["6"].map = "32.073125, 34.774864";
 allMissionsData["פרנקל"]["6"].group = COUPLE1;
 allMissionsData["פרנקל"]["6"].tree = BROSH;
 allMissionsData["פרנקל"]["6"].escort = "מאור";
