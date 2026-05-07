@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { STATION_PASSWORDS, allMissionsData } from '../missionsData';
+import { supabase } from '../supabaseClient'; // וודא שהייבוא הזה קיים
 
 const Station = () => {
   const { id } = useParams();
@@ -18,16 +19,35 @@ const Station = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  const handleUnlock = () => {
+  const handleUnlock = async () => {
     if (inputPass.trim() === STATION_PASSWORDS[id]) {
       setIsUnlocked(true);
+
+      // --- הוספת הדיווח לחמ"ל (AdminPanel) ---
+      if (team && team.username) {
+        try {
+          await supabase
+            .from('mission_reports')
+            .insert([
+              { 
+                username: team.username, 
+                station_id: id 
+              }
+            ]);
+          console.log("Report sent to HQ");
+        } catch (error) {
+          console.error("Failed to report to HQ:", error);
+        }
+      }
+      // ---------------------------------------
+
     } else {
       alert("קוד תחנה שגוי ❌");
     }
   };
 
-  const getGoogleMapsLink = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-  const getEmbedMap = (query) => `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  const getGoogleMapsLink = (query) => `https://www.google.com/maps/search/?api=1&query=$${encodeURIComponent(query)}`;
+  const getEmbedMap = (query) => `https://maps.google.com/maps?q=$${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
   if (!mission) {
     return (
