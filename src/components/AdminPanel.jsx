@@ -1,37 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPanel = () => {
+  const navigate = useNavigate();
   const [reports, setReports] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const ADMIN_PASSWORD = "1234"; 
 
   useEffect(() => {
-    const password = prompt("נא להזין סיסמה:");
+    // בדיקה האם כבר נכנסנו בעבר (בסשן הנוכחי)
+    const isAdmin = sessionStorage.getItem('isAdminConfirmed');
     
-    if (password === ADMIN_PASSWORD) {
+    if (isAdmin === 'true') {
       setIsAuthenticated(true);
-      fetchReports();
-      
-      const subscription = supabase
-        .channel('admin-realtime')
-        .on('postgres_changes', 
-          { event: '*', schema: 'public', table: 'mission_reports' }, 
-          () => {
-            fetchReports();
-          }
-        )
-        .subscribe();
-
-      return () => {
-        supabase.removeChannel(subscription);
-      };
+      startAdminSession();
     } else {
-      alert("סיסמה שגויה!");
-      window.location.href = "/";
+      const password = prompt("נא להזין סיסמה:");
+      if (password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('isAdminConfirmed', 'true');
+        setIsAuthenticated(true);
+        startAdminSession();
+      } else {
+        alert("סיסמה שגויה!");
+        navigate('/');
+      }
     }
   }, []);
+
+  const startAdminSession = () => {
+    fetchReports();
+    
+    // האזנה לשינויים בזמן אמת
+    const subscription = supabase
+      .channel('admin-realtime')
+      .on('postgres_changes', 
+        { event: 'INSERT', schema: 'public', table: 'mission_reports' }, 
+        (payload) => {
+          console.log("New report received!", payload);
+          fetchReports(); // רענון הרשימה כשמגיע דיווח חדש
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    };
+  };
 
   const fetchReports = async () => {
     const { data, error } = await supabase
@@ -44,7 +60,6 @@ const AdminPanel = () => {
       return;
     }
 
-    // --- לוגיקת הסינון: רק התחנה האחרונה של כל משתמש ---
     const latestReports = [];
     const seenUsers = new Set();
 
@@ -65,7 +80,7 @@ const AdminPanel = () => {
     const { error } = await supabase
       .from('mission_reports')
       .delete()
-      .neq('username', 'SYSTEM_RESERVED');
+      .neq('username', 'SYSTEM_RESERVED'); // מחיקה של כולם
 
     if (error) {
       alert("שגיאה במחיקה: " + error.message);
@@ -79,15 +94,7 @@ const AdminPanel = () => {
 
   return (
     <div style={{ padding: '20px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui, sans-serif' }}>
-      
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        borderBottom: '2px solid #dc2626', 
-        paddingBottom: '15px',
-        marginBottom: '20px'
-      }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #dc2626', paddingBottom: '15px', marginBottom: '20px' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '24px' }}>🛰️ חמ"ל מעקב - המירוץ</h1>
           <p style={{ margin: '5px 0 0', color: '#94a3b8', fontSize: '14px' }}>מציג תחנה אחרונה לכל צוות</p>
@@ -97,7 +104,7 @@ const AdminPanel = () => {
             🗑️ איפוס מרוץ
           </button>
           <span style={{ background: '#dc2626', padding: '6px 15px', borderRadius: '20px', fontSize: '14px', fontWeight: 'bold' }}>
-            {reports.length} צוותים בשטח
+            {reports.length} צוותים פעילים
           </span>
         </div>
       </div>
@@ -119,10 +126,8 @@ const AdminPanel = () => {
               </tr>
             ) : (
               reports.map((report) => (
-                <tr key={report.id} style={{ borderBottom: '1px solid #1e293b', background: 'transparent' }}>
-                  <td style={{ padding: '15px', fontWeight: 'bold', color: '#fbbf24', fontSize: '18px' }}>
-                    {report.username}
-                  </td>
+                <tr key={report.id} style={{ borderBottom: '1px solid #1e293b' }}>
+                  <td style={{ padding: '15px', fontWeight: 'bold', color: '#fbbf24', fontSize: '18px' }}>{report.username}</td>
                   <td style={{ padding: '15px' }}>
                     <span style={{ background: '#dc2626', color: 'white', padding: '5px 12px', borderRadius: '8px', fontWeight: 'bold' }}>
                       תחנה {report.station_id}
@@ -134,7 +139,7 @@ const AdminPanel = () => {
                   <td style={{ padding: '15px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#22c55e', fontSize: '12px' }}>
                       <span style={{ width: '8px', height: '8px', background: '#22c55e', borderRadius: '50%' }}></span>
-                      פעיל
+                      מחובר
                     </div>
                   </td>
                 </tr>
