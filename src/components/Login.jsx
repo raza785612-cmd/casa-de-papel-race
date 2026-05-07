@@ -6,30 +6,31 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showHint, setShowHint] = useState(false); // State חדש להצגת הרמז
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-  const { data, error } = await supabase
-    .from('teams')
-    .select('*')
-    .eq('username', username)
-    .eq('login_password', password)
-    .single();
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('teams')
+      .select('*')
+      .eq('username', username)
+      .eq('login_password', password)
+      .single();
 
-  if (data && !error) {
-    localStorage.setItem('race_user', JSON.stringify(data));
+    if (data && !error) {
+      localStorage.setItem('race_user', JSON.stringify(data));
 
-    if (data.is_mentor) {
-      // חשוב: ניתוב לנתיב הסטטי של המנטור
-      navigate('/mentor', { replace: true });
+      if (data.is_mentor) {
+        navigate('/mentor', { replace: true });
+      } else {
+        navigate('/station/1', { replace: true });
+      }
     } else {
-      // משתמש רגיל הולך לתחנה 1
-      navigate('/station/1', { replace: true });
+      alert("שם משתמש או סיסמה שגויים");
     }
-  } else {
-    alert("שם משתמש או סיסמה שגויים");
-  }
-};
+    setLoading(false);
+  };
 
   return (
     <div style={{
@@ -57,12 +58,12 @@ const Login = () => {
               placeholder="כינוי"
               style={{
                 width: '100%', background: '#020617', border: '1px solid #334155',
-                color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center', boxSizing: 'border-box'
+                color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center', boxSizing: 'border-box', outline: 'none'
               }}
             />
           </div>
 
-          <div style={{ marginBottom: '30px' }}>
+          <div style={{ marginBottom: '10px' }}>
             <input 
               type="password" 
               value={password}
@@ -70,9 +71,25 @@ const Login = () => {
               placeholder="סיסמה"
               style={{
                 width: '100%', background: '#020617', border: '1px solid #334155',
-                color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center', boxSizing: 'border-box'
+                color: 'white', padding: '16px', borderRadius: '1rem', textAlign: 'center', boxSizing: 'border-box', outline: 'none'
               }}
             />
+          </div>
+
+          {/* כפתור רמז מעוצב בעדינות */}
+          <div style={{ marginBottom: '25px' }}>
+            {!showHint ? (
+              <button 
+                onClick={() => setShowHint(true)}
+                style={{ background: 'none', border: 'none', color: '#475569', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
+              >
+                צריך רמז לסיסמה?
+              </button>
+            ) : (
+              <div style={{ color: '#fbbf24', fontSize: '13px', backgroundColor: 'rgba(251, 191, 36, 0.1)', padding: '10px', borderRadius: '10px', border: '1px solid rgba(251, 191, 36, 0.2)' }}>
+                💡 <strong>רמז:</strong> 4 הספרות האחרונות של הטלפון של המפיק
+              </div>
+            )}
           </div>
 
           <button 
@@ -81,7 +98,8 @@ const Login = () => {
             style={{
               width: '100%', backgroundColor: loading ? '#444' : '#dc2626', color: 'white', 
               padding: '18px', borderRadius: '1rem', border: 'none', 
-              fontSize: '18px', fontWeight: '900', cursor: loading ? 'not-allowed' : 'pointer'
+              fontSize: '18px', fontWeight: '900', cursor: loading ? 'not-allowed' : 'pointer',
+              boxShadow: '0 10px 15px -3px rgba(220, 38, 38, 0.3)'
             }}
           >
             {loading ? "מתחבר..." : "START MISSION ⚡"}
