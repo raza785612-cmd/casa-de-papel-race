@@ -134,14 +134,14 @@ allMissionsData["פרנקל"]["4"].address = "גן חיסין";
 allMissionsData["פרנקל"]["4"].map = "32.07366599931782, 34.778004364620315";
 allMissionsData["פרנקל"]["4"].group = "";
 allMissionsData["פרנקל"]["4"].tree = ILAN;
-allMissionsData["פרנקל"]["2"].img = "/missons/hisin1.png";
+allMissionsData["פרנקל"]["4"].img = "/missons/hisin1.jpg";
 allMissionsData["פרנקל"]["4"].escort = "מאור";
 
 allMissionsData["פרנקל"]["4"].address = "גן חיסין";
 allMissionsData["פרנקל"]["4"].map = "32.07366599931782, 34.778004364620315";
 allMissionsData["פרנקל"]["5"].group = "";
 allMissionsData["פרנקל"]["5"].tree = ILAN;
-allMissionsData["פרנקל"]["2"].img = "/missons/hisin1.png";
+allMissionsData["פרנקל"]["5"].img = "/missons/hisin1.jpg";
 allMissionsData["פרנקל"]["5"].escort = "מאור";
 allMissionsData["פרנקל"]["5"].dest = "אחד העם 116 תל אביב";
 
