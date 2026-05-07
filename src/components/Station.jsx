@@ -20,7 +20,8 @@ if (mission && mission.dest) {
 }
 
   useEffect(() => {
-    setIsUnlocked(false);
+    //DEBUG
+    setIsUnlocked(true);
     setInputPass("");
     window.scrollTo(0, 0);
   }, [id]);
