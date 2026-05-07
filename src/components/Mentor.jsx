@@ -6,7 +6,7 @@ const Mentor = () => {
   const navigate = useNavigate();
   const [activeTeam, setActiveTeam] = useState(null);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [showMapModal, setShowMapModal] = useState(false);
+  const [showStationsModal, setShowStationsModal] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('race_user'));
@@ -20,24 +20,22 @@ const Mentor = () => {
   if (!isAuthorized) return null;
 
   const teams = Object.keys(allMissionsData);
+  
+  // חילוץ רשימת מספרי התחנות הקיימות (למשל 1, 2, 3...)
+  const stationIds = Object.keys(STATION_PASSWORDS).sort((a, b) => a - b);
 
-  // פונקציית המפה הפשוטה - ללא API Key וללא Template Literals מורכבים
-  const getGlobalMapUrl = () => {
-    const allAddresses = [];
-    
+  // פונקציה שמייצרת מפה לכל הכתובות של תחנה ספציפית מכל הצוותים
+  const getMapForStation = (stationId) => {
+    const addresses = [];
     Object.values(allMissionsData).forEach(team => {
-      Object.values(team).forEach(m => {
-        if (m.address && m.address.trim() !== "") {
-          allAddresses.push(m.address.trim());
-        }
-      });
+      if (team[stationId] && team[stationId].address) {
+        addresses.push(team[stationId].address.trim());
+      }
     });
     
-    const uniqueAddresses = [...new Set(allAddresses)];
+    const uniqueAddresses = [...new Set(addresses)];
     const query = uniqueAddresses.join(' | ');
-    
-    // שימוש בשרשור מחרוזות פשוט כדי למנוע שגיאות Build
-    return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
+    return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&t=&z=14&ie=UTF8&iwloc=&output=embed";
   };
 
   return (
@@ -48,53 +46,65 @@ const Mentor = () => {
             <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#0f172a', marginBottom: '15px' }}>📋 סגל</h1>
             
             <button 
-              onClick={() => setShowMapModal(true)}
+              onClick={() => setShowStationsModal(true)}
               style={{
-                width: '100%', padding: '15px', backgroundColor: '#1e293b', color: '#fbbf24',
+                width: '100%', padding: '15px', backgroundColor: '#dc2626', color: 'white',
                 borderRadius: '12px', border: 'none', fontWeight: 'bold', fontSize: '16px',
                 cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', gap: '10px'
               }}
             >
-              📍 תצוגת מפה זירתית (כל המשימות)
+              🗺️ תצוגת מפות לפי תחנות
             </button>
         </header>
 
-        {showMapModal && (
+        {/* מודאל תחנות */}
+        {showStationsModal && (
           <div style={{
             position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: 'rgba(2, 6, 23, 0.9)', zIndex: 2000, display: 'flex',
-            alignItems: 'center', justifyContent: 'center', padding: '20px'
+            backgroundColor: 'rgba(2, 6, 23, 0.95)', zIndex: 2000, display: 'flex',
+            alignItems: 'center', justifyContent: 'center', padding: '10px'
           }}>
             <div style={{
-              backgroundColor: 'white', width: '100%', maxWidth: '500px', height: '80vh',
-              borderRadius: '2rem', overflow: 'hidden', display: 'flex', flexDirection: 'column',
+              backgroundColor: '#f1f5f9', width: '100%', maxWidth: '550px', height: '90vh',
+              borderRadius: '1.5rem', overflow: 'hidden', display: 'flex', flexDirection: 'column',
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
             }}>
-              <div style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0' }}>
-                <strong style={{ fontSize: '18px', color: '#0f172a' }}>מפת פריסת משימות</strong>
+              <div style={{ padding: '20px', backgroundColor: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0' }}>
+                <strong style={{ fontSize: '20px', color: '#0f172a' }}>ריכוז משימות לפי תחנה</strong>
                 <button 
-                  onClick={() => setShowMapModal(false)} 
-                  style={{ border: 'none', background: '#f1f5f9', color: '#64748b', borderRadius: '50%', width: '35px', height: '35px', cursor: 'pointer', fontWeight: 'bold' }}
+                  onClick={() => setShowStationsModal(false)} 
+                  style={{ border: 'none', background: '#fee2e2', color: '#dc2626', borderRadius: '50%', width: '35px', height: '35px', cursor: 'pointer', fontWeight: 'bold' }}
                 >
                   ✕
                 </button>
               </div>
-              <div style={{ flex: 1, backgroundColor: '#e5e7eb' }}>
-                <iframe
-                  width="100%" height="100%" frameBorder="0"
-                  src={getGlobalMapUrl()}
-                  title="global-map"
-                  style={{ border: 'none' }}
-                ></iframe>
-              </div>
-              <div style={{ padding: '15px', textAlign: 'center', fontSize: '12px', color: '#64748b', background: '#f8fafc' }}>
-                * ריכוז כתובות ללא כפילויות
+
+              <div style={{ flex: 1, overflowY: 'auto', padding: '15px' }}>
+                {stationIds.map((sId) => (
+                  <div key={sId} style={{ backgroundColor: 'white', borderRadius: '15px', padding: '15px', marginBottom: '20px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                        <span style={{ fontWeight: '900', fontSize: '18px', color: '#dc2626' }}>📍 תחנה {sId}</span>
+                        <span style={{ fontSize: '12px', color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '4px' }}>
+                           קוד: {STATION_PASSWORDS[sId]}
+                        </span>
+                    </div>
+                    
+                    <div style={{ width: '100%', height: '200px', borderRadius: '10px', overflow: 'hidden', backgroundColor: '#e5e7eb' }}>
+                      <iframe
+                        width="100%" height="100%" frameBorder="0"
+                        src={getMapForStation(sId)}
+                        title={`map-station-${sId}`}
+                      ></iframe>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         )}
 
+        {/* רשימת הצוותים כפי שהייתה */}
         {teams.map((teamName) => (
           <div key={teamName} style={{ marginBottom: '12px', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
             <button 
