@@ -20,10 +20,10 @@ const Mentor = () => {
 
   const teams = Object.keys(allMissionsData);
 
-  // פונקציה לפתיחת מפה בחלון חדש בצורה בטוחה
+  // פונקציה לפתיחת מפה בחלון חדש - הכי בטוח ולא תוקע את הדפדפן
   const openMap = (location) => {
     if (!location) return;
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+    const url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(location);
     window.open(url, '_blank');
   };
 
@@ -33,6 +33,7 @@ const Mentor = () => {
         
         <header style={{ textAlign: 'center', marginBottom: '30px' }}>
             <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#0f172a' }}>📋 סגל</h1>
+            <p style={{ color: '#64748b', fontSize: '14px' }}>ניהול ובקרה בזמן אמת</p>
         </header>
 
         {teams.map((teamName) => (
@@ -54,34 +55,34 @@ const Mentor = () => {
                         <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>
                             תחנה {id}
                         </div>
-                        <div style={{ fontSize: '13px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold' }}>
+                        <div style={{ fontSize: '13px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '4px', fontWeight: 'bold' }}>
                             🔑 קוד: {STATION_PASSWORDS[id] || "---"}
                         </div>
                     </div>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ fontSize: '15px' }}><strong>🎯 משימה: </strong> {data.task || "---"}</div>
-                      <div style={{ fontSize: '15px' }}><strong>📍 כתובת: </strong> {data.address || "---"}</div>
+                      <div style={{ fontSize: '15px', color: '#1e293b' }}><strong>🎯 משימה: </strong> {data.task || "---"}</div>
+                      <div style={{ fontSize: '15px', color: '#1e293b' }}><strong>📍 כתובת: </strong> {data.address || "---"}</div>
                       
-                      {/* כפתור למפה שמתבסס על המשתנה map */}
-                      {data.map && (
+                      {/* כפתור למפה שמתבסס על המשתנה map - פותח טאב חדש */}
+                      {(data.map || data.address) && (
                         <button 
-                          onClick={() => openMap(data.map)}
-                          style={{ alignSelf: 'flex-start', padding: '5px 12px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px' }}
+                          onClick={() => openMap(data.map || data.address)}
+                          style={{ alignSelf: 'flex-start', padding: '8px 15px', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '8px', fontSize: '13px', cursor: 'pointer', fontWeight: 'bold' }}
                         >
-                          📍 פתח מיקום מדויק (נ"צ)
+                          📍 פתח מיקום במפה
                         </button>
                       )}
 
                       {data.dest && (
-                        <div style={{ color: '#2563eb', fontWeight: 'bold', fontSize: '15px' }}>
-                          <strong>🏁 יעד סופי: </strong> {data.dest}
+                        <div style={{ color: '#2563eb', fontWeight: 'bold', fontSize: '15px', padding: '5px 0' }}>
+                          🏁 <strong>יעד סופי:</strong> {data.dest}
                         </div>
                       )}
 
-                      <div style={{ fontSize: '15px' }}><strong>👤 מלווה: </strong> {data.escort || "---"}</div>
-                      <div style={{ fontSize: '15px' }}><strong>🕒 שעות: </strong> {data.hours || "---"}</div>
-                      <div style={{ fontSize: '15px' }}><strong>👥 קבוצה: </strong> {data.group || "---"}</div>
+                      <div style={{ fontSize: '15px', color: '#1e293b' }}><strong>👤 מלווה: </strong> {data.escort || "---"}</div>
+                      <div style={{ fontSize: '15px', color: '#1e293b' }}><strong>🕒 שעות: </strong> {data.hours || "---"}</div>
+                      <div style={{ fontSize: '15px', color: '#1e293b' }}><strong>👥 קבוצה: </strong> {data.group || "---"}</div>
 
                       <div style={{ marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' }}>
                         <div style={{ color: '#059669', fontSize: '12px', fontWeight: 'bold' }}>🌳 עץ:</div>
