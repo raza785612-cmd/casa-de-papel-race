@@ -120,14 +120,14 @@ allMissionsData["פרנקל"]["2"].address = "קדמת עדן, אלנבי 93 ת�
 allMissionsData["פרנקל"]["2"].map = "אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["2"].group = "";
 allMissionsData["פרנקל"]["2"].tree = BROSH;
-allMissionsData["פרנקל"]["2"].img = "/missons/kidmat.png";
+allMissionsData["פרנקל"]["2"].img = "/missions/kidmat.png";
 allMissionsData["פרנקל"]["2"].escort = "מאור";
 
 allMissionsData["פרנקל"]["3"].address = "קדמת עדן, אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["3"].map = "אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["3"].group = "";
 allMissionsData["פרנקל"]["3"].tree = BROSH;
-allMissionsData["פרנקל"]["2"].img = "/missons/kidmat.png";
+allMissionsData["פרנקל"]["2"].img = "/missions/kidmat.png";
 allMissionsData["פרנקל"]["3"].escort = "מאור";
 
 allMissionsData["פרנקל"]["4"].address = "גן חיסין";
