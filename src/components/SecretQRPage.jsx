@@ -112,6 +112,28 @@ const SecretQrPage = () => {
       }}>
         {team?.secret_message}
       </h1>
+
+      <button 
+          onClick={() => navigate('/station/6')}
+          style={{
+            width: '100%',
+            padding: '16px',
+            backgroundColor: '#1e293b', // צבע כחול כהה
+            color: 'white',
+            borderRadius: '12px',
+            border: 'none',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px'
+          }}
+        >
+          🔙 למשימה הבאה
+        </button>
     </div>
   );
 };
