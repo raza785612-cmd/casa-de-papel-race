@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import { allMissionsData } from '../missionsData'; // ייבוא הנתונים כדי למשוך את שם המלווה
 
 const AdminPanel = () => {
   const navigate = useNavigate();
   const [reports, setReports] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const ADMIN_PASSWORD = "1234"; 
+  const ADMIN_PASSWORD = "1234";
 
   useEffect(() => {
-    // בדיקה אם המשתמש כבר אימת את עצמו בלשונית הנוכחית
     const isAdmin = sessionStorage.getItem('isAdminConfirmed');
-    
     if (isAdmin === 'true') {
       setIsAuthenticated(true);
     } else {
@@ -27,23 +26,16 @@ const AdminPanel = () => {
     }
   }, [navigate]);
 
-  // האפקט הזה ירוץ רק אחרי שהמשתמש אומת
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    // משיכה ראשונית
     fetchReports();
     
-    // הגדרת האזנה בזמן אמת
     const subscription = supabase
       .channel('admin-realtime')
       .on('postgres_changes', 
         { event: 'INSERT', schema: 'public', table: 'mission_reports' }, 
-        (payload) => {
-          console.log("דיווח חדש הגיע!", payload);
-          // במקום למשוך הכל מחדש, אפשר להוסיף את הדיווח החדש למעלה
-          fetchReports(); 
-        }
+        () => fetchReports()
       )
       .subscribe();
 
@@ -58,10 +50,7 @@ const AdminPanel = () => {
       .select('*')
       .order('created_at', { ascending: false });
     
-    if (error) {
-      console.error("שגיאה במשיכת נתונים:", error);
-      return;
-    }
+    if (error) return;
 
     const latestReports = [];
     const seenUsers = new Set();
@@ -69,73 +58,84 @@ const AdminPanel = () => {
     data.forEach(report => {
       if (!seenUsers.has(report.username)) {
         seenUsers.add(report.username);
-        latestReports.push(report);
+        
+        // מציאת שם המלווה מתוך missionsData לפי שם הצוות והתחנה הנוכחית
+        const teamData = allMissionsData[report.username];
+        const currentEscort = teamData?.[report.station_id]?.escort || "לא ידוע";
+
+        latestReports.push({
+          ...report,
+          escort: currentEscort
+        });
       }
     });
 
     setReports(latestReports);
   };
 
-  const clearAllReports = async () => {
-    const confirmDelete = window.confirm("⚠️ זה ימחק את כל התקדמות הצוותים. להמשיך?");
-    if (!confirmDelete) return;
-
-    const { error } = await supabase
-      .from('mission_reports')
-      .delete()
-      .neq('username', 'SYSTEM_RESERVED');
-
-    if (error) {
-      alert("שגיאה: " + error.message);
-    } else {
-      setReports([]);
-      alert("הנתונים נמחקו.");
-    }
+  // פונקציית עזר לבדיקה אם הצוות "פעיל" (דיווח ב-10 דקות האחרונות)
+  const isUserActive = (timestamp) => {
+    const lastSeen = new Date(timestamp);
+    const now = new Date();
+    const diffInMinutes = (now - lastSeen) / 1000 / 60;
+    return diffInMinutes < 10; 
   };
 
   if (!isAuthenticated) return <div style={{ background: '#020617', minHeight: '100vh' }} />;
 
   return (
-    <div style={{ padding: '20px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #dc2626', paddingBottom: '15px', marginBottom: '20px' }}>
-        <div>
-          <h1 style={{ margin: 0, fontSize: '24px' }}>🛰️ חמ"ל מעקב</h1>
-          <p style={{ margin: '5px 0 0', color: '#94a3b8', fontSize: '14px' }}>עדכון חי מהשטח</p>
-        </div>
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <button onClick={clearAllReports} style={{ background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', padding: '8px 12px', borderRadius: '6px', cursor: 'pointer' }}>
-            🗑️ איפוס
-          </button>
-          <span style={{ background: '#dc2626', padding: '6px 15px', borderRadius: '20px', fontWeight: 'bold' }}>
-            {reports.length} צוותים
-          </span>
+    <div style={{ padding: '15px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui' }}>
+      <header style={{ marginBottom: '20px', borderBottom: '2px solid #dc2626', paddingBottom: '15px' }}>
+        <h1 style={{ fontSize: '22px', margin: 0 }}>🛰️ חמ"ל שליטה מרכזי</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', color: '#94a3b8' }}>סטטוס צוותים בזמן אמת</span>
+            <span style={{ background: '#dc2626', padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>
+                {reports.length} צוותים מדווחים
+            </span>
         </div>
       </header>
 
-      <div style={{ overflowX: 'auto', background: '#0f172a', borderRadius: '12px', border: '1px solid #1e293b' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'right' }}>
+      <div style={{ overflowX: 'auto', borderRadius: '12px', border: '1px solid #1e293b' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'right', fontSize: '14px' }}>
           <thead>
-            <tr style={{ background: '#1e293b' }}>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>צוות</th>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>מיקום</th>
-              <th style={{ padding: '15px', color: '#94a3b8' }}>זמן</th>
+            <tr style={{ background: '#1e293b', color: '#94a3b8' }}>
+              <th style={{ padding: '12px' }}>סטטוס</th>
+              <th style={{ padding: '12px' }}>צוות</th>
+              <th style={{ padding: '12px' }}>מיקום</th>
+              <th style={{ padding: '12px' }}>מלווה</th>
+              <th style={{ padding: '12px' }}>עדכון אחרון</th>
             </tr>
           </thead>
           <tbody>
-            {reports.map((report) => (
-              <tr key={report.id} style={{ borderBottom: '1px solid #1e293b' }}>
-                <td style={{ padding: '15px', fontWeight: 'bold', color: '#fbbf24' }}>{report.username}</td>
-                <td style={{ padding: '15px' }}>
-                  <span style={{ background: '#dc2626', color: 'white', padding: '4px 10px', borderRadius: '6px' }}>תחנה {report.station_id}</span>
-                </td>
-                <td style={{ padding: '15px', color: '#94a3b8', fontSize: '13px' }}>
-                  {new Date(report.created_at).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}
-                </td>
-              </tr>
-            ))}
+            {reports.map((report) => {
+              const active = isUserActive(report.created_at);
+              return (
+                <tr key={report.id} style={{ borderBottom: '1px solid #0f172a', background: '#0f172a' }}>
+                  <td style={{ padding: '12px', textAlign: 'center' }}>
+                    <div style={{ 
+                        width: '12px', height: '12px', borderRadius: '50%', margin: '0 auto',
+                        backgroundColor: active ? '#22c55e' : '#475569',
+                        boxShadow: active ? '0 0 10px #22c55e' : 'none'
+                    }} title={active ? "פעיל כרגע" : "לא נראה לאחרונה"} />
+                  </td>
+                  <td style={{ padding: '12px', fontWeight: 'bold', color: '#fbbf24' }}>{report.username}</td>
+                  <td style={{ padding: '12px' }}>
+                    <span style={{ background: '#dc2626', padding: '3px 8px', borderRadius: '6px', fontSize: '12px' }}>תחנה {report.station_id}</span>
+                  </td>
+                  <td style={{ padding: '12px', color: '#e2e8f0' }}>{report.escort}</td>
+                  <td style={{ padding: '12px', color: '#94a3b8', fontSize: '12px' }}>
+                    {new Date(report.created_at).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
+
+      <p style={{ fontSize: '11px', color: '#475569', marginTop: '20px', textAlign: 'center' }}>
+        * סימון ירוק מציין צוות שדיווח ב-10 הדקות האחרונות.
+      </p>
     </div>
   );
 };
