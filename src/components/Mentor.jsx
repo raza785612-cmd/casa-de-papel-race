@@ -21,7 +21,7 @@ const Mentor = () => {
 
   const teams = Object.keys(allMissionsData);
 
-  // פונקציה שאוספת כתובות מכל הצוותים ללא כפילויות למפה הזירתית
+  // פונקציית המפה הפשוטה - ללא API Key וללא Template Literals מורכבים
   const getGlobalMapUrl = () => {
     const allAddresses = [];
     
@@ -33,13 +33,11 @@ const Mentor = () => {
       });
     });
     
-    // סינון כפילויות בעזרת Set
     const uniqueAddresses = [...new Set(allAddresses)];
-    
-    // איחוד הכתובות למחרוזת חיפוש אחת
     const query = uniqueAddresses.join(' | ');
     
-    return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+    // שימוש בשרשור מחרוזות פשוט כדי למנוע שגיאות Build
+    return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
   };
 
   return (
@@ -49,7 +47,6 @@ const Mentor = () => {
         <header style={{ textAlign: 'center', marginBottom: '30px' }}>
             <h1 style={{ fontSize: '28px', fontWeight: '900', color: '#0f172a', marginBottom: '15px' }}>📋 סגל</h1>
             
-            {/* כפתור פתיחת מפה זירתית */}
             <button 
               onClick={() => setShowMapModal(true)}
               style={{
@@ -63,7 +60,6 @@ const Mentor = () => {
             </button>
         </header>
 
-        {/* פופ-אפ מפה (Modal) */}
         {showMapModal && (
           <div style={{
             position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
@@ -89,17 +85,16 @@ const Mentor = () => {
                   width="100%" height="100%" frameBorder="0"
                   src={getGlobalMapUrl()}
                   title="global-map"
-                  style={{ filter: 'contrast(1.1)' }}
+                  style={{ border: 'none' }}
                 ></iframe>
               </div>
               <div style={{ padding: '15px', textAlign: 'center', fontSize: '12px', color: '#64748b', background: '#f8fafc' }}>
-                * המפה מציגה ריכוז כתובות ללא כפילויות
+                * ריכוז כתובות ללא כפילויות
               </div>
             </div>
           </div>
         )}
 
-        {/* רשימת הצוותים */}
         {teams.map((teamName) => (
           <div key={teamName} style={{ marginBottom: '12px', backgroundColor: 'white', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
             <button 
@@ -114,7 +109,6 @@ const Mentor = () => {
               <div style={{ padding: '0 20px 20px', backgroundColor: '#f8fafc' }}>
                 {Object.entries(allMissionsData[teamName]).map(([id, data]) => (
                   <div key={id} style={{ backgroundColor: 'white', padding: '15px', borderRadius: '12px', marginTop: '15px', border: '1px solid #e2e8f0' }}>
-                    
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                         <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>
                             תחנה {id}
@@ -134,19 +128,14 @@ const Mentor = () => {
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>👤 מדריך מלווה: </strong> {data.escort || "---"}
                       </div>
-                      
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>🕒 שעות פעילות: </strong> {data.hours || "---"}
                       </div>
-                      
                       <div style={{ fontSize: '15px', color: '#1e293b' }}>
                         <strong style={{ color: '#64748b' }}>👥 קבוצה: </strong> {data.group || "---"}
                       </div>
 
-                      <div style={{ 
-                        marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', 
-                        borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' 
-                      }}>
+                      <div style={{ marginTop: '10px', padding: '12px', backgroundColor: '#ecfdf5', borderRadius: '10px', border: '1px solid #d1fae5', textAlign: 'center' }}>
                         <div style={{ color: '#059669', fontSize: '12px', fontWeight: 'bold', marginBottom: '4px' }}>🌳 עץ:</div>
                         <div style={{ color: '#064e3b', fontSize: '18px', fontWeight: '900' }}>
                             {data.tree || "⚠️ לא הוזן"}
