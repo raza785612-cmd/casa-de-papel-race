@@ -127,7 +127,7 @@ allMissionsData["פרנקל"]["3"].address = "קדמת עדן, אלנבי 93 ת�
 allMissionsData["פרנקל"]["3"].map = "אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["3"].group = "";
 allMissionsData["פרנקל"]["3"].tree = BROSH;
-allMissionsData["פרנקל"]["2"].img = "/missions/kidmat.jpg";
+allMissionsData["פרנקל"]["3"].img = "/missions/kidmat.jpg";
 allMissionsData["פרנקל"]["3"].escort = "מאור";
 
 allMissionsData["פרנקל"]["4"].address = "גן חיסין";
