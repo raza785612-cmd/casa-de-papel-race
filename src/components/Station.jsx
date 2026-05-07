@@ -146,10 +146,15 @@ const getEmbedMap = (query) => {
         <div style={{ backgroundColor: '#0f172a', borderRadius: '2rem', border: '1px solid #1e293b', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
           
           {mission.img && (
-            <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
-              <img src={mission.img} alt="Mission" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-          )}
+  <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
+    <img 
+      src={mission.img} 
+      alt="Mission" 
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+      onError={(e) => console.error("Image failed to load:", mission.img)}
+    />
+  </div>
+)}
 
           <div style={{ padding: '25px', textAlign: 'right' }}>
             <div style={{ marginBottom: '20px' }}>
