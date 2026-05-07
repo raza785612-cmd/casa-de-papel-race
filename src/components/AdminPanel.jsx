@@ -10,6 +10,8 @@ const AdminPanel = () => {
 
   const ADMIN_PASSWORD = "1234";
 
+  
+
   useEffect(() => {
     const isAdmin = sessionStorage.getItem('isAdminConfirmed');
     if (isAdmin === 'true') {
@@ -73,6 +75,27 @@ const AdminPanel = () => {
     setReports(latestReports);
   };
 
+  const handleReset = async () => {
+    const confirmReset = window.confirm("האם אתה בטוח שברצונך לאפס את כל דיווחי התחנות? פעולה זו אינה ניתנת לביטול.");
+    if (!confirmReset) return;
+
+    try {
+      // מחיקת כל השורות מטבלת הדיווחים
+      const { error } = await supabase
+        .from('mission_reports')
+        .delete()
+        .neq('id', 0); // טריק למחיקת כל השורות ב-Supabase
+
+      if (error) throw error;
+      
+      alert("הנתונים אופסו בהצלחה ✨");
+      setReports([]); // עדכון התצוגה באופן מיידי
+    } catch (error) {
+      console.error("Error resetting data:", error);
+      alert("שגיאה באיפוס הנתונים");
+    }
+  };
+
   // פונקציית עזר לבדיקה אם הצוות "פעיל" (דיווח ב-10 דקות האחרונות)
   const isUserActive = (timestamp) => {
     const lastSeen = new Date(timestamp);
@@ -86,7 +109,27 @@ const AdminPanel = () => {
   return (
     <div style={{ padding: '15px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui' }}>
       <header style={{ marginBottom: '20px', borderBottom: '2px solid #dc2626', paddingBottom: '15px' }}>
-        <h1 style={{ fontSize: '22px', margin: 0 }}>🛰️ שליטה </h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h1 style={{ fontSize: '22px', margin: 0 }}>🛰️ שליטה </h1>
+          <button 
+            onClick={handleReset}
+            style={{
+              background: 'rgba(220, 38, 38, 0.1)',
+              color: '#ef4444',
+              border: '1px solid #ef4444',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              transition: '0.2s'
+            }}
+            onMouseOver={(e) => e.target.style.background = '#ef4444' + '33'}
+            onMouseOut={(e) => e.target.style.background = 'rgba(220, 38, 38, 0.1)'}
+          >
+            🗑️ איפוס נתונים
+          </button>
+        </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', alignItems: 'center' }}>
             <span style={{ fontSize: '14px', color: '#94a3b8' }}>סטטוס צוותים בזמן אמת</span>
             <span style={{ background: '#dc2626', padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>
