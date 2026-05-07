@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient'; // הוספנו ייבוא של סופבייס
+import { useNavigate } from 'react-router-dom'; // הוספת הייבוא של הניווט
+import { supabase } from '../supabaseClient';
 
 const SecretQrPage = () => {
+  const navigate = useNavigate(); // אתחול פונקציית הניווט
   const [pass, setPass] = useState("");
   const [auth, setAuth] = useState(false);
   const [team, setTeam] = useState(null);
@@ -12,7 +14,6 @@ const SecretQrPage = () => {
       const storedUser = JSON.parse(localStorage.getItem('race_user'));
       
       if (storedUser && storedUser.id) {
-        // משיכת הנתונים הכי עדכניים מהדאטאבייס לפי ה-ID
         const { data, error } = await supabase
           .from('teams')
           .select('*')
@@ -21,10 +22,9 @@ const SecretQrPage = () => {
 
         if (data && !error) {
           setTeam(data);
-          // מעדכנים גם את ה-localStorage שיהיה מעודכן להמשך
           localStorage.setItem('race_user', JSON.stringify(data));
         } else {
-          setTeam(storedUser); // fallback למה שיש בזיכרון
+          setTeam(storedUser);
         }
       }
       setLoading(false);
@@ -99,26 +99,31 @@ const SecretQrPage = () => {
     );
   }
 
+  // דף ההודעה הסודית - אחרי אימות מוצלח
   return (
     <div style={{
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'white', display: 'flex', alignItems: 'center',
-      justifyContent: 'center', padding: '40px', zIndex: 1000
+      backgroundColor: 'white', display: 'flex', flexDirection: 'column', // שינוי ל-Column כדי לסדר כפתור למטה
+      alignItems: 'center', justifyContent: 'center', padding: '20px', zIndex: 1000
     }} dir="rtl">
-      <h1 style={{
-        fontSize: '28px', fontFamily: 'serif', fontStyle: 'italic',
-        borderLeft: '3px solid black', borderRight: '3px solid black',
-        padding: '20px 30px', lineHeight: '1.6', color: 'black', textAlign: 'center'
-      }}>
-        {team?.secret_message}
-      </h1>
+      
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <h1 style={{
+          fontSize: '28px', fontFamily: 'serif', fontStyle: 'italic',
+          borderLeft: '3px solid black', borderRight: '3px solid black',
+          padding: '20px 30px', lineHeight: '1.6', color: 'black', textAlign: 'center'
+        }}>
+          {team?.secret_message}
+        </h1>
+      </div>
 
       <button 
           onClick={() => navigate('/station/6')}
           style={{
             width: '100%',
+            maxWidth: '300px', // שלא יהיה רחב מדי במסכים גדולים
             padding: '16px',
-            backgroundColor: '#1e293b', // צבע כחול כהה
+            backgroundColor: '#1e293b',
             color: 'white',
             borderRadius: '12px',
             border: 'none',
@@ -126,13 +131,10 @@ const SecretQrPage = () => {
             fontWeight: 'bold',
             cursor: 'pointer',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '10px'
+            marginBottom: '30px' // רווח מהתחתית
           }}
         >
-          🔙 למשימה הבאה
+          🔙 חזרה למשימה הבאה
         </button>
     </div>
   );
