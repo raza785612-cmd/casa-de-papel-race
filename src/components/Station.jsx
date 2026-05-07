@@ -52,7 +52,7 @@ const sendReport = async () => {
       // --- הוספת הדיווח לחמ"ל (AdminPanel) ---
      sendReport();
       
-  };
+  };}
 // פתיחת ניווט/מפה מלאה - תומך בכתובת ובנ.צ
 const getGoogleMapsLink = (query) => {
   if (!query) return "#";
