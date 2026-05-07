@@ -45,10 +45,19 @@ const Station = () => {
       alert("קוד תחנה שגוי ❌");
     }
   };
+// פתיחת ניווט/מפה מלאה - תומך בכתובת ובנ.צ
+const getGoogleMapsLink = (query) => {
+  if (!query) return "#";
+  // שימוש ב-search?q מאפשר לגוגל להחליט לבד אם זה נ.צ או כתובת
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+};
 
-  const getGoogleMapsLink = (query) => `https://www.google.com/maps/search/?api=1&query=$${encodeURIComponent(query)}`;
-  const getEmbedMap = (query) => `https://maps.google.com/maps?q=$${encodeURIComponent(query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-
+// הצגת המפה הקטנה בתוך האפליקציה
+const getEmbedMap = (query) => {
+  if (!query) return "";
+  // הקישור הזה הוא הכי יציב להצגת Pin על המפה ללא API Key
+  return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+};
   if (!mission) {
     return (
       <div style={{ backgroundColor: '#020617', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', textAlign: 'center', padding: '20px' }} dir="rtl">
@@ -164,20 +173,20 @@ const Station = () => {
               </div>
             )}
 
-            {mission.map && (
-              <div style={{ borderRadius: '15px', overflow: 'hidden', border: '1px solid #1e293b', marginBottom: '20px' }}>
-                <iframe
-                  width="100%" height="160" frameBorder="0"
-                  src={getEmbedMap(mission.map)}
-                  title="map"
-                  style={{ filter: 'grayscale(1) contrast(1.2)', border: 'none' }}
-                ></iframe>
-                <a href={getGoogleMapsLink(mission.map)} target="_blank" rel="noopener noreferrer"
-                   style={{ display: 'block', textAlign: 'center', padding: '10px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold' }}>
-                  פתיחה ב-GOOGLE MAPS ↗
-                </a>
-              </div>
-            )}
+           {mission.map && (
+  <div style={{ borderRadius: '15px', overflow: 'hidden', border: '1px solid #1e293b', marginBottom: '20px' }}>
+    <iframe
+      width="100%" height="160" frameBorder="0"
+      src={getEmbedMap(mission.map)} // קריאה לפונקציה המעודכנת
+      title="map"
+      style={{ filter: 'grayscale(1) contrast(1.2)', border: 'none' }}
+    ></iframe>
+    <a href={getGoogleMapsLink(mission.map)} target="_blank" rel="noopener noreferrer"
+       style={{ display: 'block', textAlign: 'center', padding: '10px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold' }}>
+      פתיחה ב-GOOGLE MAPS ↗
+    </a>
+  </div>
+)}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {mission.escort && (
