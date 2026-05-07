@@ -25,7 +25,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
 
         {/*דף מנהל שרואה נתונים של כולם */}
-        <Route path="/adminpanel" element={<AdminPanel />} />
+        <Route path="/admin-panel" element={<AdminPanel />} />
 
           {/*דף שמוביל למסעדה */}
         <Route path="/secret-mission/:slug" element={<SecretQRPage />} />
