@@ -76,23 +76,25 @@ const AdminPanel = () => {
   };
 
   const handleReset = async () => {
-    const confirmReset = window.confirm("האם אתה בטוח שברצונך לאפס את כל דיווחי התחנות? פעולה זו אינה ניתנת לביטול.");
+    const confirmReset = window.confirm("האם אתה בטוח שברצונך לאפס את הכל?");
     if (!confirmReset) return;
 
     try {
-      // מחיקת כל השורות מטבלת הדיווחים
+      // ניסיון מחיקה באמצעות פילטר שתמיד נכון
       const { error } = await supabase
         .from('mission_reports')
         .delete()
-        .neq('id', 0); // טריק למחיקת כל השורות ב-Supabase
+        .gte('id', 0); // מוחק כל מי שה-ID שלו גדול או שווה ל-0
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase Error Details:", error);
+        throw error;
+      }
       
-      alert("הנתונים אופסו בהצלחה ✨");
-      setReports([]); // עדכון התצוגה באופן מיידי
+      alert("הנתונים אופסו! ✨");
+      setReports([]);
     } catch (error) {
-      console.error("Error resetting data:", error);
-      alert("שגיאה באיפוס הנתונים");
+      alert("שגיאה: " + (error.message || "בדוק את ה-RLS ב-Supabase"));
     }
   };
 
