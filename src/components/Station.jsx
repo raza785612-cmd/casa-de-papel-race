@@ -19,10 +19,29 @@ if (mission && mission.dest) {
     delete mission.dest; 
 }
 
+const sendReport = async () => {
+    if (team && team.username) {
+      try {
+        await supabase
+          .from('mission_reports')
+          .insert([
+            { 
+              username: team.username, 
+              station_id: id 
+            }
+          ]);
+        console.log("Report sent to HQ");
+      } catch (error) {
+        console.error("Failed to report to HQ:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     //DEBUG
     setIsUnlocked(true);
     setInputPass("");
+    sendReport();
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -31,26 +50,8 @@ if (mission && mission.dest) {
       setIsUnlocked(true);
 
       // --- הוספת הדיווח לחמ"ל (AdminPanel) ---
-      if (team && team.username) {
-        try {
-          await supabase
-            .from('mission_reports')
-            .insert([
-              { 
-                username: team.username, 
-                station_id: id 
-              }
-            ]);
-          console.log("Report sent to HQ");
-        } catch (error) {
-          console.error("Failed to report to HQ:", error);
-        }
-      }
-      // ---------------------------------------
-
-    } else {
-      alert("קוד תחנה שגוי ❌");
-    }
+     sendReport();
+      
   };
 // פתיחת ניווט/מפה מלאה - תומך בכתובת ובנ.צ
 const getGoogleMapsLink = (query) => {
