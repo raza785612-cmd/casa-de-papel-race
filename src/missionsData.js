@@ -120,28 +120,28 @@ allMissionsData["פרנקל"]["2"].address = "קדמת עדן, אלנבי 93 ת�
 allMissionsData["פרנקל"]["2"].map = "אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["2"].group = "";
 allMissionsData["פרנקל"]["2"].tree = BROSH;
-allMissionsData["פרנקל"]["2"].img = "/missons/kidmat.jpg";
+allMissionsData["פרנקל"]["2"].img = "/missons/kidmat.png";
 allMissionsData["פרנקל"]["2"].escort = "מאור";
 
 allMissionsData["פרנקל"]["3"].address = "קדמת עדן, אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["3"].map = "אלנבי 93 תל אביב";
 allMissionsData["פרנקל"]["3"].group = "";
 allMissionsData["פרנקל"]["3"].tree = BROSH;
-allMissionsData["פרנקל"]["2"].img = "/missons/kidmat.jpg";
+allMissionsData["פרנקל"]["2"].img = "/missons/kidmat.png";
 allMissionsData["פרנקל"]["3"].escort = "מאור";
 
 allMissionsData["פרנקל"]["4"].address = "גן חיסין";
 allMissionsData["פרנקל"]["4"].map = "32.07366599931782, 34.778004364620315";
 allMissionsData["פרנקל"]["4"].group = "";
 allMissionsData["פרנקל"]["4"].tree = ILAN;
-allMissionsData["פרנקל"]["2"].img = "/missons/hisin1.jpg";
+allMissionsData["פרנקל"]["2"].img = "/missons/hisin1.png";
 allMissionsData["פרנקל"]["4"].escort = "מאור";
 
 allMissionsData["פרנקל"]["4"].address = "גן חיסין";
 allMissionsData["פרנקל"]["4"].map = "32.07366599931782, 34.778004364620315";
 allMissionsData["פרנקל"]["5"].group = "";
 allMissionsData["פרנקל"]["5"].tree = ILAN;
-allMissionsData["פרנקל"]["2"].img = "/missons/hisin1.jpg";
+allMissionsData["פרנקל"]["2"].img = "/missons/hisin1.png";
 allMissionsData["פרנקל"]["5"].escort = "מאור";
 allMissionsData["פרנקל"]["5"].dest = "אחד העם 116 תל אביב";
 
