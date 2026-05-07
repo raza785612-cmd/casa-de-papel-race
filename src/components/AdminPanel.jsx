@@ -86,11 +86,11 @@ const AdminPanel = () => {
   return (
     <div style={{ padding: '15px', background: '#020617', minHeight: '100vh', color: 'white', direction: 'rtl', fontFamily: 'system-ui' }}>
       <header style={{ marginBottom: '20px', borderBottom: '2px solid #dc2626', paddingBottom: '15px' }}>
-        <h1 style={{ fontSize: '22px', margin: 0 }}>🛰️ חמ"ל שליטה מרכזי</h1>
+        <h1 style={{ fontSize: '22px', margin: 0 }}>🛰️ שליטה </h1>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', alignItems: 'center' }}>
             <span style={{ fontSize: '14px', color: '#94a3b8' }}>סטטוס צוותים בזמן אמת</span>
             <span style={{ background: '#dc2626', padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>
-                {reports.length} צוותים מדווחים
+                {reports.length} משתתפים מדווחים
             </span>
         </div>
       </header>
@@ -100,9 +100,9 @@ const AdminPanel = () => {
           <thead>
             <tr style={{ background: '#1e293b', color: '#94a3b8' }}>
               <th style={{ padding: '12px' }}>סטטוס</th>
-              <th style={{ padding: '12px' }}>צוות</th>
+              <th style={{ padding: '12px' }}>כינוי</th>
               <th style={{ padding: '12px' }}>מיקום</th>
-              <th style={{ padding: '12px' }}>מלווה</th>
+              <th style={{ padding: '12px' }}>מדריך מלווה</th>
               <th style={{ padding: '12px' }}>עדכון אחרון</th>
             </tr>
           </thead>
@@ -120,8 +120,11 @@ const AdminPanel = () => {
                   </td>
                   <td style={{ padding: '12px', fontWeight: 'bold', color: '#fbbf24' }}>{report.username}</td>
                   <td style={{ padding: '12px' }}>
-                    <span style={{ background: '#dc2626', padding: '3px 8px', borderRadius: '6px', fontSize: '12px' }}>תחנה {report.station_id}</span>
-                  </td>
+  <span style={{ background: '#dc2626', padding: '4px 10px', borderRadius: '8px', fontSize: '12px', fontWeight: 'bold' }}>
+    {/* שואב את הכותרת מהקובץ לפי שם הצוות ומספר התחנה שדווח */}
+    {allMissionsData[report.username]?.[report.station_id]?.title || `תחנה ${report.station_id}`}
+  </span>
+</td>
                   <td style={{ padding: '12px', color: '#e2e8f0' }}>{report.escort}</td>
                   <td style={{ padding: '12px', color: '#94a3b8', fontSize: '12px' }}>
                     {new Date(report.created_at).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}

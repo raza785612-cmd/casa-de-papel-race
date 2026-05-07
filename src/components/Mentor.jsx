@@ -51,14 +51,15 @@ const Mentor = () => {
                 {Object.entries(allMissionsData[teamName]).map(([id, data]) => (
                   <div key={id} style={{ backgroundColor: 'white', padding: '15px', borderRadius: '12px', marginTop: '15px', border: '1px solid #e2e8f0' }}>
                     
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                        <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '2px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: 'bold' }}>
-                            תחנה {id}
-                        </div>
-                        <div style={{ fontSize: '13px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '4px', fontWeight: 'bold' }}>
-                            🔑 קוד: {STATION_PASSWORDS[id] || "---"}
-                        </div>
-                    </div>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+    <div style={{ backgroundColor: '#dc2626', color: 'white', padding: '4px 12px', borderRadius: '8px', fontSize: '14px', fontWeight: 'bold' }}>
+        {/* מציג את הכותרת מה-JSON, ואם היא לא קיימת מציג "תחנה X" */}
+        {data.title || `תחנה ${id}`}
+    </div>
+    <div style={{ fontSize: '13px', color: '#1e293b', backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold' }}>
+        🔑 קוד: {STATION_PASSWORDS[id] || "---"}
+    </div>
+</div>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <div style={{ fontSize: '15px', color: '#1e293b' }}><strong>🎯 משימה: </strong> {data.task || "---"}</div>
