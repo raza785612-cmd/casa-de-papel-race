@@ -4,6 +4,8 @@ import Station from './components/Station';
 import Mentor from './components/Mentor';
 import AdminPanel from './components/AdminPanel'; 
 import SecretQRPage from './components/SecretQRPage';
+// הוסף את הייבוא למעלה
+import Finish from './components/Finish';
 
 
 function App() {
@@ -32,6 +34,10 @@ function App() {
         
         {/* 5. דף שגיאה/כל דבר אחר - תמיד אחרון בתור */}
         <Route path="*" element={<Navigate to="/login" />} />
+
+        {/*דף סיום */}
+        <Route path="/finish" element={<Finish />} />
+
       </Routes>
     </Router>
   );

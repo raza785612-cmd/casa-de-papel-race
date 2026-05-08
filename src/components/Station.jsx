@@ -185,7 +185,7 @@ const Station = () => {
               {/* החזרת ה-Group למקומו */}
               {mission.group && (
                 <div style={{ gridColumn: '1 / span 2', background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
-                  <div style={{ fontSize: '9px', color: '#64748b' }}>👥 קבוצה רשומה</div>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>👥 קבוצה</div>
                   <div style={{ fontSize: '12px', fontWeight: 'bold', color: 'white' }}>{mission.group}</div>
                 </div>
               )}
@@ -193,16 +193,22 @@ const Station = () => {
           </div>
         </div>
 
-        <button 
-          onClick={() => navigate(`/station/${Number(id) + 1}`)} 
-          style={{ 
-            width: '100%', padding: '20px', backgroundColor: '#dc2626', color: 'white', 
-            borderRadius: '1.5rem', border: 'none', fontSize: '18px', fontWeight: '900',
-            boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)', cursor: 'pointer'
-          }}
-        >
-          סיימנו, המשימה הבאה ⚡
-        </button>
+       <button 
+  onClick={() => {
+    if (Number(id) === 8) {
+      navigate('/finish');
+    } else {
+      navigate(`/station/${Number(id) + 1}`);
+    }
+  }} 
+  style={{ 
+    width: '100%', padding: '20px', backgroundColor: '#dc2626', color: 'white', 
+    borderRadius: '1.5rem', border: 'none', fontSize: '18px', fontWeight: '900',
+    boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)', cursor: 'pointer'
+  }}
+>
+  {Number(id) === 8 ? "סיום המסע 🏁" : "סיימנו, המשימה הבאה ⚡"}
+</button>
       </div>
     </div>
   );
