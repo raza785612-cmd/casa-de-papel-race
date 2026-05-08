@@ -260,7 +260,7 @@ allMissionsData["ענבר"]["3"].address = "אייסי בוגרשוב 26";
 allMissionsData["ענבר"]["3"].map = "בוגרשוב 26 תל אביב";
 allMissionsData["ענבר"]["3"].group = "";
 allMissionsData["ענבר"]["3"].tree = PAPAYA;
-allMissionsData["ענבר"]["3"].img = "";
+allMissionsData["ענבר"]["3"].img = "/missions/ICI_bug26.png";
 allMissionsData["ענבר"]["3"].escort = HABIBI_AMIT;
 
 allMissionsData["ענבר"]["4"].address = "גן מאיר";
