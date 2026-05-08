@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         
         {/* 2. דף המנטור - חייב להופיע לפני ה-* */}
-        <Route path="/mentor" element={<Mentor />} />
+        <Route path="/segel" element={<Mentor />} />
         
         {/* 3. דף התחנה למשתתפים */}
 <Route 

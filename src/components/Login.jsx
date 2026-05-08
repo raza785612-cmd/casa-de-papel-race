@@ -33,7 +33,7 @@ const Login = () => {
       } 
       else if (data.username === 'mentor') {
         // במידה וזה מנטור, שליחה לדף המנטור
-        navigate('/mentor', { replace: true });
+        navigate('/segel', { replace: true });
       } 
       else {
         // כל משתמש אחר (צוותי המרוץ) נשלח לתחנה הראשונה
