@@ -12,16 +12,21 @@ const Login = () => {
   const handleLogin = async () => {
     setLoading(true);
     
+    // ניקוי רווחים מיותרים משם המשתמש והסיסמה לפני השליחה לדאטאבייס
+    const cleanUsername = username.trim();
+    const cleanPassword = password.trim();
+
     const { data, error } = await supabase
       .from('teams')
       .select('*')
-      .eq('username', username)
-      .eq('login_password', password)
+      .eq('username', cleanUsername) // משתמשים בשם הנקי
+      .eq('login_password', cleanPassword) // משתמשים בסיסמה הנקייה
       .single();
 
     if (data && !error) {
       localStorage.setItem('race_user', JSON.stringify(data));
 
+      // ניתוב לפי שם משתמש
       if (data.username === 'admin') {
         sessionStorage.setItem('isAdminConfirmed', 'true');
         navigate('/admin-panel', { replace: true });
@@ -51,7 +56,6 @@ const Login = () => {
           backgroundColor: '#0f172a', borderRadius: '2.5rem', padding: '40px 30px',
           border: '1px solid #1e293b', textAlign: 'center'
         }}>
-          {/* שינוי האימוג'י למסכה */}
           <div style={{ fontSize: '50px', marginBottom: '10px' }}>🎭</div>
           <h1 style={{ fontSize: '32px', fontWeight: '900', color: 'white', marginBottom: '5px', fontStyle: 'italic' }}>
              Casa De Papel <span style={{ color: '#dc2626' }}>RACE</span>
