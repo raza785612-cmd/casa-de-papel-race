@@ -1151,14 +1151,14 @@ allMissionsData["עזרי"]["4"].address = MOTHERS_PARK_NAME;
 allMissionsData["עזרי"]["4"].map = MOTHERS_PARK;
 allMissionsData["עזרי"]["4"].group = PERSONAL;
 allMissionsData["עזרי"]["4"].tree = LIMON;
-allMissionsData["עזרי"]["4"].img = "/missions/mothers.png";
+allMissionsData["עזרי"]["4"].img = MOTHER_PIC;
 allMissionsData["עזרי"]["4"].escort = HABIBTI_AVIA;
 
 allMissionsData["עזרי"]["5"].address = MOTHERS_PARK_NAME
 allMissionsData["עזרי"]["5"].map = MOTHERS_PARK;
 allMissionsData["עזרי"]["5"].group = PERSONAL;
 allMissionsData["עזרי"]["5"].tree = LIMON;
-allMissionsData["עזרי"]["5"].img = "/missions/mothers.png";
+allMissionsData["עזרי"]["5"].img = MOTHER_PIC;
 allMissionsData["עזרי"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["עזרי"]["5"].dest = "עין חרוד 15";
 
