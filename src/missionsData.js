@@ -115,7 +115,7 @@ const HABIBI_ELIKO = "אליקו";
 const HABIBI_AMIT = "עמית";
 const HABIBTI_AVIA = "אביה";
 
-//Resturants
+//Resturants address
 const RAMA = "32.073107, 34.774906";
 const LEVANTINI = "בן יהודה 170 תל אביב";
 const PANKINA = "גורדון 39 תל אביב";
@@ -126,6 +126,22 @@ const ROSTIKO = "בזל 42 תל אביב";
 const ARNESTO = "בן יהודה 90 תל אביב";
 const MEXICANA = "בוגרשוב 7 תל אביב";
 const LASHUK = "דיזינגוף 92 תל אביב";
+
+//resturants names 
+const RAMA_NAME = " מסעדת ראמה המלך ג'ורג' 38";
+const LEVANTINI_NAME = "הלבנטיני";
+const PANKINA_NAME = "פנקינה";
+const PROZDOR_NAME = "הפרוזדור";
+const METAO_NAME = "מטאו, בוגרשוב 87";
+const KAPARA_MIO_NAME = "כפרה מיו, המלך ג'ורג' 105";
+const ROSTIKO_NAME = "רוסטיקו בזל";
+const ARNESTO_NAME = "Ernesto";
+const MEXICANA_NAME = "מקסיקנה";
+const LASHUK_NAME = "לה שוק דיזינגוף";
+
+
+
+
 
 //pics
 const ALBERT_PIC = "/missions/albert.jpg";
@@ -185,22 +201,22 @@ allMissionsData["פרנקל"]["3"].tree = BROSH;
 allMissionsData["פרנקל"]["3"].img = "/missions/kidmat.jpg";
 allMissionsData["פרנקל"]["3"].escort = HABIBI_MAOR;
 
-allMissionsData["פרנקל"]["4"].address = "גן חיסין";
+allMissionsData["פרנקל"]["4"].address = HIS_NAME;
 allMissionsData["פרנקל"]["4"].map = HISIN;
 allMissionsData["פרנקל"]["4"].group = "";
 allMissionsData["פרנקל"]["4"].tree = ILAN;
-allMissionsData["פרנקל"]["4"].img = "/missions/hisin1.jpg";
+allMissionsData["פרנקל"]["4"].img = HISIN_PIC;
 allMissionsData["פרנקל"]["4"].escort = HABIBI_MAOR;
 
 allMissionsData["פרנקל"]["5"].address = HIS_NAME;
 allMissionsData["פרנקל"]["5"].map = HISIN;
 allMissionsData["פרנקל"]["5"].group = "";
 allMissionsData["פרנקל"]["5"].tree = ILAN;
-allMissionsData["פרנקל"]["5"].img = "/missions/hisin1.jpg";
+allMissionsData["פרנקל"]["5"].img = HISIN_PIC;
 allMissionsData["פרנקל"]["5"].escort = HABIBI_MAOR;
 allMissionsData["פרנקל"]["5"].dest = "אחד העם 116 תל אביב";
 
-allMissionsData["פרנקל"]["6"].address = "ראמה, המלך גורג 38";
+allMissionsData["פרנקל"]["6"].address = RAMA_NAME;
 allMissionsData["פרנקל"]["6"].map = RAMA;
 allMissionsData["פרנקל"]["6"].group = COUPLE1;
 allMissionsData["פרנקל"]["6"].tree = BROSH;
@@ -210,14 +226,14 @@ allMissionsData["פרנקל"]["7"].address = LURIA_NAME;
 allMissionsData["פרנקל"]["7"].map = LURIA;
 allMissionsData["פרנקל"]["7"].group = GROUP1;
 allMissionsData["פרנקל"]["7"].tree = BROSH;
-allMissionsData["פרנקל"]["7"].escort = "מאור + אליקו";
+allMissionsData["פרנקל"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 allMissionsData["פרנקל"]["8"].address = CINEMA_NAME;
 allMissionsData["פרנקל"]["8"].intel = INTEL_TASK8_1;
 allMissionsData["פרנקל"]["8"].map = CINEMA_HOTEL;
 allMissionsData["פרנקל"]["8"].group = GROUP1;
 allMissionsData["פרנקל"]["8"].tree = BROSH;
-allMissionsData["פרנקל"]["8"].escort = "מאור + אליקו";
+allMissionsData["פרנקל"]["8"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 // =====================================================================
 // עריכה ידנית לכל משתתף - 8 תחנות לכל שם (שדות ריקים להזנה)
@@ -262,7 +278,7 @@ allMissionsData["ענבר"]["5"].img = MEIR_PIC;
 allMissionsData["ענבר"]["5"].escort = HABIBI_AMIT;
 allMissionsData["ענבר"]["5"].dest = "צבי ברוק 7 תל אביב";
 
-allMissionsData["ענבר"]["6"].address = "מסעדת ראמה, המלך ג'ורג' 38";
+allMissionsData["ענבר"]["6"].address = RAMA_NAME;
 allMissionsData["ענבר"]["6"].map = RAMA;
 allMissionsData["ענבר"]["6"].group = COUPLE1;
 allMissionsData["ענבר"]["6"].tree = BROSH;
@@ -318,8 +334,8 @@ allMissionsData["דותן"]["5"].img = HISIN_PIC;
 allMissionsData["דותן"]["5"].escort = HABIBI_MAOR;
 allMissionsData["דותן"]["5"].dest = "אחד העם 116 תל אביב";
 
-allMissionsData["דותן"]["6"].address = "מסעדת ראמה, המלך ג'ורג' 38";
-allMissionsData["דותן"]["6"].map = RAMA;
+allMissionsData["דותן"]["6"].address = KAPARA_MIO_NAME;
+allMissionsData["דותן"]["6"].map = KAPARA_MIO;
 allMissionsData["דותן"]["6"].group = COUPLE5;
 allMissionsData["דותן"]["6"].tree = BROSH;
 allMissionsData["דותן"]["6"].escort = HABIBI_MAOR;
@@ -373,7 +389,7 @@ allMissionsData["צוקר"]["5"].img = MEIR_PIC;
 allMissionsData["צוקר"]["5"].escort = HABIBI_AMIT;
 allMissionsData["צוקר"]["5"].dest = "צבי ברוק 7 תל אביב";
 
-allMissionsData["צוקר"]["6"].address = "כפרה מיו, המלך ג'ורג' 105 תל אביב";
+allMissionsData["צוקר"]["6"].address = KAPARA_MIO_NAME;
 allMissionsData["צוקר"]["6"].map = KAPARA_MIO;
 allMissionsData["צוקר"]["6"].group = COUPLE5;
 allMissionsData["צוקר"]["6"].tree = BROSH;
@@ -428,7 +444,7 @@ allMissionsData["מתן"]["5"].img = HABIMA_PIC;
 allMissionsData["מתן"]["5"].escort = HABIBI_MAOR;
 allMissionsData["מתן"]["5"].dest = "אנג'ל 4";
 
-allMissionsData["מתן"]["6"].address = LEVANTINI;
+allMissionsData["מתן"]["6"].address = LEVANTINI_NAME;
 allMissionsData["מתן"]["6"].map = LEVANTINI;
 allMissionsData["מתן"]["6"].group = COUPLE2;
 allMissionsData["מתן"]["6"].tree = ILAN;
@@ -483,7 +499,7 @@ allMissionsData["רובן"]["5"].img = DIZI_PIC;
 allMissionsData["רובן"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["רובן"]["5"].dest = "סמולנסקין 7";
 
-allMissionsData["רובן"]["6"].address = LEVANTINI;
+allMissionsData["רובן"]["6"].address = LEVANTINI_NAME;
 allMissionsData["רובן"]["6"].map = LEVANTINI;
 allMissionsData["רובן"]["6"].group = COUPLE2;
 allMissionsData["רובן"]["6"].tree = ILAN;
@@ -538,7 +554,7 @@ allMissionsData["אדרי"]["5"].img = HABIMA_PIC;
 allMissionsData["אדרי"]["5"].escort = HABIBI_MAOR;
 allMissionsData["אדרי"]["5"].dest = "אנג'ל 4";
 
-allMissionsData["אדרי"]["6"].address = ROSTIKO;
+allMissionsData["אדרי"]["6"].address = ROSTIKO_NAME;
 allMissionsData["אדרי"]["6"].map = ROSTIKO;
 allMissionsData["אדרי"]["6"].group = COUPLE6;
 allMissionsData["אדרי"]["6"].tree = ILAN;
@@ -558,554 +574,551 @@ allMissionsData["אדרי"]["8"].tree = ILAN;
 allMissionsData["אדרי"]["8"].escort = HABIBI_AMIT + ', ' + HABIBI_ELIKO;
 
 // --- גדי ---
-allMissionsData["גדי"]["1"].address = "";
-allMissionsData["גדי"]["1"].map = "";
+allMissionsData["גדי"]["1"].address = C_TOWER_NAME;
+allMissionsData["גדי"]["1"].map = C_TOWER;
 allMissionsData["גדי"]["1"].group = "";
 allMissionsData["גדי"]["1"].tree = "";
-allMissionsData["גדי"]["1"].escort = "";
+allMissionsData["גדי"]["1"].escort = HABIBTI_AVIA;
 
-allMissionsData["גדי"]["2"].address = "";
-allMissionsData["גדי"]["2"].map = "";
+allMissionsData["גדי"]["2"].address = "Lightwave בוגרשוב 72";
+allMissionsData["גדי"]["2"].map = "32.07529620482618, 34.77279078751429";
 allMissionsData["גדי"]["2"].group = "";
-allMissionsData["גדי"]["2"].tree = "";
-allMissionsData["גדי"]["2"].img = "";
-allMissionsData["גדי"]["2"].escort = "";
+allMissionsData["גדי"]["2"].tree = PAPAYA;
+allMissionsData["גדי"]["2"].img = "/missions/lightwave.png";
+allMissionsData["גדי"]["2"].escort = HABIBI_AMIT;
 
-allMissionsData["גדי"]["3"].address = "";
-allMissionsData["גדי"]["3"].map = "";
+allMissionsData["גדי"]["3"].address = "Lightwave בוגרשוב 72";
+allMissionsData["גדי"]["3"].map = "32.07529620482618, 34.77279078751429";
 allMissionsData["גדי"]["3"].group = "";
-allMissionsData["גדי"]["3"].tree = "";
-allMissionsData["גדי"]["3"].img = "";
-allMissionsData["גדי"]["3"].escort = "";
+allMissionsData["גדי"]["3"].tree = PAPAYA;
+allMissionsData["גדי"]["3"].img = "/missions/lightwave.png";
+allMissionsData["גדי"]["3"].escort = HABIBI_AMIT;
 
-allMissionsData["גדי"]["4"].address = "";
-allMissionsData["גדי"]["4"].map = "";
+allMissionsData["גדי"]["4"].address = BIALIK_NAME;
+allMissionsData["גדי"]["4"].map = BIALIK;
 allMissionsData["גדי"]["4"].group = "";
-allMissionsData["גדי"]["4"].tree = "";
-allMissionsData["גדי"]["4"].img = "";
-allMissionsData["גדי"]["4"].escort = "";
+allMissionsData["גדי"]["4"].tree = MANGO;
+allMissionsData["גדי"]["4"].img = BIALIK_PIC;
+allMissionsData["גדי"]["4"].escort = HABIBI_AMIT;
 
-allMissionsData["גדי"]["5"].address = "";
-allMissionsData["גדי"]["5"].map = "";
+allMissionsData["גדי"]["5"].address = BIALIK_NAME;
+allMissionsData["גדי"]["5"].map = BIALIK;
 allMissionsData["גדי"]["5"].group = "";
-allMissionsData["גדי"]["5"].tree = "";
-allMissionsData["גדי"]["5"].img = "";
-allMissionsData["גדי"]["5"].escort = "";
-allMissionsData["גדי"]["5"].dest = "";
+allMissionsData["גדי"]["5"].tree = MANGO;
+allMissionsData["גדי"]["5"].img = BIALIK_PIC;
+allMissionsData["גדי"]["5"].escort = HABIBI_AMIT;
+allMissionsData["גדי"]["5"].dest = "הס 1";
 
-allMissionsData["גדי"]["6"].address = "";
-allMissionsData["גדי"]["6"].map = "";
-allMissionsData["גדי"]["6"].group = "";
-allMissionsData["גדי"]["6"].tree = "";
-allMissionsData["גדי"]["6"].escort = "";
+allMissionsData["גדי"]["6"].address = LASHUK_NAME;
+allMissionsData["גדי"]["6"].map = LASHUK;
+allMissionsData["גדי"]["6"].group = COUPLE7;
+allMissionsData["גדי"]["6"].tree = MANGO;
+allMissionsData["גדי"]["6"].escort = HABIBI_AMIT;
 
-allMissionsData["גדי"]["7"].address = "";
-allMissionsData["גדי"]["7"].map = "";
-allMissionsData["גדי"]["7"].group = "";
-allMissionsData["גדי"]["7"].tree = "";
-allMissionsData["גדי"]["7"].escort = "";
+allMissionsData["גדי"]["7"].address = CENTER_NAME;
+allMissionsData["גדי"]["7"].map = CENTER;
+allMissionsData["גדי"]["7"].group = GROUP4;
+allMissionsData["גדי"]["7"].tree = ILAN;
+allMissionsData["גדי"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
-allMissionsData["גדי"]["8"].address = "";
+allMissionsData["גדי"]["8"].address = CINEMA_NAME;
 allMissionsData["גדי"]["8"].intel = INTEL_TASK8_2;
-allMissionsData["גדי"]["8"].map = "";
-allMissionsData["גדי"]["8"].group = "";
-allMissionsData["גדי"]["8"].tree = "";
-allMissionsData["גדי"]["8"].escort = "";
-
+allMissionsData["גדי"]["8"].map = CINEMA_HOTEL;
+allMissionsData["גדי"]["8"].group = GROUP4;
+allMissionsData["גדי"]["8"].tree = ILAN;
+allMissionsData["גדי"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 // --- ליו ---
-allMissionsData["ליו"]["1"].address = "";
-allMissionsData["ליו"]["1"].map = "";
+allMissionsData["ליו"]["1"].address = ROTCHILD_NAME;
+allMissionsData["ליו"]["1"].map = ROTCHILD_NAME;
 allMissionsData["ליו"]["1"].group = "";
 allMissionsData["ליו"]["1"].tree = "";
-allMissionsData["ליו"]["1"].escort = "";
+allMissionsData["ליו"]["1"].escort = HABIBI_ELIKO;
 
-allMissionsData["ליו"]["2"].address = "";
-allMissionsData["ליו"]["2"].map = "";
+allMissionsData["ליו"]["2"].address = "פיד קלין מזאה 22א'";
+allMissionsData["ליו"]["2"].map = "32.06683107720606, 34.77415698936624";
 allMissionsData["ליו"]["2"].group = "";
-allMissionsData["ליו"]["2"].tree = "";
-allMissionsData["ליו"]["2"].img = "";
-allMissionsData["ליו"]["2"].escort = "";
+allMissionsData["ליו"]["2"].tree = ILAN;
+allMissionsData["ליו"]["2"].img = "/missions/fidklin.png";
+allMissionsData["ליו"]["2"].escort = HABIBI_ELIKO;
 
-allMissionsData["ליו"]["3"].address = "";
-allMissionsData["ליו"]["3"].map = "";
+allMissionsData["ליו"]["3"].address = "פיד קלין מזאה 22א'";
+allMissionsData["ליו"]["3"].map = "32.06683107720606, 34.77415698936624";
 allMissionsData["ליו"]["3"].group = "";
-allMissionsData["ליו"]["3"].tree = "";
-allMissionsData["ליו"]["3"].img = "";
-allMissionsData["ליו"]["3"].escort = "";
+allMissionsData["ליו"]["3"].tree = ILAN;
+allMissionsData["ליו"]["3"].img = "/missions/fidklin.png";
+allMissionsData["ליו"]["3"].escort = HABIBI_ELIKO;
 
-allMissionsData["ליו"]["4"].address = "";
-allMissionsData["ליו"]["4"].map = "";
+allMissionsData["ליו"]["4"].address = ALBERT_NAME;
+allMissionsData["ליו"]["4"].map = ALBERT;
 allMissionsData["ליו"]["4"].group = "";
-allMissionsData["ליו"]["4"].tree = "";
-allMissionsData["ליו"]["4"].img = "";
-allMissionsData["ליו"]["4"].escort = "";
+allMissionsData["ליו"]["4"].tree = BROSH;
+allMissionsData["ליו"]["4"].img = ALBERT_PIC;
+allMissionsData["ליו"]["4"].escort = HABIBI_ELIKO;
 
-allMissionsData["ליו"]["5"].address = "";
-allMissionsData["ליו"]["5"].map = "";
+allMissionsData["ליו"]["5"].address = ALBERT_NAME;
+allMissionsData["ליו"]["5"].map = ALBERT;
 allMissionsData["ליו"]["5"].group = "";
-allMissionsData["ליו"]["5"].tree = "";
-allMissionsData["ליו"]["5"].img = "";
-allMissionsData["ליו"]["5"].escort = "";
-allMissionsData["ליו"]["5"].dest = "";
+allMissionsData["ליו"]["5"].tree = BROSH;
+allMissionsData["ליו"]["5"].img = ALBERT_PIC;
+allMissionsData["ליו"]["5"].escort = HABIBI_ELIKO;
+allMissionsData["ליו"]["5"].dest = "ג'ורג' אליוט 13";
 
-allMissionsData["ליו"]["6"].address = "";
-allMissionsData["ליו"]["6"].map = "";
-allMissionsData["ליו"]["6"].group = "";
-allMissionsData["ליו"]["6"].tree = "";
-allMissionsData["ליו"]["6"].escort = "";
+allMissionsData["ליו"]["6"].address = PANKINA_NAME;
+allMissionsData["ליו"]["6"].map = PANKINA;
+allMissionsData["ליו"]["6"].group = COUPLE3;
+allMissionsData["ליו"]["6"].tree = MANGO;
+allMissionsData["ליו"]["6"].escort = HABIBI_AMIT;
 
-allMissionsData["ליו"]["7"].address = "";
-allMissionsData["ליו"]["7"].map = "";
-allMissionsData["ליו"]["7"].group = "";
-allMissionsData["ליו"]["7"].tree = "";
-allMissionsData["ליו"]["7"].escort = "";
+allMissionsData["ליו"]["7"].address = CENTER_NAME;
+allMissionsData["ליו"]["7"].map = CENTER;
+allMissionsData["ליו"]["7"].group = GROUP2;
+allMissionsData["ליו"]["7"].tree = ILAN;
+allMissionsData["ליו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
-allMissionsData["ליו"]["8"].address = "";
+allMissionsData["ליו"]["8"].address = CINEMA_NAME;
 allMissionsData["ליו"]["8"].intel = INTEL_TASK8_2;
-allMissionsData["ליו"]["8"].map = "";
-allMissionsData["ליו"]["8"].group = "";
-allMissionsData["ליו"]["8"].tree = "";
-allMissionsData["ליו"]["8"].escort = "";
+allMissionsData["ליו"]["8"].map = CINEMA_HOTEL;
+allMissionsData["ליו"]["8"].group = GROUP2;
+allMissionsData["ליו"]["8"].tree = ILAN;
+allMissionsData["ליו"]["8"].escort = HABIBI_AMIT + ', ' + HABIBI_ELIKO;
 
 // --- אגם ---
-allMissionsData["אגם"]["1"].address = "";
-allMissionsData["אגם"]["1"].map = "";
+allMissionsData["אגם"]["1"].address = C_TOWER_NAME;
+allMissionsData["אגם"]["1"].map = C_TOWER;
 allMissionsData["אגם"]["1"].group = "";
 allMissionsData["אגם"]["1"].tree = "";
-allMissionsData["אגם"]["1"].escort = "";
+allMissionsData["אגם"]["1"].escort = HABIBI_AMIT;
 
-allMissionsData["אגם"]["2"].address = "";
-allMissionsData["אגם"]["2"].map = "";
+allMissionsData["אגם"]["2"].address = "Lightwave בוגרשוב 72";
+allMissionsData["אגם"]["2"].map = "32.07529620482618, 34.77279078751429";
 allMissionsData["אגם"]["2"].group = "";
-allMissionsData["אגם"]["2"].tree = "";
-allMissionsData["אגם"]["2"].img = "";
-allMissionsData["אגם"]["2"].escort = "";
+allMissionsData["אגם"]["2"].tree = PAPAYA;
+allMissionsData["אגם"]["2"].img = "/missions/lightwave.png";
+allMissionsData["אגם"]["2"].escort = HABIBI_AMIT;
 
-allMissionsData["אגם"]["3"].address = "";
-allMissionsData["אגם"]["3"].map = "";
+allMissionsData["אגם"]["3"].address = "Lightwave בוגרשוב 72";
+allMissionsData["אגם"]["3"].map = "32.07529620482618, 34.77279078751429";
 allMissionsData["אגם"]["3"].group = "";
-allMissionsData["אגם"]["3"].tree = "";
-allMissionsData["אגם"]["3"].img = "";
-allMissionsData["אגם"]["3"].escort = "";
+allMissionsData["אגם"]["3"].tree = PAPAYA;
+allMissionsData["אגם"]["3"].img = "/missions/lightwave.png";
+allMissionsData["אגם"]["3"].escort = HABIBI_AMIT;
 
-allMissionsData["אגם"]["4"].address = "";
-allMissionsData["אגם"]["4"].map = "";
+allMissionsData["אגם"]["4"].address = BIALIK_NAME;
+allMissionsData["אגם"]["4"].map = BIALIK;
 allMissionsData["אגם"]["4"].group = "";
-allMissionsData["אגם"]["4"].tree = "";
-allMissionsData["אגם"]["4"].img = "";
-allMissionsData["אגם"]["4"].escort = "";
+allMissionsData["אגם"]["4"].tree = MANGO;
+allMissionsData["אגם"]["4"].img = BIALIK_PIC;
+allMissionsData["אגם"]["4"].escort = HABIBI_AMIT;
 
-allMissionsData["אגם"]["5"].address = "";
-allMissionsData["אגם"]["5"].map = "";
+allMissionsData["אגם"]["5"].address = BIALIK_NAME;
+allMissionsData["אגם"]["5"].map = BIALIK;
 allMissionsData["אגם"]["5"].group = "";
-allMissionsData["אגם"]["5"].tree = "";
-allMissionsData["אגם"]["5"].img = "";
-allMissionsData["אגם"]["5"].escort = "";
-allMissionsData["אגם"]["5"].dest = "";
+allMissionsData["אגם"]["5"].tree = MANGO;
+allMissionsData["אגם"]["5"].img = BIALIK_PIC;
+allMissionsData["אגם"]["5"].escort = HABIBI_AMIT;
+allMissionsData["אגם"]["5"].dest = "הס 1";
 
-allMissionsData["אגם"]["6"].address = "";
-allMissionsData["אגם"]["6"].map = "";
-allMissionsData["אגם"]["6"].group = "";
-allMissionsData["אגם"]["6"].tree = "";
-allMissionsData["אגם"]["6"].escort = "";
+allMissionsData["אגם"]["6"].address = PANKINA_NAME;
+allMissionsData["אגם"]["6"].map = PANKINA;
+allMissionsData["אגם"]["6"].group = COUPLE3;
+allMissionsData["אגם"]["6"].tree = MANGO;
+allMissionsData["אגם"]["6"].escort = HABIBI_AMIT;
 
-allMissionsData["אגם"]["7"].address = "";
-allMissionsData["אגם"]["7"].map = "";
-allMissionsData["אגם"]["7"].group = "";
-allMissionsData["אגם"]["7"].tree = "";
-allMissionsData["אגם"]["7"].escort = "";
+allMissionsData["אגם"]["7"].address = LURIA_NAME;
+allMissionsData["אגם"]["7"].map = LURIA;
+allMissionsData["אגם"]["7"].group = GROUP1;
+allMissionsData["אגם"]["7"].tree = BROSH;
+allMissionsData["אגם"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
-allMissionsData["אגם"]["8"].address = "";
+allMissionsData["אגם"]["8"].address = CINEMA_NAME;
 allMissionsData["אגם"]["8"].intel = INTEL_TASK8_1;
-allMissionsData["אגם"]["8"].map = "";
-allMissionsData["אגם"]["8"].group = "";
-allMissionsData["אגם"]["8"].tree = "";
-allMissionsData["אגם"]["8"].escort = "";
+allMissionsData["אגם"]["8"].map = CINEMA_HOTEL;
+allMissionsData["אגם"]["8"].group = GROUP1;
+allMissionsData["אגם"]["8"].tree = BROSH;
+allMissionsData["אגם"]["8"].escort = HABIBTI_AVIA;
 
 // --- רני ---
-allMissionsData["רני"]["1"].address = "";
-allMissionsData["רני"]["1"].map = "";
+allMissionsData["רני"]["1"].address = ROTCHILD_NAME;
+allMissionsData["רני"]["1"].map = ROTCHILD_22;
 allMissionsData["רני"]["1"].group = "";
 allMissionsData["רני"]["1"].tree = "";
-allMissionsData["רני"]["1"].escort = "";
+allMissionsData["רני"]["1"].escort = HABIBI_ELIKO;
 
-allMissionsData["רני"]["2"].address = "";
-allMissionsData["רני"]["2"].map = "";
+allMissionsData["רני"]["2"].address = "טישלר מוצרי חשמל מונטיפורי 30";
+allMissionsData["רני"]["2"].map = "32.06552084706536, 34.77261458936652";
 allMissionsData["רני"]["2"].group = "";
-allMissionsData["רני"]["2"].tree = "";
-allMissionsData["רני"]["2"].img = "";
-allMissionsData["רני"]["2"].escort = "";
+allMissionsData["רני"]["2"].tree = ILAN;
+allMissionsData["רני"]["2"].img = "/missions/tishler.png";
+allMissionsData["רני"]["2"].escort = HABIBI_ELIKO;
 
-allMissionsData["רני"]["3"].address = "";
-allMissionsData["רני"]["3"].map = "";
+allMissionsData["רני"]["3"].address = "טישלר מוצרי חשמל מונטיפורי 30";
+allMissionsData["רני"]["3"].map = "32.06552084706536, 34.77261458936652";
 allMissionsData["רני"]["3"].group = "";
-allMissionsData["רני"]["3"].tree = "";
-allMissionsData["רני"]["3"].img = "";
-allMissionsData["רני"]["3"].escort = "";
+allMissionsData["רני"]["3"].tree = ILAN;
+allMissionsData["רני"]["3"].img = "/missions/tishler.png";
+allMissionsData["רני"]["3"].escort = HABIBI_ELIKO;
 
-allMissionsData["רני"]["4"].address = "";
-allMissionsData["רני"]["4"].map = "";
+allMissionsData["רני"]["4"].address = ALBERT_NAME;
+allMissionsData["רני"]["4"].map = ALBERT;
 allMissionsData["רני"]["4"].group = "";
-allMissionsData["רני"]["4"].tree = "";
-allMissionsData["רני"]["4"].img = "";
-allMissionsData["רני"]["4"].escort = "";
+allMissionsData["רני"]["4"].tree = BROSH;
+allMissionsData["רני"]["4"].img = ALBERT_PIC;
+allMissionsData["רני"]["4"].escort = HABIBI_ELIKO;
 
-allMissionsData["רני"]["5"].address = "";
-allMissionsData["רני"]["5"].map = "";
+allMissionsData["רני"]["5"].address = ALBERT_NAME;
+allMissionsData["רני"]["5"].map = ALBERT;
 allMissionsData["רני"]["5"].group = "";
-allMissionsData["רני"]["5"].tree = "";
-allMissionsData["רני"]["5"].img = "";
-allMissionsData["רני"]["5"].escort = "";
-allMissionsData["רני"]["5"].dest = "";
+allMissionsData["רני"]["5"].tree = BROSH;
+allMissionsData["רני"]["5"].img = ALBERT_PIC;
+allMissionsData["רני"]["5"].escort = HABIBI_ELIKO;
+allMissionsData["רני"]["5"].dest = "ג'ורג' אליוט 13";
 
-allMissionsData["רני"]["6"].address = "";
-allMissionsData["רני"]["6"].map = "";
-allMissionsData["רני"]["6"].group = "";
-allMissionsData["רני"]["6"].tree = "";
-allMissionsData["רני"]["6"].escort = "";
+allMissionsData["רני"]["6"].address = LASHUK_NAME;
+allMissionsData["רני"]["6"].map = LASHUK;
+allMissionsData["רני"]["6"].group = COUPLE7;
+allMissionsData["רני"]["6"].tree = MANGO;
+allMissionsData["רני"]["6"].escort = HABIBI_AMIT;
 
-allMissionsData["רני"]["7"].address = "";
-allMissionsData["רני"]["7"].map = "";
-allMissionsData["רני"]["7"].group = "";
-allMissionsData["רני"]["7"].tree = "";
-allMissionsData["רני"]["7"].escort = "";
+allMissionsData["רני"]["7"].address = CENTER_NAME;
+allMissionsData["רני"]["7"].map = CENTER;
+allMissionsData["רני"]["7"].group = GROUP4;
+allMissionsData["רני"]["7"].tree = ILAN;
+allMissionsData["רני"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
-allMissionsData["רני"]["8"].address = "";
+allMissionsData["רני"]["8"].address = CINEMA_NAME;
 allMissionsData["רני"]["8"].intel = INTEL_TASK8_2;
-allMissionsData["רני"]["8"].map = "";
-allMissionsData["רני"]["8"].group = "";
-allMissionsData["רני"]["8"].tree = "";
-allMissionsData["רני"]["8"].escort = "";
+allMissionsData["רני"]["8"].map = CINEMA_HOTEL;
+allMissionsData["רני"]["8"].group = GROUP4;
+allMissionsData["רני"]["8"].tree = ILAN;
+allMissionsData["רני"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- נירו ---
-allMissionsData["נירו"]["1"].address = "";
-allMissionsData["נירו"]["1"].map = "";
+allMissionsData["נירו"]["1"].address = C_TOWER_NAME;
+allMissionsData["נירו"]["1"].map = C_TOWER;
 allMissionsData["נירו"]["1"].group = "";
 allMissionsData["נירו"]["1"].tree = "";
-allMissionsData["נירו"]["1"].escort = "";
+allMissionsData["נירו"]["1"].escort = HABIBTI_AVIA;
 
-allMissionsData["נירו"]["2"].address = "";
-allMissionsData["נירו"]["2"].map = "";
+allMissionsData["נירו"]["2"].address = "פון מרקט קינג ג'ורג'/בוגרשוב";
+allMissionsData["נירו"]["2"].map = "32.07394926063898, 34.77521607420142";
 allMissionsData["נירו"]["2"].group = "";
-allMissionsData["נירו"]["2"].tree = "";
-allMissionsData["נירו"]["2"].img = "";
-allMissionsData["נירו"]["2"].escort = "";
+allMissionsData["נירו"]["2"].tree = MANGO;
+allMissionsData["נירו"]["2"].img = "/missions/sunGlassesCenterpng.png";
+allMissionsData["נירו"]["2"].escort = HABIBTI_AVIA;
 
-allMissionsData["נירו"]["3"].address = "";
-allMissionsData["נירו"]["3"].map = "";
+allMissionsData["נירו"]["3"].address = "פון מרקט קינג ג'ורג'/בוגרשוב";
+allMissionsData["נירו"]["3"].map = "32.07394926063898, 34.77521607420142";
 allMissionsData["נירו"]["3"].group = "";
-allMissionsData["נירו"]["3"].tree = "";
-allMissionsData["נירו"]["3"].img = "";
-allMissionsData["נירו"]["3"].escort = "";
+allMissionsData["נירו"]["3"].tree = MANGO;
+allMissionsData["נירו"]["3"].img = "/missions/sunGlassesCenterpng.png";
+allMissionsData["נירו"]["3"].escort = HABIBTI_AVIA;
 
-allMissionsData["נירו"]["4"].address = "";
-allMissionsData["נירו"]["4"].map = "";
+allMissionsData["נירו"]["4"].address = DIZI_PARK_NAME;
+allMissionsData["נירו"]["4"].map = DIZI_SQUERE;
 allMissionsData["נירו"]["4"].group = "";
-allMissionsData["נירו"]["4"].tree = "";
-allMissionsData["נירו"]["4"].img = "";
-allMissionsData["נירו"]["4"].escort = "";
+allMissionsData["נירו"]["4"].tree = PAPAYA;
+allMissionsData["נירו"]["4"].img = DIZI_PIC;
+allMissionsData["נירו"]["4"].escort = HABIBTI_AVIA;
 
-allMissionsData["נירו"]["5"].address = "";
-allMissionsData["נירו"]["5"].map = "";
+allMissionsData["נירו"]["5"].address = DIZI_PARK_NAME;
+allMissionsData["נירו"]["5"].map = DIZI_SQUERE;
 allMissionsData["נירו"]["5"].group = "";
-allMissionsData["נירו"]["5"].tree = "";
-allMissionsData["נירו"]["5"].img = "";
-allMissionsData["נירו"]["5"].escort = "";
-allMissionsData["נירו"]["5"].dest = "";
+allMissionsData["נירו"]["5"].tree = PAPAYA;
+allMissionsData["נירו"]["5"].img = DIZI_PIC;
+allMissionsData["נירו"]["5"].escort = HABIBTI_AVIA;
+allMissionsData["נירו"]["5"].dest = "סמולנסקין 7";
 
-allMissionsData["נירו"]["6"].address = "";
-allMissionsData["נירו"]["6"].map = "";
-allMissionsData["נירו"]["6"].group = "";
-allMissionsData["נירו"]["6"].tree = "";
-allMissionsData["נירו"]["6"].escort = "";
+allMissionsData["נירו"]["6"].address = ROSTIKO_NAME;
+allMissionsData["נירו"]["6"].map = ROSTIKO;
+allMissionsData["נירו"]["6"].group = COUPLE6;
+allMissionsData["נירו"]["6"].tree = ILAN;
+allMissionsData["נירו"]["6"].escort = HABIBI_ELIKO;
 
-allMissionsData["נירו"]["7"].address = "";
-allMissionsData["נירו"]["7"].map = "";
-allMissionsData["נירו"]["7"].group = "";
-allMissionsData["נירו"]["7"].tree = "";
-allMissionsData["נירו"]["7"].escort = "";
+allMissionsData["נירו"]["7"].address = CENTER_NAME;
+allMissionsData["נירו"]["7"].map = CENTER;
+allMissionsData["נירו"]["7"].group = ILAN;
+allMissionsData["נירו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
-allMissionsData["נירו"]["8"].address = "";
+allMissionsData["נירו"]["8"].address = CINEMA_NAME;
 allMissionsData["נירו"]["8"].intel = INTEL_TASK8_2;
-allMissionsData["נירו"]["8"].map = "";
-allMissionsData["נירו"]["8"].group = "";
-allMissionsData["נירו"]["8"].tree = "";
-allMissionsData["נירו"]["8"].escort = "";
+allMissionsData["נירו"]["8"].map = CINEMA_HOTEL;
+allMissionsData["נירו"]["8"].group = GROUP4;
+allMissionsData["נירו"]["8"].tree = ILAN;
+allMissionsData["נירו"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- ניירו ---
-allMissionsData["ניירו"]["1"].address = "";
-allMissionsData["ניירו"]["1"].map = "";
+allMissionsData["ניירו"]["1"].address = C_TOWER_NAME;
+allMissionsData["ניירו"]["1"].map = C_TOWER;
 allMissionsData["ניירו"]["1"].group = "";
 allMissionsData["ניירו"]["1"].tree = "";
-allMissionsData["ניירו"]["1"].escort = "";
+allMissionsData["ניירו"]["1"].escort = HABIBTI_AVIA;
 
-allMissionsData["ניירו"]["2"].address = "";
-allMissionsData["ניירו"]["2"].map = "";
+allMissionsData["ניירו"]["2"].address = "פון מרקט קינג ג'ורג'/בוגרשוב";
+allMissionsData["ניירו"]["2"].map = "32.07394926063898, 34.77521607420142";
 allMissionsData["ניירו"]["2"].group = "";
-allMissionsData["ניירו"]["2"].tree = "";
-allMissionsData["ניירו"]["2"].img = "";
-allMissionsData["ניירו"]["2"].escort = "";
+allMissionsData["ניירו"]["2"].tree = MANGO;
+allMissionsData["ניירו"]["2"].img = "/missions/sunGlassesCenterpng.png";
+allMissionsData["ניירו"]["2"].escort = HABIBTI_AVIA;
 
-allMissionsData["ניירו"]["3"].address = "";
-allMissionsData["ניירו"]["3"].map = "";
+allMissionsData["ניירו"]["3"].address = "פון מרקט קינג ג'ורג'/בוגרשוב";
+allMissionsData["ניירו"]["3"].map = "32.07394926063898, 34.77521607420142";
 allMissionsData["ניירו"]["3"].group = "";
-allMissionsData["ניירו"]["3"].tree = "";
-allMissionsData["ניירו"]["3"].img = "";
-allMissionsData["ניירו"]["3"].escort = "";
+allMissionsData["ניירו"]["3"].tree = MANGO;
+allMissionsData["ניירו"]["3"].img = "/missions/sunGlassesCenterpng.png";
+allMissionsData["ניירו"]["3"].escort = HABIBTI_AVIA;
 
-allMissionsData["ניירו"]["4"].address = "";
-allMissionsData["ניירו"]["4"].map = "";
+allMissionsData["ניירו"]["4"].address = DIZI_PARK_NAME;
+allMissionsData["ניירו"]["4"].map = DIZI_SQUERE;
 allMissionsData["ניירו"]["4"].group = "";
-allMissionsData["ניירו"]["4"].tree = "";
-allMissionsData["ניירו"]["4"].img = "";
-allMissionsData["ניירו"]["4"].escort = "";
+allMissionsData["ניירו"]["4"].tree = PAPAYA;
+allMissionsData["ניירו"]["4"].img = DIZI_PIC;
+allMissionsData["ניירו"]["4"].escort = HABIBTI_AVIA;
 
-allMissionsData["ניירו"]["5"].address = "";
-allMissionsData["ניירו"]["5"].map = "";
+allMissionsData["ניירו"]["5"].address = DIZI_PARK_NAME;
+allMissionsData["ניירו"]["5"].map = DIZI_SQUERE;
 allMissionsData["ניירו"]["5"].group = "";
-allMissionsData["ניירו"]["5"].tree = "";
-allMissionsData["ניירו"]["5"].img = "";
-allMissionsData["ניירו"]["5"].escort = "";
-allMissionsData["ניירו"]["5"].dest = "";
+allMissionsData["ניירו"]["5"].tree = PAPAYA;
+allMissionsData["ניירו"]["5"].img = DIZI_PIC;
+allMissionsData["ניירו"]["5"].escort = HABIBTI_AVIA;
+allMissionsData["ניירו"]["5"].dest = "סמולנסקין 7";
 
-allMissionsData["ניירו"]["6"].address = "";
-allMissionsData["ניירו"]["6"].map = "";
-allMissionsData["ניירו"]["6"].group = "";
-allMissionsData["ניירו"]["6"].tree = "";
-allMissionsData["ניירו"]["6"].escort = "";
+allMissionsData["ניירו"]["6"].address = ROSTIKO_NAME;
+allMissionsData["ניירו"]["6"].map = ROSTIKO;
+allMissionsData["ניירו"]["6"].group = COUPLE6;
+allMissionsData["ניירו"]["6"].tree = ILAN;
+allMissionsData["ניירו"]["6"].escort = HABIBI_ELIKO;
 
-allMissionsData["ניירו"]["7"].address = "";
-allMissionsData["ניירו"]["7"].map = "";
-allMissionsData["ניירו"]["7"].group = "";
-allMissionsData["ניירו"]["7"].tree = "";
-allMissionsData["ניירו"]["7"].escort = "";
+allMissionsData["ניירו"]["7"].address = CENTER_NAME;
+allMissionsData["ניירו"]["7"].map = CENTER;
+allMissionsData["ניירו"]["7"].group = ILAN;
+allMissionsData["ניירו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
-allMissionsData["ניירו"]["8"].address = "";
+allMissionsData["ניירו"]["8"].address = CINEMA_NAME;
 allMissionsData["ניירו"]["8"].intel = INTEL_TASK8_2;
-allMissionsData["ניירו"]["8"].map = "";
-allMissionsData["ניירו"]["8"].group = "";
-allMissionsData["ניירו"]["8"].tree = "";
-allMissionsData["ניירו"]["8"].escort = "";
+allMissionsData["ניירו"]["8"].map = CINEMA_HOTEL;
+allMissionsData["ניירו"]["8"].group = GROUP4;
+allMissionsData["ניירו"]["8"].tree = ILAN;
+allMissionsData["ניירו"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- יוני ---
-allMissionsData["יוני"]["1"].address = "";
-allMissionsData["יוני"]["1"].map = "";
+allMissionsData["יוני"]["1"].address = ROTCHILD_NAME;
+allMissionsData["יוני"]["1"].map = ROTCHILD_22;
 allMissionsData["יוני"]["1"].group = "";
 allMissionsData["יוני"]["1"].tree = "";
-allMissionsData["יוני"]["1"].escort = "";
+allMissionsData["יוני"]["1"].escort = HABIBI_ELIKO;
 
-allMissionsData["יוני"]["2"].address = "";
-allMissionsData["יוני"]["2"].map = "";
+allMissionsData["יוני"]["2"].address = "טוי שופ מונטיפיורי 33";
+allMissionsData["יוני"]["2"].map = "מונטיפיורי 33 תל אביב";
 allMissionsData["יוני"]["2"].group = "";
-allMissionsData["יוני"]["2"].tree = "";
-allMissionsData["יוני"]["2"].img = "";
-allMissionsData["יוני"]["2"].escort = "";
+allMissionsData["יוני"]["2"].tree = ILAN;
+allMissionsData["יוני"]["2"].img = "/missions/toishop.png";
+allMissionsData["יוני"]["2"].escort = HABIBI_ELIKO;
 
-allMissionsData["יוני"]["3"].address = "";
-allMissionsData["יוני"]["3"].map = "";
+allMissionsData["יוני"]["3"].address = "טוי שופ מונטיפיורי 33";
+allMissionsData["יוני"]["3"].map = "מונטיפיורי 33 תל אביב";
 allMissionsData["יוני"]["3"].group = "";
-allMissionsData["יוני"]["3"].tree = "";
-allMissionsData["יוני"]["3"].img = "";
-allMissionsData["יוני"]["3"].escort = "";
+allMissionsData["יוני"]["3"].tree = ILAN;
+allMissionsData["יוני"]["3"].img = "/missions/toishop.png";
+allMissionsData["יוני"]["3"].escort = HABIBI_ELIKO;
 
-allMissionsData["יוני"]["4"].address = "";
-allMissionsData["יוני"]["4"].map = "";
+allMissionsData["יוני"]["4"].address = NAFHA_NAME;
+allMissionsData["יוני"]["4"].map = NAFHA;
 allMissionsData["יוני"]["4"].group = "";
-allMissionsData["יוני"]["4"].tree = "";
-allMissionsData["יוני"]["4"].img = "";
-allMissionsData["יוני"]["4"].escort = "";
+allMissionsData["יוני"]["4"].tree = BROSH;
+allMissionsData["יוני"]["4"].img = NAFHA_PIC;
+allMissionsData["יוני"]["4"].escort = HABIBI_ELIKO;
 
-allMissionsData["יוני"]["5"].address = "";
-allMissionsData["יוני"]["5"].map = "";
+allMissionsData["יוני"]["5"].address = NAFHA_NAME;
+allMissionsData["יוני"]["5"].map = NAFHA;
 allMissionsData["יוני"]["5"].group = "";
-allMissionsData["יוני"]["5"].tree = "";
-allMissionsData["יוני"]["5"].img = "";
-allMissionsData["יוני"]["5"].escort = "";
-allMissionsData["יוני"]["5"].dest = "";
+allMissionsData["יוני"]["5"].tree = BROSH;
+allMissionsData["יוני"]["5"].img = NAFHA_PIC;
+allMissionsData["יוני"]["5"].escort = HABIBI_ELIKO;
+allMissionsData["יוני"]["5"].dest = "פיארברג 22";
 
-allMissionsData["יוני"]["6"].address = "";
-allMissionsData["יוני"]["6"].map = "";
-allMissionsData["יוני"]["6"].group = "";
-allMissionsData["יוני"]["6"].tree = "";
-allMissionsData["יוני"]["6"].escort = "";
+allMissionsData["יוני"]["6"].address = PROZDOR_NAME;
+allMissionsData["יוני"]["6"].map = PROZDOR;
+allMissionsData["יוני"]["6"].group = COUPLE4;
+allMissionsData["יוני"]["6"].tree = PAPAYA;
+allMissionsData["יוני"]["6"].escort = HABIBTI_AVIA;
 
-allMissionsData["יוני"]["7"].address = "";
-allMissionsData["יוני"]["7"].map = "";
-allMissionsData["יוני"]["7"].group = "";
-allMissionsData["יוני"]["7"].tree = "";
-allMissionsData["יוני"]["7"].escort = "";
+allMissionsData["יוני"]["7"].address = LURIA_NAME;
+allMissionsData["יוני"]["7"].map = LURIA;
+allMissionsData["יוני"]["7"].group = GROUP1;
+allMissionsData["יוני"]["7"].tree = BROSH;
+allMissionsData["יוני"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
-allMissionsData["יוני"]["8"].address = "";
+allMissionsData["יוני"]["8"].address = CINEMA_NAME;
 allMissionsData["יוני"]["8"].intel = INTEL_TASK8_1;
-allMissionsData["יוני"]["8"].map = "";
-allMissionsData["יוני"]["8"].group = "";
-allMissionsData["יוני"]["8"].tree = "";
-allMissionsData["יוני"]["8"].escort = "";
+allMissionsData["יוני"]["8"].map = CINEMA_HOTEL;
+allMissionsData["יוני"]["8"].group = GROUP1;
+allMissionsData["יוני"]["8"].tree = BROSH;
+allMissionsData["יוני"]["8"].escort = HABIBTI_AVIA;
 
 // --- גליקמן ---
-allMissionsData["גליקמן"]["1"].address = "";
-allMissionsData["גליקמן"]["1"].map = "";
+allMissionsData["גליקמן"]["1"].address = C_TOWER_NAME;
+allMissionsData["גליקמן"]["1"].map = C_TOWER_NAME;
 allMissionsData["גליקמן"]["1"].group = "";
 allMissionsData["גליקמן"]["1"].tree = "";
-allMissionsData["גליקמן"]["1"].escort = "";
+allMissionsData["גליקמן"]["1"].escort = HABIBTI_AVIA;
 
-allMissionsData["גליקמן"]["2"].address = "";
-allMissionsData["גליקמן"]["2"].map = "";
+allMissionsData["גליקמן"]["2"].address = "סטימצקי דיזינגוף 109";
+allMissionsData["גליקמן"]["2"].map = "דיזינגוף 109 תל אביב";
 allMissionsData["גליקמן"]["2"].group = "";
-allMissionsData["גליקמן"]["2"].tree = "";
-allMissionsData["גליקמן"]["2"].img = "";
-allMissionsData["גליקמן"]["2"].escort = "";
+allMissionsData["גליקמן"]["2"].tree = MANGO;
+allMissionsData["גליקמן"]["2"].img = "/missions/DIZI_109.png";
+allMissionsData["גליקמן"]["2"].escort = HABIBTI_AVIA;
 
-allMissionsData["גליקמן"]["3"].address = "";
-allMissionsData["גליקמן"]["3"].map = "";
+allMissionsData["גליקמן"]["3"].address = "סטימצקי דיזינגוף 109";
+allMissionsData["גליקמן"]["3"].map = "דיזינגוף 109 תל אביב";
 allMissionsData["גליקמן"]["3"].group = "";
-allMissionsData["גליקמן"]["3"].tree = "";
-allMissionsData["גליקמן"]["3"].img = "";
-allMissionsData["גליקמן"]["3"].escort = "";
+allMissionsData["גליקמן"]["3"].tree = MANGO;
+allMissionsData["גליקמן"]["3"].img = "/missions/DIZI_109.png";
+allMissionsData["גליקמן"]["3"].escort = HABIBTI_AVIA;
 
-allMissionsData["גליקמן"]["4"].address = "";
-allMissionsData["גליקמן"]["4"].map = "";
+allMissionsData["גליקמן"]["4"].address = SHOTER_NAME;
+allMissionsData["גליקמן"]["4"].map = SHOTER;
 allMissionsData["גליקמן"]["4"].group = "";
-allMissionsData["גליקמן"]["4"].tree = "";
-allMissionsData["גליקמן"]["4"].img = "";
-allMissionsData["גליקמן"]["4"].escort = "";
+allMissionsData["גליקמן"]["4"].tree = PAPAYA;
+allMissionsData["גליקמן"]["4"].img = SHOTER_PIC;
+allMissionsData["גליקמן"]["4"].escort = HABIBTI_AVIA;
 
-allMissionsData["גליקמן"]["5"].address = "";
-allMissionsData["גליקמן"]["5"].map = "";
+allMissionsData["גליקמן"]["5"].address = SHOTER_NAME;
+allMissionsData["גליקמן"]["5"].map = SHOTER;
 allMissionsData["גליקמן"]["5"].group = "";
-allMissionsData["גליקמן"]["5"].tree = "";
-allMissionsData["גליקמן"]["5"].img = "";
-allMissionsData["גליקמן"]["5"].escort = "";
-allMissionsData["גליקמן"]["5"].dest = "";
+allMissionsData["גליקמן"]["5"].tree = PAPAYA;
+allMissionsData["גליקמן"]["5"].img = SHOTER_PIC;
+allMissionsData["גליקמן"]["5"].escort = HABIBTI_AVIA;
+allMissionsData["גליקמן"]["5"].dest = "לוריא 10";
 
-allMissionsData["גליקמן"]["6"].address = "";
-allMissionsData["גליקמן"]["6"].map = "";
-allMissionsData["גליקמן"]["6"].group = "";
-allMissionsData["גליקמן"]["6"].tree = "";
-allMissionsData["גליקמן"]["6"].escort = "";
+allMissionsData["גליקמן"]["6"].address = PROZDOR_NAME;
+allMissionsData["גליקמן"]["6"].map = PROZDOR;
+allMissionsData["גליקמן"]["6"].group = COUPLE4;
+allMissionsData["גליקמן"]["6"].tree = PAPAYA;
+allMissionsData["גליקמן"]["6"].escort = HABIBTI_AVIA;
 
-allMissionsData["גליקמן"]["7"].address = "";
-allMissionsData["גליקמן"]["7"].map = "";
-allMissionsData["גליקמן"]["7"].group = "";
-allMissionsData["גליקמן"]["7"].tree = "";
-allMissionsData["גליקמן"]["7"].escort = "";
+allMissionsData["גליקמן"]["7"].address = CENTER_NAME;
+allMissionsData["גליקמן"]["7"].map = CENTER;
+allMissionsData["גליקמן"]["7"].group = GROUP2;
+allMissionsData["גליקמן"]["7"].tree = ILAN;
+allMissionsData["גליקמן"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
-allMissionsData["גליקמן"]["8"].address = "";
+allMissionsData["גליקמן"]["8"].address = CINEMA_NAME;
 allMissionsData["גליקמן"]["8"].intel = INTEL_TASK8_2;
-allMissionsData["גליקמן"]["8"].map = "";
-allMissionsData["גליקמן"]["8"].group = "";
-allMissionsData["גליקמן"]["8"].tree = "";
-allMissionsData["גליקמן"]["8"].escort = "";
+allMissionsData["גליקמן"]["8"].map = CINEMA_HOTEL;
+allMissionsData["גליקמן"]["8"].group = GROUP2;
+allMissionsData["גליקמן"]["8"].tree = ILAN;
+allMissionsData["גליקמן"]["8"].escort =  HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- גלעד ---
-allMissionsData["גלעד"]["1"].address = "";
-allMissionsData["גלעד"]["1"].map = "";
+allMissionsData["גלעד"]["1"].address = C_TOWER_NAME;
+allMissionsData["גלעד"]["1"].map = C_TOWER;
 allMissionsData["גלעד"]["1"].group = "";
 allMissionsData["גלעד"]["1"].tree = "";
-allMissionsData["גלעד"]["1"].escort = "";
+allMissionsData["גלעד"]["1"].escort = HABIBTI_AVIA;
 
-allMissionsData["גלעד"]["2"].address = "";
-allMissionsData["גלעד"]["2"].map = "";
+allMissionsData["גלעד"]["2"].address = "אפרטיף בוטיק יינות דיזינגוף 93";
+allMissionsData["גלעד"]["2"].map = "דיזינגוף 93 תל אביב";
 allMissionsData["גלעד"]["2"].group = "";
-allMissionsData["גלעד"]["2"].tree = "";
-allMissionsData["גלעד"]["2"].img = "";
-allMissionsData["גלעד"]["2"].escort = "";
+allMissionsData["גלעד"]["2"].tree = MANGO;
+allMissionsData["גלעד"]["2"].img = "/missions/apertif.png";
+allMissionsData["גלעד"]["2"].escort = HABIBTI_AVIA;
 
-allMissionsData["גלעד"]["3"].address = "";
-allMissionsData["גלעד"]["3"].map = "";
+allMissionsData["גלעד"]["3"].address = "אפרטיף בוטיק יינות דיזינגוף 93";
+allMissionsData["גלעד"]["3"].map = "דיזינגוף 93 תל אביב";
 allMissionsData["גלעד"]["3"].group = "";
-allMissionsData["גלעד"]["3"].tree = "";
-allMissionsData["גלעד"]["3"].img = "";
-allMissionsData["גלעד"]["3"].escort = "";
+allMissionsData["גלעד"]["3"].tree = MANGO;
+allMissionsData["גלעד"]["3"].img = "/missions/apertif.png";
+allMissionsData["גלעד"]["3"].escort = HABIBTI_AVIA;
 
-allMissionsData["גלעד"]["4"].address = "";
-allMissionsData["גלעד"]["4"].map = "";
+allMissionsData["גלעד"]["4"].address = SHOTER_NAME;
+allMissionsData["גלעד"]["4"].map = SHOTER;
 allMissionsData["גלעד"]["4"].group = "";
-allMissionsData["גלעד"]["4"].tree = "";
-allMissionsData["גלעד"]["4"].img = "";
-allMissionsData["גלעד"]["4"].escort = "";
+allMissionsData["גלעד"]["4"].tree = PAPAYA;
+allMissionsData["גלעד"]["4"].img = SHOTER_PIC;
+allMissionsData["גלעד"]["4"].escort = HABIBTI_AVIA;
 
-allMissionsData["גלעד"]["5"].address = "";
-allMissionsData["גלעד"]["5"].map = "";
+allMissionsData["גלעד"]["5"].address = SHOTER_NAME;
+allMissionsData["גלעד"]["5"].map = SHOTER;
 allMissionsData["גלעד"]["5"].group = "";
-allMissionsData["גלעד"]["5"].tree = "";
-allMissionsData["גלעד"]["5"].img = "";
-allMissionsData["גלעד"]["5"].escort = "";
-allMissionsData["גלעד"]["5"].dest = "";
+allMissionsData["גלעד"]["5"].tree = PAPAYA;
+allMissionsData["גלעד"]["5"].img = SHOTER_PIC;
+allMissionsData["גלעד"]["5"].escort = HABIBTI_AVIA;
+allMissionsData["גלעד"]["5"].dest = "לוריא 10";
 
-allMissionsData["גלעד"]["6"].address = "";
-allMissionsData["גלעד"]["6"].map = "";
-allMissionsData["גלעד"]["6"].group = "";
-allMissionsData["גלעד"]["6"].tree = "";
-allMissionsData["גלעד"]["6"].escort = "";
+allMissionsData["גלעד"]["6"].address = MEXICANA_NAME;
+allMissionsData["גלעד"]["6"].map = MEXICANA;
+allMissionsData["גלעד"]["6"].group = COUPLE8;
+allMissionsData["גלעד"]["6"].tree = PAPAYA;
+allMissionsData["גלעד"]["6"].escort = HABIBTI_AVIA;
 
-allMissionsData["גלעד"]["7"].address = "";
-allMissionsData["גלעד"]["7"].map = "";
-allMissionsData["גלעד"]["7"].group = "";
-allMissionsData["גלעד"]["7"].tree = "";
-allMissionsData["גלעד"]["7"].escort = "";
+allMissionsData["גלעד"]["7"].address = LURIA_NAME;
+allMissionsData["גלעד"]["7"].map = LURIA;
+allMissionsData["גלעד"]["7"].group = GROUP3;
+allMissionsData["גלעד"]["7"].tree = BROSH;
+allMissionsData["גלעד"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
-allMissionsData["גלעד"]["8"].address = "";
+allMissionsData["גלעד"]["8"].address = CINEMA_NAME;
 allMissionsData["גלעד"]["8"].intel = INTEL_TASK8_1;
-allMissionsData["גלעד"]["8"].map = "";
-allMissionsData["גלעד"]["8"].group = "";
-allMissionsData["גלעד"]["8"].tree = "";
-allMissionsData["גלעד"]["8"].escort = "";
+allMissionsData["גלעד"]["8"].map = CINEMA_HOTEL;
+allMissionsData["גלעד"]["8"].group = GROUP3;
+allMissionsData["גלעד"]["8"].tree = BROSH;
+allMissionsData["גלעד"]["8"].escort = HABIBTI_AVIA;
 
 // --- אתי ---
-allMissionsData["אתי"]["1"].address = "";
-allMissionsData["אתי"]["1"].map = "";
+allMissionsData["אתי"]["1"].address = ROTCHILD_NAME;
+allMissionsData["אתי"]["1"].map = ROTCHILD_22;
 allMissionsData["אתי"]["1"].group = "";
 allMissionsData["אתי"]["1"].tree = "";
-allMissionsData["אתי"]["1"].escort = "";
+allMissionsData["אתי"]["1"].escort = HABIBI_ELIKO;
 
-allMissionsData["אתי"]["2"].address = "";
-allMissionsData["אתי"]["2"].map = "";
+allMissionsData["אתי"]["2"].address = "טוי שופ מונטיפיורי 33";
+allMissionsData["אתי"]["2"].map = "מונטיפיורי 33 תל אביב";
 allMissionsData["אתי"]["2"].group = "";
-allMissionsData["אתי"]["2"].tree = "";
-allMissionsData["אתי"]["2"].img = "";
-allMissionsData["אתי"]["2"].escort = "";
+allMissionsData["אתי"]["2"].tree = ILAN;
+allMissionsData["אתי"]["2"].img = "/missions/toishop.png";
+allMissionsData["אתי"]["2"].escort = HABIBI_ELIKO;
 
-allMissionsData["אתי"]["3"].address = "";
-allMissionsData["אתי"]["3"].map = "";
+allMissionsData["אתי"]["3"].address = "טוי שופ מונטיפיורי 33";
+allMissionsData["אתי"]["3"].map = "מונטיפיורי 33 תל אביב";
 allMissionsData["אתי"]["3"].group = "";
-allMissionsData["אתי"]["3"].tree = "";
-allMissionsData["אתי"]["3"].img = "";
-allMissionsData["אתי"]["3"].escort = "";
+allMissionsData["אתי"]["3"].tree = ILAN;
+allMissionsData["אתי"]["3"].img = "/missions/toishop.png";
+allMissionsData["אתי"]["3"].escort = HABIBI_ELIKO;
 
-allMissionsData["אתי"]["4"].address = "";
-allMissionsData["אתי"]["4"].map = "";
+allMissionsData["אתי"]["4"].address = NAFHA_NAME;
+allMissionsData["אתי"]["4"].map = NAFHA;
 allMissionsData["אתי"]["4"].group = "";
-allMissionsData["אתי"]["4"].tree = "";
-allMissionsData["אתי"]["4"].img = "";
-allMissionsData["אתי"]["4"].escort = "";
+allMissionsData["אתי"]["4"].tree = BROSH;
+allMissionsData["אתי"]["4"].img = NAFHA_PIC;
+allMissionsData["אתי"]["4"].escort = HABIBI_ELIKO;
 
-allMissionsData["אתי"]["5"].address = "";
-allMissionsData["אתי"]["5"].map = "";
+allMissionsData["אתי"]["5"].address = NAFHA_NAME;
+allMissionsData["אתי"]["5"].map = NAFHA;
 allMissionsData["אתי"]["5"].group = "";
-allMissionsData["אתי"]["5"].tree = "";
-allMissionsData["אתי"]["5"].img = "";
-allMissionsData["אתי"]["5"].escort = "";
-allMissionsData["אתי"]["5"].dest = "";
+allMissionsData["אתי"]["5"].tree = BROSH;
+allMissionsData["אתי"]["5"].img = NAFHA_PIC;
+allMissionsData["אתי"]["5"].escort = HABIBI_ELIKO;
+allMissionsData["אתי"]["5"].dest = "פיארברג 22";
 
-allMissionsData["אתי"]["6"].address = "";
-allMissionsData["אתי"]["6"].map = "";
-allMissionsData["אתי"]["6"].group = "";
-allMissionsData["אתי"]["6"].tree = "";
-allMissionsData["אתי"]["6"].escort = "";
+allMissionsData["אתי"]["6"].address = MEXICANA_NAME;
+allMissionsData["אתי"]["6"].map = MEXICANA;
+allMissionsData["אתי"]["6"].group = COUPLE8;
+allMissionsData["אתי"]["6"].tree = PAPAYA;
+allMissionsData["אתי"]["6"].escort = HABIBTI_AVIA;
 
-allMissionsData["אתי"]["7"].address = "";
-allMissionsData["אתי"]["7"].map = "";
-allMissionsData["אתי"]["7"].group = "";
-allMissionsData["אתי"]["7"].tree = "";
-allMissionsData["אתי"]["7"].escort = "";
+allMissionsData["אתי"]["7"].address = LURIA_NAME;
+allMissionsData["אתי"]["7"].map = LURIA;
+allMissionsData["אתי"]["7"].group = GROUP3;
+allMissionsData["אתי"]["7"].tree = BROSH;
+allMissionsData["אתי"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
-allMissionsData["אתי"]["8"].address = "";
+allMissionsData["אתי"]["8"].address = CINEMA_NAME;
 allMissionsData["אתי"]["8"].intel = INTEL_TASK8_1;
-allMissionsData["אתי"]["8"].map = "";
-allMissionsData["אתי"]["8"].group = "";
-allMissionsData["אתי"]["8"].tree = "";
-allMissionsData["אתי"]["8"].escort = "";
+allMissionsData["אתי"]["8"].map = CINEMA_HOTEL;
+allMissionsData["אתי"]["8"].group = GROUP3;
+allMissionsData["אתי"]["8"].tree = BROSH;
+allMissionsData["אתי"]["8"].escort = HABIBTI_AVIA;
 
 // --- עזרי ---
 allMissionsData["עזרי"]["1"].address = C_TOWER_NAME;
@@ -1143,8 +1156,8 @@ allMissionsData["עזרי"]["5"].img = "/missions/mothers.png";
 allMissionsData["עזרי"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["עזרי"]["5"].dest = "עין חרוד 15";
 
-allMissionsData["עזרי"]["6"].address = "מקסיקנה, בוגרשוב 7";
-allMissionsData["עזרי"]["6"].map = "בוגרשוב 7 תל אביב";
+allMissionsData["עזרי"]["6"].address = MEXICANA_NAME;
+allMissionsData["עזרי"]["6"].map = MEXICANA;
 allMissionsData["עזרי"]["6"].group = COUPLE8;
 allMissionsData["עזרי"]["6"].tree = PAPAYA;
 allMissionsData["עזרי"]["6"].escort = HABIBTI_AVIA;

@@ -17,7 +17,7 @@ const AdminPanel = () => {
     if (isAdmin === 'true') {
       setIsAuthenticated(true);
     } else {
-      const password = prompt("נא להזין סיסמת חמ\"ל:");
+      const password = prompt("נא להזין סיסמה: ");
       if (password === ADMIN_PASSWORD) {
         sessionStorage.setItem('isAdminConfirmed', 'true');
         setIsAuthenticated(true);
@@ -131,7 +131,7 @@ const AdminPanel = () => {
           </button>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', alignItems: 'center' }}>
-            <span style={{ fontSize: '14px', color: '#94a3b8' }}>סטטוס צוותים בזמן אמת</span>
+            <span style={{ fontSize: '14px', color: '#94a3b8' }}>סטטוס משתתפים בזמן אמת</span>
             <span style={{ background: '#dc2626', padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 'bold' }}>
                 {reports.length} משתתפים מדווחים
             </span>
