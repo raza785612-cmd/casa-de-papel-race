@@ -90,7 +90,7 @@ const Login = () => {
                 onClick={() => setShowHint(true)}
                 style={{ background: 'none', border: 'none', color: '#475569', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
               >
-                צריך רמז לסיסמה?
+               רמז
               </button>
             ) : (
               <div style={{ color: '#fbbf24', fontSize: '13px', backgroundColor: 'rgba(251, 191, 36, 0.1)', padding: '10px', borderRadius: '10px', border: '1px solid rgba(251, 191, 36, 0.2)' }}>

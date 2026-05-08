@@ -94,7 +94,7 @@ const Finish = () => {
           }}></div>
           
           <p style={{ color: '#e2e8f0', fontSize: '20px', lineHeight: '1.6', marginBottom: '30px' }}>
-            סיימתם את כל המשימות של <br />
+            סיימת את כל המשימות של <br />
             <strong>בית הנייר</strong>
           </p>
           
