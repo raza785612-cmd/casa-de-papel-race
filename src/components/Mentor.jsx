@@ -10,7 +10,7 @@ const Mentor = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('race_user'));
     // הבדיקה המעודכנת: בודקת גם אם השם הוא mentor וגם אם קיים דגל is_mentor
-    if (user && (user.username === 'mentor' || user.is_mentor)) {
+    if (user && (user.username === 'segel' || user.is_mentor)) {
       setIsAuthorized(true);
     } else {
       console.log("Access Denied for user:", user);
