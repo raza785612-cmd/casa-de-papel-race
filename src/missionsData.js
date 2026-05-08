@@ -505,8 +505,8 @@ allMissionsData["רובן"]["6"].group = COUPLE2;
 allMissionsData["רובן"]["6"].tree = ILAN;
 allMissionsData["רובן"]["6"].escort = HABIBI_ELIKO;
 
-allMissionsData["רובן"]["7"].address = LURIA_NAME;
-allMissionsData["רובן"]["7"].map = LURIA;
+allMissionsData["רובן"]["7"].address = CENTER_NAME;
+allMissionsData["רובן"]["7"].map = CENTER;
 allMissionsData["רובן"]["7"].group = GROUP2;
 allMissionsData["רובן"]["7"].tree = BROSH;
 allMissionsData["רובן"]["7"].escort = HABIBI_AMIT + ', ' + HABIBTI_AVIA;
