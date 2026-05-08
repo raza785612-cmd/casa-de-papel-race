@@ -31,7 +31,7 @@ const Login = () => {
         sessionStorage.setItem('isAdminConfirmed', 'true');
         navigate('/admin-panel', { replace: true });
       } 
-      else if (data.username === 'mentor') {
+      else if (data.username === 'segel') {
         // במידה וזה מנטור, שליחה לדף המנטור
         navigate('/segel', { replace: true });
       } 
