@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { STATION_PASSWORDS, allMissionsData } from '../missionsData';
-import { supabase } from '../supabaseClient'; // וודא שהייבוא הזה קיים
+import { supabase } from '../supabaseClient';
 
 const Station = () => {
   const { id } = useParams();
@@ -10,26 +10,20 @@ const Station = () => {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [inputPass, setInputPass] = useState("");
   
- const team = JSON.parse(localStorage.getItem('race_user'));
-const fullMissionData = allMissionsData[team?.username]?.[id];
+  const team = JSON.parse(localStorage.getItem('race_user'));
+  const fullMissionData = allMissionsData[team?.username]?.[id];
 
-// יצירת עותק נקי ללא המשתנה dest כדי למנוע קונפליקטים בסטיישן
-const mission = fullMissionData ? { ...fullMissionData } : null;
-if (mission && mission.dest) {
-    delete mission.dest; 
-}
+  const mission = fullMissionData ? { ...fullMissionData } : null;
+  if (mission && mission.dest) {
+      delete mission.dest; 
+  }
 
-const sendReport = async () => {
+  const sendReport = async () => {
     if (team && team.username) {
       try {
         await supabase
           .from('mission_reports')
-          .insert([
-            { 
-              username: team.username, 
-              station_id: id 
-            }
-          ]);
+          .insert([{ username: team.username, station_id: id }]);
         console.log("Report sent to HQ");
       } catch (error) {
         console.error("Failed to report to HQ:", error);
@@ -38,7 +32,7 @@ const sendReport = async () => {
   };
 
   useEffect(() => {
-    //DEBUG
+    //DEBUG - להחזיר ל-false בסיום הבדיקות אם רוצים נעילת תחנות
     setIsUnlocked(true);
     setInputPass("");
     sendReport();
@@ -48,24 +42,22 @@ const sendReport = async () => {
   const handleUnlock = async () => {
     if (inputPass.trim() === STATION_PASSWORDS[id]) {
       setIsUnlocked(true);
+      sendReport();
+    } else {
+      alert("קוד תחנה שגוי ❌");
+    }
+  };
 
-      // --- הוספת הדיווח לחמ"ל (AdminPanel) ---
-     sendReport();
-      
-  };}
-// פתיחת ניווט/מפה מלאה - תומך בכתובת ובנ.צ
-const getGoogleMapsLink = (query) => {
-  if (!query) return "#";
-  // שימוש ב-search?q מאפשר לגוגל להחליט לבד אם זה נ.צ או כתובת
-  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
-};
+  const getGoogleMapsLink = (query) => {
+    if (!query) return "#";
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+  };
 
-// הצגת המפה הקטנה בתוך האפליקציה
-const getEmbedMap = (query) => {
-  if (!query) return "";
-  // הקישור הזה הוא הכי יציב להצגת Pin על המפה ללא API Key
-  return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
-};
+  const getEmbedMap = (query) => {
+    if (!query) return "";
+    return "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&t=&z=15&ie=UTF8&iwloc=&output=embed";
+  };
+
   if (!mission) {
     return (
       <div style={{ backgroundColor: '#020617', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', textAlign: 'center', padding: '20px' }} dir="rtl">
@@ -113,32 +105,6 @@ const getEmbedMap = (query) => {
           >
             חשיפת משימה ⚡
           </button>
-
-          <div style={{ 
-            marginTop: '30px', display: 'flex', justifyContent: 'space-between', 
-            alignItems: 'center', borderTop: '1px solid #1e293b', paddingTop: '20px' 
-          }}>
-            <button 
-              onClick={() => navigate(`/station/${Math.max(1, Number(id) - 1)}`)}
-              disabled={Number(id) <= 1}
-              style={{ 
-                background: 'transparent', color: Number(id) <= 1 ? '#334155' : '#94a3b8', 
-                border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold'
-              }}
-            >
-              ⬅️ משימה קודמת
-            </button>
-            <span style={{ color: '#334155', fontSize: '12px' }}>|</span>
-            <button 
-              onClick={() => navigate(`/station/${Number(id) + 1}`)}
-              style={{ 
-                background: 'transparent', color: '#94a3b8', 
-                border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold'
-              }}
-            >
-              משימה הבאה ➡️
-            </button>
-          </div>
         </div>
       </div>
     );
@@ -151,22 +117,28 @@ const getEmbedMap = (query) => {
     }} dir="rtl">
       <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        <div style={{ backgroundColor: '#0f172a', borderRadius: '2rem', border: '1px solid #1e293b', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+        {/* פנייה אישית בכותרת */}
+        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+          <h2 style={{ color: '#94a3b8', fontSize: '18px', fontWeight: 'normal', margin: 0 }}>
+            שלום, <span style={{ color: 'white', fontWeight: 'bold' }}>{team?.username}</span> 👋
+          </h2>
+        </div>
+
+        <div style={{ backgroundColor: '#0f172a', borderRadius: '2.5rem', border: '1px solid #1e293b', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
           
           {mission.img && (
-  <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
-    <img 
-      src={mission.img} 
-      alt="Mission" 
-      style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-      onError={(e) => console.error("Image failed to load:", mission.img)}
-    />
-  </div>
-)}
+            <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
+              <img 
+                src={mission.img} 
+                alt="Mission" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              />
+            </div>
+          )}
 
           <div style={{ padding: '25px', textAlign: 'right' }}>
             <div style={{ marginBottom: '20px' }}>
-              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימה</div>
+              <div style={{ color: '#dc2626', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '5px' }}>● משימה {id}</div>
               <h2 style={{ fontSize: '24px', fontWeight: '900', color: 'white', margin: 0, lineHeight: '1.2' }}>{mission.task}</h2>
             </div>
 
@@ -178,28 +150,28 @@ const getEmbedMap = (query) => {
 
             {mission.address && (
               <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', padding: '15px', borderRadius: '15px', marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <span style={{ fontSize: '20px' }}>📍מיקום</span>
+                <span style={{ fontSize: '20px' }}>📍 מיקום</span>
                 <div>
-                  <div style={{ fontSize: '9px', color: '#64748b', fontWeight: 'bold' }}>מיקום יעד</div>
+                  <div style={{ fontSize: '9px', color: '#64748b', fontWeight: 'bold' }}>יעד</div>
                   <div style={{ fontSize: '16px', fontWeight: 'bold', color: 'white' }}>{mission.address}</div>
                 </div>
               </div>
             )}
 
-           {mission.map && (
-  <div style={{ borderRadius: '15px', overflow: 'hidden', border: '1px solid #1e293b', marginBottom: '20px' }}>
-    <iframe
-      width="100%" height="160" frameBorder="0"
-      src={getEmbedMap(mission.map)} // קריאה לפונקציה המעודכנת
-      title="map"
-      style={{ filter: 'grayscale(1) contrast(1.2)', border: 'none' }}
-    ></iframe>
-    <a href={getGoogleMapsLink(mission.map)} target="_blank" rel="noopener noreferrer"
-       style={{ display: 'block', textAlign: 'center', padding: '10px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold' }}>
-      פתיחה ב-GOOGLE MAPS ↗
-    </a>
-  </div>
-)}
+            {mission.map && (
+              <div style={{ borderRadius: '15px', overflow: 'hidden', border: '1px solid #1e293b', marginBottom: '20px' }}>
+                <iframe
+                  width="100%" height="160" frameBorder="0"
+                  src={getEmbedMap(mission.map)} 
+                  title="map"
+                  style={{ filter: 'grayscale(1) contrast(1.2)', border: 'none' }}
+                ></iframe>
+                <a href={getGoogleMapsLink(mission.map)} target="_blank" rel="noopener noreferrer"
+                   style={{ display: 'block', textAlign: 'center', padding: '10px', backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '11px', textDecoration: 'none', fontWeight: 'bold' }}>
+                  פתיחה ב-GOOGLE MAPS ↗
+                </a>
+              </div>
+            )}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
               {mission.escort && (
@@ -212,12 +184,6 @@ const getEmbedMap = (query) => {
                 <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
                   <div style={{ fontSize: '9px', color: '#64748b' }}>🕒 זמנים</div>
                   <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
-                </div>
-              )}
-              {mission.group && (
-                <div style={{ gridColumn: '1 / span 2', background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
-                  <div style={{ fontSize: '9px', color: '#64748b' }}>👥 קבוצה </div>
-                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: 'white' }}>{mission.group}</div>
                 </div>
               )}
             </div>

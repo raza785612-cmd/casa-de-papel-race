@@ -12,7 +12,6 @@ const Login = () => {
   const handleLogin = async () => {
     setLoading(true);
     
-    // שליפת המשתמש מהדאטאבייס לפי שם וסיסמה
     const { data, error } = await supabase
       .from('teams')
       .select('*')
@@ -21,22 +20,16 @@ const Login = () => {
       .single();
 
     if (data && !error) {
-      // שמירת פרטי המשתמש לשימוש בשאר חלקי האפליקציה
       localStorage.setItem('race_user', JSON.stringify(data));
 
-      // --- לוגיקת ניתוב מבוססת שם משתמש (Usernames) ---
-      
       if (data.username === 'admin') {
-        // במידה וזה אדמין, מאשרים לו כניסה לחמ"ל ללא סיסמה נוספת
         sessionStorage.setItem('isAdminConfirmed', 'true');
         navigate('/admin-panel', { replace: true });
       } 
       else if (data.username === 'segel') {
-        // במידה וזה מנטור, שליחה לדף המנטור
         navigate('/segel', { replace: true });
       } 
       else {
-        // כל משתמש אחר (צוותי המרוץ) נשלח לתחנה הראשונה
         navigate('/station/1', { replace: true });
       }
 
@@ -58,7 +51,8 @@ const Login = () => {
           backgroundColor: '#0f172a', borderRadius: '2.5rem', padding: '40px 30px',
           border: '1px solid #1e293b', textAlign: 'center'
         }}>
-          <div style={{ fontSize: '50px', marginBottom: '10px' }}>🏎️</div>
+          {/* שינוי האימוג'י למסכה */}
+          <div style={{ fontSize: '50px', marginBottom: '10px' }}>🎭</div>
           <h1 style={{ fontSize: '32px', fontWeight: '900', color: 'white', marginBottom: '5px', fontStyle: 'italic' }}>
             THE AMAZING <span style={{ color: '#dc2626' }}>RACE</span>
           </h1>
@@ -123,5 +117,4 @@ const Login = () => {
   );
 };
 
-// חשוב מאוד: הייצוא של הקומפוננטה כדי למנוע שגיאת MISSING_EXPORT
 export default Login;
