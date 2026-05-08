@@ -836,7 +836,7 @@ allMissionsData["נירו"]["6"].escort = HABIBI_ELIKO;
 
 allMissionsData["נירו"]["7"].address = CENTER_NAME;
 allMissionsData["נירו"]["7"].map = CENTER;
-allMissionsData["נירו"]["7"].group = ILAN;
+allMissionsData["נירו"]["7"].group = GROUP4;
 allMissionsData["נירו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
 allMissionsData["נירו"]["8"].address = CINEMA_NAME;
