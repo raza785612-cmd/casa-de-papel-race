@@ -32,7 +32,7 @@ const Station = () => {
   };
 
   useEffect(() => {
-    //DEBUG - להחזיר ל-false בסיום הבדיקות אם רוצים נעילת תחנות
+    // בבדיקות זה על true, במרוץ האמיתי שנה ל-false אם תרצה נעילה
     setIsUnlocked(true);
     setInputPass("");
     sendReport();
@@ -117,8 +117,8 @@ const Station = () => {
     }} dir="rtl">
       <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        {/* פנייה אישית בכותרת */}
-        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+        {/* שלום אישי */}
+        <div style={{ textAlign: 'center', marginBottom: '5px' }}>
           <h2 style={{ color: '#94a3b8', fontSize: '18px', fontWeight: 'normal', margin: 0 }}>
             שלום, <span style={{ color: 'white', fontWeight: 'bold' }}>{team?.username}</span> 👋
           </h2>
@@ -128,11 +128,7 @@ const Station = () => {
           
           {mission.img && (
             <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
-              <img 
-                src={mission.img} 
-                alt="Mission" 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-              />
+              <img src={mission.img} alt="Mission" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
           )}
 
@@ -184,6 +180,13 @@ const Station = () => {
                 <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
                   <div style={{ fontSize: '9px', color: '#64748b' }}>🕒 זמנים</div>
                   <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
+                </div>
+              )}
+              {/* החזרת ה-Group למקומו */}
+              {mission.group && (
+                <div style={{ gridColumn: '1 / span 2', background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
+                  <div style={{ fontSize: '9px', color: '#64748b' }}>👥 קבוצה רשומה</div>
+                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: 'white' }}>{mission.group}</div>
                 </div>
               )}
             </div>
