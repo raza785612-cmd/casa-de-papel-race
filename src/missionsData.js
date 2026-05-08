@@ -744,18 +744,18 @@ allMissionsData["רני"]["1"].group = "";
 allMissionsData["רני"]["1"].tree = "";
 allMissionsData["רני"]["1"].escort = HABIBI_ELIKO;
 
-allMissionsData["רני"]["2"].address = "טישלר מוצרי חשמל מונטיפורי 30";
-allMissionsData["רני"]["2"].map = "32.06552084706536, 34.77261458936652";
+allMissionsData["רני"]["2"].address = "קדמת עדן אלנבי 93";
+allMissionsData["רני"]["2"].map = "אלנבי 93 תל אביב";
 allMissionsData["רני"]["2"].group = "";
 allMissionsData["רני"]["2"].tree = ILAN;
-allMissionsData["רני"]["2"].img = "/missions/tishler.png";
+allMissionsData["רני"]["2"].img = "/missions/kidmat.png";
 allMissionsData["רני"]["2"].escort = HABIBI_ELIKO;
 
-allMissionsData["רני"]["3"].address = "טישלר מוצרי חשמל מונטיפורי 30";
-allMissionsData["רני"]["3"].map = "32.06552084706536, 34.77261458936652";
+allMissionsData["רני"]["3"].address = "קדמת עדן אלנבי 93";
+allMissionsData["רני"]["3"].map = "אלנבי 93 תל אביב";
 allMissionsData["רני"]["3"].group = "";
 allMissionsData["רני"]["3"].tree = ILAN;
-allMissionsData["רני"]["3"].img = "/missions/tishler.png";
+allMissionsData["רני"]["3"].img = "/missions/kidmat.png";
 allMissionsData["רני"]["3"].escort = HABIBI_ELIKO;
 
 allMissionsData["רני"]["4"].address = ALBERT_NAME;
