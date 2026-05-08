@@ -54,7 +54,7 @@ const Login = () => {
           {/* שינוי האימוג'י למסכה */}
           <div style={{ fontSize: '50px', marginBottom: '10px' }}>🎭</div>
           <h1 style={{ fontSize: '32px', fontWeight: '900', color: 'white', marginBottom: '5px', fontStyle: 'italic' }}>
-            THE AMAZING <span style={{ color: '#dc2626' }}>RACE</span>
+             Casa De Papel <span style={{ color: '#dc2626' }}>RACE</span>
           </h1>
           <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '30px' }}>מערכת זיהוי</p>
 

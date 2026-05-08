@@ -207,7 +207,7 @@ const Station = () => {
     boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)', cursor: 'pointer'
   }}
 >
-  {Number(id) === 8 ? "סיום המסע 🏁" : "סיימנו, המשימה הבאה ⚡"}
+  {Number(id) === 8 ? "משימת בונוס  🏁" : "סיימנו, המשימה הבאה ⚡"}
 </button>
       </div>
     </div>
