@@ -890,7 +890,7 @@ allMissionsData["ניירו"]["6"].escort = HABIBI_ELIKO;
 
 allMissionsData["ניירו"]["7"].address = CENTER_NAME;
 allMissionsData["ניירו"]["7"].map = CENTER;
-allMissionsData["ניירו"]["7"].group = ILAN;
+allMissionsData["ניירו"]["7"].group = GROUP4;
 allMissionsData["ניירו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
 allMissionsData["ניירו"]["8"].address = CINEMA_NAME;
