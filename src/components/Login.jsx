@@ -100,7 +100,7 @@ const Login = () => {
               </button>
             ) : (
               <div style={{ color: '#fbbf24', fontSize: '13px', backgroundColor: 'rgba(251, 191, 36, 0.1)', padding: '10px', borderRadius: '10px', border: '1px solid rgba(251, 191, 36, 0.2)' }}>
-                💡 <strong>רמז:</strong> 4 הספרות האחרונות של הטלפון של המפיק
+                💡 <strong>רמז:</strong> דיזינגוף דיזינגוף הירקון בן יהודה
               </div>
             )}
           </div>
