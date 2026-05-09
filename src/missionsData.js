@@ -94,7 +94,7 @@ const PAPAYA = "פפאיה";
 const LIMON = "לימון";
 
 //parks
-const HISIN = "32.073580, 34.778952";
+const HISIN = "32.073621, 34.777997";
 const DIZI_SQUERE = "32.077922, 34.774287";
 const MOTHERS_PARK = "32.078709, 34.775723";
 const HABIMA = "32.072048, 34.779746";
@@ -135,15 +135,15 @@ const LASHUK = "דיזינגוף 92 תל אביב";
 
 //resturants names 
 const RAMA_NAME = " מסעדת ראמה המלך ג'ורג' 38";
-const LEVANTINI_NAME = "הלבנטיני";
-const PANKINA_NAME = "פנקינה";
-const PROZDOR_NAME = "הפרוזדור";
+const LEVANTINI_NAME = "הלבנטיני, בן יהודה 170";
+const PANKINA_NAME = "פנקינה, גורדון 39";
+const PROZDOR_NAME = "הפרוזדור, מנדלי 6";
 const METAO_NAME = "מטאו, בוגרשוב 87";
 const KAPARA_MIO_NAME = "כפרה מיו, המלך ג'ורג' 105";
 const ROSTIKO_NAME = "רוסטיקו בזל";
 const ARNESTO_NAME = "Ernesto";
-const MEXICANA_NAME = "מקסיקנה";
-const LASHUK_NAME = "לה שוק דיזינגוף";
+const MEXICANA_NAME = "מקסיקנה, בוגרשוב 7";
+const LASHUK_NAME = "לה שוק דיזינגוף 92";
 
 
 
