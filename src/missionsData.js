@@ -171,6 +171,7 @@ const participants = [
 // יצירת השלד לכולם
 participants.forEach(name => {
   allMissionsData[name] = {
+    loginPass: "1234", // <--- הוספת השדה כאן (סיסמת ברירת מחדל)
     "1": { title: HOTEL_TITLE, intel: INTEL_TASK1, task: TASK1, hours: HOURS_T1, img: "/missions/depapel.png", group: "", address: "", map: "", tree: "", escort: "", dest: "" },
     "2": { title: SCOUT_STORE, intel: INTEL_TASK2, task: TASK2, hours: HOURS_T2, img: "", group: "", address: "", map: "", tree: "", escort: "", dest: "" },
     "3": { title: PHOTO_STORE, intel: INTEL_TASK3, task: TASK3, hours: HOURS_T3, img: "", group: "", address: "", map: "", tree: "", escort: "", dest: "" },
@@ -187,6 +188,7 @@ participants.forEach(name => {
 // =====================================================================
 
 // --- פרנקל ---
+allMissionsData["פרנקל"].loginPass = "1147"; // סיסמה ייחודית לפרנקל
 allMissionsData["פרנקל"]["1"].address = ROTCHILD_NAME;
 allMissionsData["פרנקל"]["1"].map = ROTCHILD_22;
 allMissionsData["פרנקל"]["1"].group = PERSONAL;
@@ -249,6 +251,7 @@ allMissionsData["פרנקל"]["8"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 // =====================================================================
 
 // --- ענבר ---
+allMissionsData["ענבר"].loginPass = "3344"; // סיסמה ייחודית לענבר
 allMissionsData["ענבר"]["1"].address = C_TOWER_NAME;
 allMissionsData["ענבר"]["1"].map = C_TOWER;
 allMissionsData["ענבר"]["1"].group = PERSONAL;
@@ -305,6 +308,7 @@ allMissionsData["ענבר"]["8"].escort = "אליקו + עמית";
 
 
 // --- דותן ---
+allMissionsData["דותן"].loginPass = "1147"; // סיסמה ייחודית לדותן
 allMissionsData["דותן"]["1"].address = ROTCHILD_NAME;
 allMissionsData["דותן"]["1"].map = ROTCHILD_22;
 allMissionsData["דותן"]["1"].group = PERSONAL;
@@ -360,6 +364,7 @@ allMissionsData["דותן"]["8"].tree = BROSH;
 allMissionsData["דותן"]["8"].escort = HABIBI_MAOR +', ' + HABIBI_ELIKO;
 
 // --- צוקר ---
+allMissionsData["צוקר"].loginPass = "3344"; 
 allMissionsData["צוקר"]["1"].address = C_TOWER_NAME;
 allMissionsData["צוקר"]["1"].map = C_TOWER;
 allMissionsData["צוקר"]["1"].group = PERSONAL;
@@ -415,6 +420,7 @@ allMissionsData["צוקר"]["8"].tree = BROSH;
 allMissionsData["צוקר"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_MAOR;
 
 // --- מתן ---
+allMissionsData["מתן"].loginPass = "7878"; 
 allMissionsData["מתן"]["1"].address = ROTCHILD_NAME;
 allMissionsData["מתן"]["1"].map = ROTCHILD_22;
 allMissionsData["מתן"]["1"].group = PERSONAL;
@@ -470,6 +476,7 @@ allMissionsData["מתן"]["8"].tree = BROSH;
 allMissionsData["מתן"]["8"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 // --- רובן ---
+allMissionsData["רובן"].loginPass = "3456"; 
 allMissionsData["רובן"]["1"].address = C_TOWER_NAME;
 allMissionsData["רובן"]["1"].map = C_TOWER;
 allMissionsData["רובן"]["1"].group = PERSONAL;
@@ -525,6 +532,7 @@ allMissionsData["רובן"]["8"].tree = ILAN;
 allMissionsData["רובן"]["8"].escort = HABIBI_AMIT + ', ' + HABIBI_ELIKO;
 
 // --- אדרי ---
+allMissionsData["אדרי"].loginPass = "3312"; 
 allMissionsData["אדרי"]["1"].address = ROTCHILD_NAME;
 allMissionsData["אדרי"]["1"].map = ROTCHILD_22;
 allMissionsData["אדרי"]["1"].group = PERSONAL;
@@ -580,6 +588,7 @@ allMissionsData["אדרי"]["8"].tree = ILAN;
 allMissionsData["אדרי"]["8"].escort = HABIBI_AMIT + ', ' + HABIBI_ELIKO;
 
 // --- גדי ---
+allMissionsData["גדי"].loginPass = "4545"; 
 allMissionsData["גדי"]["1"].address = RINUMA_NAME;
 allMissionsData["גדי"]["1"].map = RINUMA;
 allMissionsData["גדי"]["1"].group = PERSONAL;
@@ -634,6 +643,7 @@ allMissionsData["גדי"]["8"].group = GROUP4;
 allMissionsData["גדי"]["8"].tree = ILAN;
 allMissionsData["גדי"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 // --- ליו ---
+allMissionsData["ליו"].loginPass = "1419"; 
 allMissionsData["ליו"]["1"].address = ROTCHILD_NAME;
 allMissionsData["ליו"]["1"].map = ROTCHILD_22;
 allMissionsData["ליו"]["1"].group = PERSONAL;
@@ -689,6 +699,7 @@ allMissionsData["ליו"]["8"].tree = ILAN;
 allMissionsData["ליו"]["8"].escort = HABIBI_AMIT + ', ' + HABIBI_ELIKO;
 
 // --- אגם ---
+allMissionsData["אגם"].loginPass = "2323"; 
 allMissionsData["אגם"]["1"].address = C_TOWER_NAME;
 allMissionsData["אגם"]["1"].map = C_TOWER;
 allMissionsData["אגם"]["1"].group = PERSONAL;
@@ -744,6 +755,7 @@ allMissionsData["אגם"]["8"].tree = BROSH;
 allMissionsData["אגם"]["8"].escort = HABIBTI_AVIA;
 
 // --- רני ---
+allMissionsData["רני"].loginPass = "1419"; 
 allMissionsData["רני"]["1"].address = ROTCHILD_65_NAME;
 allMissionsData["רני"]["1"].map = ROTCHILD_65;
 allMissionsData["רני"]["1"].group = PERSONAL;
@@ -799,6 +811,7 @@ allMissionsData["רני"]["8"].tree = ILAN;
 allMissionsData["רני"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- נירו ---
+allMissionsData["נירו"].loginPass = "2323"; 
 allMissionsData["נירו"]["1"].address = C_TOWER_NAME;
 allMissionsData["נירו"]["1"].map = C_TOWER;
 allMissionsData["נירו"]["1"].group = PERSONAL;
@@ -854,6 +867,7 @@ allMissionsData["נירו"]["8"].tree = ILAN;
 allMissionsData["נירו"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- ניירו ---
+allMissionsData["ניירו"].loginPass = "2323"; 
 allMissionsData["ניירו"]["1"].address = C_TOWER_NAME;
 allMissionsData["ניירו"]["1"].map = C_TOWER;
 allMissionsData["ניירו"]["1"].group = PERSONAL;
@@ -909,6 +923,7 @@ allMissionsData["ניירו"]["8"].tree = ILAN;
 allMissionsData["ניירו"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- יוני ---
+allMissionsData["יוני"].loginPass = "7777"; 
 allMissionsData["יוני"]["1"].address = ROTCHILD_NAME;
 allMissionsData["יוני"]["1"].map = ROTCHILD_22;
 allMissionsData["יוני"]["1"].group = PERSONAL;
@@ -964,6 +979,7 @@ allMissionsData["יוני"]["8"].tree = BROSH;
 allMissionsData["יוני"]["8"].escort = HABIBTI_AVIA;
 
 // --- גליקמן ---
+allMissionsData["גליקמן"].loginPass = "3312"; 
 allMissionsData["גליקמן"]["1"].address = C_TOWER_NAME;
 allMissionsData["גליקמן"]["1"].map = C_TOWER;
 allMissionsData["גליקמן"]["1"].group = PERSONAL;
@@ -1019,6 +1035,7 @@ allMissionsData["גליקמן"]["8"].tree = ILAN;
 allMissionsData["גליקמן"]["8"].escort =  HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 
 // --- גלעד ---
+allMissionsData["גלעד"].loginPass = "9898"; 
 allMissionsData["גלעד"]["1"].address = RINUMA_NAME;
 allMissionsData["גלעד"]["1"].map = RINUMA;
 allMissionsData["גלעד"]["1"].group = PERSONAL;
@@ -1074,6 +1091,7 @@ allMissionsData["גלעד"]["8"].tree = BROSH;
 allMissionsData["גלעד"]["8"].escort = HABIBTI_AVIA;
 
 // --- אתי ---
+allMissionsData["אתי"].loginPass = "7777"; 
 allMissionsData["אתי"]["1"].address = ROTCHILD_65_NAME;
 allMissionsData["אתי"]["1"].map = ROTCHILD_65;
 allMissionsData["אתי"]["1"].group = PERSONAL;
@@ -1129,6 +1147,7 @@ allMissionsData["אתי"]["8"].tree = BROSH;
 allMissionsData["אתי"]["8"].escort = HABIBTI_AVIA;
 
 // --- עזרי ---
+allMissionsData["עזרי"].loginPass = "3312"; 
 allMissionsData["עזרי"]["1"].address = RINUMA_NAME;
 allMissionsData["עזרי"]["1"].map = RINUMA;
 allMissionsData["עזרי"]["1"].group = PERSONAL;
