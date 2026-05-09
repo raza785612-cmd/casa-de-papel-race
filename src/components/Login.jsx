@@ -121,7 +121,7 @@ const Login = () => {
                 border: '1px solid rgba(251, 191, 36, 0.2)',
                 animation: 'fadeIn 0.5s ease' 
               }}>
-                💡 <strong>רמז:</strong> {dynamicHint || "הקלד כינוי כדי לראות רמז"}
+                💡 <strong>רמז:</strong> {dynamicHint || "נא להקליד כינוי ולעבור לסיסמה כדי לראות רמז"}
               </div>
             )}
           </div>
