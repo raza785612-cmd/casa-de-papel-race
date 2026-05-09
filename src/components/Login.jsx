@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
@@ -7,37 +7,48 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showHint, setShowHint] = useState(false); 
+  const [dynamicHint, setDynamicHint] = useState(""); // state חדש לרמז הדינמי
   const navigate = useNavigate();
+
+  // פונקציה למשיכת הרמז ברגע שהוקלד שם משתמש
+  const fetchHint = async (name) => {
+    if (name.trim().length < 2) return; // לא לחפש אם השם קצר מדי
+
+    const { data, error } = await supabase
+      .from('teams')
+      .select('hint')
+      .eq('username', name.trim())
+      .single();
+
+    if (data && data.hint) {
+      setDynamicHint(data.hint);
+    } else {
+      setDynamicHint("לא נמצא רמז למשתמש זה");
+    }
+  };
 
   const handleLogin = async () => {
     setLoading(true);
-    
-    // ניקוי רווחים מיותרים משם המשתמש והסיסמה לפני השליחה לדאטאבייס
     const cleanUsername = username.trim();
     const cleanPassword = password.trim();
 
     const { data, error } = await supabase
       .from('teams')
       .select('*')
-      .eq('username', cleanUsername) // משתמשים בשם הנקי
-      .eq('login_password', cleanPassword) // משתמשים בסיסמה הנקייה
+      .eq('username', cleanUsername)
+      .eq('login_password', cleanPassword)
       .single();
 
     if (data && !error) {
       localStorage.setItem('race_user', JSON.stringify(data));
-
-      // ניתוב לפי שם משתמש
       if (data.username === 'admin') {
         sessionStorage.setItem('isAdminConfirmed', 'true');
         navigate('/admin-panel', { replace: true });
-      } 
-      else if (data.username === 'segel') {
+      } else if (data.username === 'segel') {
         navigate('/segel', { replace: true });
-      } 
-      else {
+      } else {
         navigate('/station/1', { replace: true });
       }
-
     } else {
       alert("שם משתמש או סיסמה שגויים ❌");
     }
@@ -67,6 +78,7 @@ const Login = () => {
               type="text" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onBlur={() => fetchHint(username)} // ברגע שיוצאים מהשדה, נמשוך את הרמז
               placeholder="כינוי"
               style={{
                 width: '100%', background: '#020617', border: '1px solid #334155',
@@ -91,14 +103,25 @@ const Login = () => {
           <div style={{ marginBottom: '25px' }}>
             {!showHint ? (
               <button 
-                onClick={() => setShowHint(true)}
+                onClick={() => {
+                    fetchHint(username); // מוודא משיכה גם בלחיצה
+                    setShowHint(true);
+                }}
                 style={{ background: 'none', border: 'none', color: '#475569', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
               >
-               רמז
+               צריך רמז?
               </button>
             ) : (
-              <div style={{ color: '#fbbf24', fontSize: '13px', backgroundColor: 'rgba(251, 191, 36, 0.1)', padding: '10px', borderRadius: '10px', border: '1px solid rgba(251, 191, 36, 0.2)' }}>
-                💡 <strong>רמז:</strong> דיזינגוף דיזינגוף הירקון בן יהודה
+              <div style={{ 
+                color: '#fbbf24', 
+                fontSize: '13px', 
+                backgroundColor: 'rgba(251, 191, 36, 0.1)', 
+                padding: '10px', 
+                borderRadius: '10px', 
+                border: '1px solid rgba(251, 191, 36, 0.2)',
+                animation: 'fadeIn 0.5s ease' 
+              }}>
+                💡 <strong>רמז:</strong> {dynamicHint || "הקלד כינוי כדי לראות רמז"}
               </div>
             )}
           </div>
