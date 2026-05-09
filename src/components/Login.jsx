@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 const Login = () => {
@@ -7,27 +7,28 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showHint, setShowHint] = useState(false); 
-  const [dynamicHint, setDynamicHint] = useState(""); // state חדש לרמז הדינמי
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // פונקציה למשיכת הרמז ברגע שהוקלד שם משתמש
-  const fetchHint = async (name) => {
-    if (name.trim().length < 2) return; // לא לחפש אם השם קצר מדי
+  // מנגנון קליטת פרטים מ-QR (URL Parameters)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const userFromUrl = params.get('u'); // מחפש ?u=name
+    const passFromUrl = params.get('p'); // מחפש &p=1234
+    
+    if (userFromUrl) setUsername(userFromUrl);
+    if (passFromUrl) setPassword(passFromUrl);
 
-    const { data, error } = await supabase
-      .from('teams')
-      .select('hint')
-      .eq('username', name.trim())
-      .single();
-
-    if (data && data.hint) {
-      setDynamicHint(data.hint);
-    } else {
-      setDynamicHint("לא נמצא רמז למשתמש זה");
-    }
-  };
+    // אופציונלי: אם תרצה שזה יתחבר אוטומטית כשיש פרטים ב-URL, 
+    // אפשר להוסיף כאן קריאה ל-handleLogin(), אבל עדיף שהם ילחצו בעצמם כדי לוודא שהם מוכנים.
+  }, [location]);
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      alert("נא להזין שם משתמש וסיסמה");
+      return;
+    }
+
     setLoading(true);
     const cleanUsername = username.trim();
     const cleanPassword = password.trim();
@@ -78,7 +79,6 @@ const Login = () => {
               type="text" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              onBlur={() => fetchHint(username)} // ברגע שיוצאים מהשדה, נמשוך את הרמז
               placeholder="כינוי"
               style={{
                 width: '100%', background: '#020617', border: '1px solid #334155',
@@ -100,13 +100,11 @@ const Login = () => {
             />
           </div>
 
+          {/* רמז סטטי ללא פנייה לדאטאבייס */}
           <div style={{ marginBottom: '25px' }}>
             {!showHint ? (
               <button 
-                onClick={() => {
-                    fetchHint(username); // מוודא משיכה גם בלחיצה
-                    setShowHint(true);
-                }}
+                onClick={() => setShowHint(true)}
                 style={{ background: 'none', border: 'none', color: '#475569', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
               >
                צריך רמז?
@@ -121,7 +119,7 @@ const Login = () => {
                 border: '1px solid rgba(251, 191, 36, 0.2)',
                 animation: 'fadeIn 0.5s ease' 
               }}>
-                💡 <strong>רמז:</strong> {dynamicHint || "נא להקליד כינוי ולעבור לסיסמה כדי לראות רמז"}
+                💡 <strong>רמז:</strong> השתמשו בפרטים שהופיעו בכתב החידה שקיבלתם מהמפקדה.
               </div>
             )}
           </div>
