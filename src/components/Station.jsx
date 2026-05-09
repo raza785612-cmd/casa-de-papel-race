@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { STATION_PASSWORDS, allMissionsData } from '../missionsData';
 import { supabase } from '../supabaseClient';
 
 const Station = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [inputPass, setInputPass] = useState("");
-  
-  const team = JSON.parse(localStorage.getItem('race_user'));
+
+  let team = null;
+  try {
+    team = JSON.parse(localStorage.getItem('race_user'));
+  } catch {
+    localStorage.removeItem('race_user');
+  }
+
+  if (!team) return <Navigate to="/login" replace />;
+
   const fullMissionData = allMissionsData[team?.username]?.[id];
 
   const mission = fullMissionData ? { ...fullMissionData } : null;
@@ -32,10 +40,9 @@ const Station = () => {
   };
 
   useEffect(() => {
-    // בבדיקות זה על true, במרוץ האמיתי שנה ל-false אם תרצה נעילה
+    //for testing purposes, you can uncomment the next line to auto-unlock all stations
     setIsUnlocked(true);
     setInputPass("");
-    sendReport();
     window.scrollTo(0, 0);
   }, [id]);
 
@@ -47,6 +54,7 @@ const Station = () => {
       alert("קוד תחנה שגוי ❌");
     }
   };
+
 
   const getGoogleMapsLink = (query) => {
     if (!query) return "#";

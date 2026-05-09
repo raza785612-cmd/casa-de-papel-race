@@ -635,7 +635,7 @@ allMissionsData["גדי"]["8"].tree = ILAN;
 allMissionsData["גדי"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_AMIT;
 // --- ליו ---
 allMissionsData["ליו"]["1"].address = ROTCHILD_NAME;
-allMissionsData["ליו"]["1"].map = ROTCHILD_NAME;
+allMissionsData["ליו"]["1"].map = ROTCHILD_22;
 allMissionsData["ליו"]["1"].group = PERSONAL;
 allMissionsData["ליו"]["1"].tree = "";
 allMissionsData["ליו"]["1"].escort = HABIBI_ELIKO;
@@ -843,6 +843,7 @@ allMissionsData["נירו"]["6"].escort = HABIBI_ELIKO;
 allMissionsData["נירו"]["7"].address = CENTER_NAME;
 allMissionsData["נירו"]["7"].map = CENTER;
 allMissionsData["נירו"]["7"].group = GROUP4;
+allMissionsData["נירו"]["7"].tree = MANGO;
 allMissionsData["נירו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
 allMissionsData["נירו"]["8"].address = CINEMA_NAME;
@@ -897,6 +898,7 @@ allMissionsData["ניירו"]["6"].escort = HABIBI_ELIKO;
 allMissionsData["ניירו"]["7"].address = CENTER_NAME;
 allMissionsData["ניירו"]["7"].map = CENTER;
 allMissionsData["ניירו"]["7"].group = GROUP4;
+allMissionsData["ניירו"]["7"].tree = MANGO;
 allMissionsData["ניירו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
 allMissionsData["ניירו"]["8"].address = CINEMA_NAME;
@@ -963,7 +965,7 @@ allMissionsData["יוני"]["8"].escort = HABIBTI_AVIA;
 
 // --- גליקמן ---
 allMissionsData["גליקמן"]["1"].address = C_TOWER_NAME;
-allMissionsData["גליקמן"]["1"].map = C_TOWER_NAME;
+allMissionsData["גליקמן"]["1"].map = C_TOWER;
 allMissionsData["גליקמן"]["1"].group = PERSONAL;
 allMissionsData["גליקמן"]["1"].tree = "";
 allMissionsData["גליקמן"]["1"].escort = HABIBTI_AVIA;
@@ -1154,7 +1156,7 @@ allMissionsData["עזרי"]["4"].tree = LIMON;
 allMissionsData["עזרי"]["4"].img = MOTHER_PIC;
 allMissionsData["עזרי"]["4"].escort = HABIBTI_AVIA;
 
-allMissionsData["עזרי"]["5"].address = MOTHERS_PARK_NAME
+allMissionsData["עזרי"]["5"].address = MOTHERS_PARK_NAME;
 allMissionsData["עזרי"]["5"].map = MOTHERS_PARK;
 allMissionsData["עזרי"]["5"].group = PERSONAL;
 allMissionsData["עזרי"]["5"].tree = LIMON;
