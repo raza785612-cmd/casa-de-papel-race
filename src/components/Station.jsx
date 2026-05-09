@@ -20,28 +20,24 @@ const Station = () => {
   if (!team) return <Navigate to="/login" replace />;
 
   const fullMissionData = allMissionsData[team?.username]?.[id];
-
   const mission = fullMissionData ? { ...fullMissionData } : null;
-  if (mission && mission.dest) {
-      delete mission.dest; 
-  }
 
+  // פונקציית דיווח לסופבייס
   const sendReport = async () => {
     if (team && team.username) {
       try {
         await supabase
           .from('mission_reports')
           .insert([{ username: team.username, station_id: id }]);
-        console.log("Report sent to HQ");
       } catch (error) {
         console.error("Failed to report to HQ:", error);
       }
     }
   };
 
+  // תיקון 1: איפוס הסטטוס בכל פעם שה-ID משתנה
   useEffect(() => {
-    //for testing purposes, you can uncomment the next line to auto-unlock all stations
-    //setIsUnlocked(true);
+    setIsUnlocked(false); // נועל את המסך מחדש במעבר תחנה
     setInputPass("");
     window.scrollTo(0, 0);
   }, [id]);
@@ -54,7 +50,6 @@ const Station = () => {
       alert("קוד תחנה שגוי ❌");
     }
   };
-
 
   const getGoogleMapsLink = (query) => {
     if (!query) return "#";
@@ -77,30 +72,48 @@ const Station = () => {
     );
   }
 
+  // מסך נעילה
   if (!isUnlocked) {
     return (
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         backgroundColor: '#020617', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex: 1000, padding: '20px'
       }} dir="rtl">
+        
+        {/* תיקון 2: חצי ניווט בין תחנות גם כשהן נעולות */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '350px', marginBottom: '15px' }}>
+            <button 
+                onClick={() => Number(id) > 1 && navigate(`/station/${Number(id) - 1}`)}
+                style={{ background: 'none', border: 'none', color: Number(id) > 1 ? '#64748b' : 'transparent', cursor: 'pointer', fontSize: '14px' }}
+            >
+                ← תחנה קודמת
+            </button>
+            <button 
+                onClick={() => Number(id) < 8 && navigate(`/station/${Number(id) + 1}`)}
+                style={{ background: 'none', border: 'none', color: Number(id) < 8 ? '#64748b' : 'transparent', cursor: 'pointer', fontSize: '14px' }}
+            >
+                תחנה הבאה →
+            </button>
+        </div>
+
         <div style={{ 
           width: '100%', maxWidth: '350px', backgroundColor: '#0f172a', 
           padding: '30px', borderRadius: '2rem', border: '1px solid #1e293b', textAlign: 'center',
           boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
         }}>
           <h1 style={{ color: 'white', fontSize: '24px', marginBottom: '10px' }}>משימה <span style={{ color: '#dc2626' }}>{id}</span></h1>
-          <p style={{ color: '#94a3b8', marginBottom: '25px' }}>בקש קוד מהמדריך המלווה למשימה</p>
+          <p style={{ color: '#94a3b8', marginBottom: '25px' }}>הזינו קוד נעילה כדי לחשוף את הפרטים</p>
           
           <input 
             type="text" 
             inputMode="numeric" 
             value={inputPass}
             onChange={(e) => setInputPass(e.target.value)}
-            placeholder="----"
+            placeholder="קוד תחנה"
             style={{ 
               width: '100%', background: '#020617', border: '1px solid #334155', 
               color: 'white', padding: '16px', borderRadius: '1rem', 
-              marginBottom: '15px', textAlign: 'center', fontSize: '1.5rem', outline: 'none'
+              marginBottom: '15px', textAlign: 'center', fontSize: '1.5rem', outline: 'none', boxSizing: 'border-box'
             }}
           />
           
@@ -118,6 +131,7 @@ const Station = () => {
     );
   }
 
+  // תוכן התחנה (פתוח)
   return (
     <div style={{ 
       position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, 
@@ -125,7 +139,6 @@ const Station = () => {
     }} dir="rtl">
       <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         
-        {/* שלום אישי */}
         <div style={{ textAlign: 'center', marginBottom: '5px' }}>
           <h2 style={{ color: '#94a3b8', fontSize: '18px', fontWeight: 'normal', margin: 0 }}>
             שלום, <span style={{ color: 'white', fontWeight: 'bold' }}>{team?.username}</span> 👋
@@ -133,7 +146,6 @@ const Station = () => {
         </div>
 
         <div style={{ backgroundColor: '#0f172a', borderRadius: '2.5rem', border: '1px solid #1e293b', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
-          
           {mission.img && (
             <div style={{ width: '100%', height: '200px', overflow: 'hidden' }}>
               <img src={mission.img} alt="Mission" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -190,7 +202,6 @@ const Station = () => {
                   <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#dc2626' }}>{mission.hours}</div>
                 </div>
               )}
-              {/* החזרת ה-Group למקומו */}
               {mission.group && (
                 <div style={{ gridColumn: '1 / span 2', background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '12px', border: '1px solid #1e293b' }}>
                   <div style={{ fontSize: '9px', color: '#64748b' }}>👥 קבוצה</div>
@@ -202,21 +213,21 @@ const Station = () => {
         </div>
 
        <button 
-  onClick={() => {
-    if (Number(id) === 8) {
-      navigate('/finish');
-    } else {
-      navigate(`/station/${Number(id) + 1}`);
-    }
-  }} 
-  style={{ 
-    width: '100%', padding: '20px', backgroundColor: '#dc2626', color: 'white', 
-    borderRadius: '1.5rem', border: 'none', fontSize: '18px', fontWeight: '900',
-    boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)', cursor: 'pointer'
-  }}
->
-  {Number(id) === 8 ? "משימת בונוס  🏁" : "סיימנו, המשימה הבאה ⚡"}
-</button>
+          onClick={() => {
+            if (Number(id) === 8) {
+              navigate('/finish');
+            } else {
+              navigate(`/station/${Number(id) + 1}`);
+            }
+          }} 
+          style={{ 
+            width: '100%', padding: '20px', backgroundColor: '#dc2626', color: 'white', 
+            borderRadius: '1.5rem', border: 'none', fontSize: '18px', fontWeight: '900',
+            boxShadow: '0 10px 20px rgba(220, 38, 38, 0.3)', cursor: 'pointer'
+          }}
+        >
+          {Number(id) === 8 ? " בונוס 🏁" : "סיימנו, המשימה הבאה ⚡"}
+        </button>
       </div>
     </div>
   );
