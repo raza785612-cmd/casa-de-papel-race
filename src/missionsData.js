@@ -10,14 +10,14 @@ export const STATION_PASSWORDS = {
 };
 
 // --- Global Variables (Titles) ---
-const HOTEL_TITLE = "הגעה למלון 🏨";
-const SCOUT_STORE = "סיוש בעוגן";
-const PHOTO_STORE = "ראי 8 בעוגן";
-const SCOUT_PARK = "סיוש בפארק";
-const PARK_ADDR_TITLE = "תצפית והובלה לעוגן";
-const RESTURANT = "סיוש וביצוע התקנה במסעדה";
-const TUKI = "התקנת תוכי";
-const DANA = "משימת סיום";
+const HOTEL_TITLE = "1 - הגעה למלון";
+const SCOUT_STORE = " 2 - סיוש בעוגן";
+const PHOTO_STORE = " 3 - ראי 8 בעוגן ";
+const SCOUT_PARK = "4 -  סיוש בפארק";
+const PARK_ADDR_TITLE = "5 - תצפית והובלה לעוגן";
+const RESTURANT = "6 - סיוש והתקנה במסעדה";
+const TUKI = "7 - התקנת תוכי";
+const DANA = "8 - דנה";
 
 // --- Global Variables (Intel) ---
 const INTEL_TASK1 = "ברוך הבא למשימה האחרונה בפרק הפרט / מצומצם. לפניך יומיים מאתגרים. סומכים עליך. בהצלחה !";
