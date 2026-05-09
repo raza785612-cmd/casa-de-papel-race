@@ -87,10 +87,10 @@ const ROTCHILD_65_NAME = "מלון רוטשילד 65";
 const ROTCHILD_65 = "32.065376902686175, 34.77628046053035";
 
 //tree
-const BROSH = "ברוש";
-const ILAN = "אילן";
-const MANGO = "מנגו";
-const PAPAYA = "פפאיה";
+const BROSH = "ברוש / ארנון";
+const ILAN = "אילן / אופיר";
+const MANGO = "מנגו / מורי";
+const PAPAYA = "פפאיה / איימי";
 const LIMON = "לימון";
 
 //parks
