@@ -41,7 +41,7 @@ const Station = () => {
 
   useEffect(() => {
     //for testing purposes, you can uncomment the next line to auto-unlock all stations
-    setIsUnlocked(true);
+    //setIsUnlocked(true);
     setInputPass("");
     window.scrollTo(0, 0);
   }, [id]);
