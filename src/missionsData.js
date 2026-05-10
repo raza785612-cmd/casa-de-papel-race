@@ -297,14 +297,14 @@ allMissionsData["ענבר"]["7"].address = CENTER_NAME;
 allMissionsData["ענבר"]["7"].map = CENTER;
 allMissionsData["ענבר"]["7"].group = GROUP2;
 allMissionsData["ענבר"]["7"].tree = BROSH;
-allMissionsData["ענבר"]["7"].escort = "מאור + אליקו";
+allMissionsData["ענבר"]["7"].escort = HABIBI_AMIT + ', ' + HABIBTI_AVIA;
 
 allMissionsData["ענבר"]["8"].address = CINEMA_NAME;
 allMissionsData["ענבר"]["8"].intel = INTEL_TASK8_2;
 allMissionsData["ענבר"]["8"].map = CINEMA_HOTEL;
 allMissionsData["ענבר"]["8"].group = GROUP2;
 allMissionsData["ענבר"]["8"].tree = ILAN;
-allMissionsData["ענבר"]["8"].escort = "אליקו + עמית";
+allMissionsData["ענבר"]["8"].escort = HABIBI_AMIT + ', ' + HABIBI_ELIKO;
 
 
 // --- דותן ---
