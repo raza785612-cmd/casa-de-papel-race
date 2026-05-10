@@ -156,7 +156,7 @@ const LASHUK_NAME = "לה שוק דיזינגוף 92";
 //pics
 const ALBERT_PIC = "/missions/albert.jpg";
 const BIALIK_PIC = "/missions/bialik.jpg";
-const DIZI_PIC   = "/missions/dizingof.jpg";
+const DIZI_PIC   = "/missions/DIZI_PARK.png";
 const HABIMA_PIC = "/missions/habima.jpg";
 const HISIN_PIC  = "/missions/hisin1.jpg";
 const MEIR_PIC   = "/missions/meir.jpg";
