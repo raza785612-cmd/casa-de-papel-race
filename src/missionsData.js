@@ -241,7 +241,7 @@ allMissionsData["פרנקל"]["8"].intel = INTEL_TASK8_1;
 allMissionsData["פרנקל"]["8"].map = CINEMA_HOTEL;
 allMissionsData["פרנקל"]["8"].group = GROUP1;
 allMissionsData["פרנקל"]["8"].tree = BROSH;
-allMissionsData["פרנקל"]["8"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
+allMissionsData["פרנקל"]["8"].escort = HABIBTI_AVIA;
 
 // =====================================================================
 // עריכה ידנית לכל משתתף - 8 תחנות לכל שם (שדות ריקים להזנה)
@@ -473,7 +473,7 @@ allMissionsData["מתן"]["8"].intel = INTEL_TASK8_1;
 allMissionsData["מתן"]["8"].map = CINEMA_HOTEL;
 allMissionsData["מתן"]["8"].group = GROUP1;
 allMissionsData["מתן"]["8"].tree = BROSH;
-allMissionsData["מתן"]["8"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
+allMissionsData["מתן"]["8"].escort = HABIBTI_AVIA;
 
 // --- רובן ---
 allMissionsData["רובן"].loginPass = "3456"; 
