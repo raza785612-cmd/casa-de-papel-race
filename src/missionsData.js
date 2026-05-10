@@ -86,6 +86,10 @@ const RINUMA = "הירקון 59 תל אביב";
 const ROTCHILD_65_NAME = "מלון רוטשילד 65";
 const ROTCHILD_65 = "32.065376902686175, 34.77628046053035";
 
+//cars
+const CENTER_CAR ="/missions/centercar.jpg";
+const LURIA_CAR ="/missions/luriacar.jpg";
+
 //tree
 const BROSH = "ברוש / ארנון";
 const ILAN = "אילן / אופיר";
@@ -234,6 +238,7 @@ allMissionsData["פרנקל"]["7"].address = LURIA_NAME;
 allMissionsData["פרנקל"]["7"].map = LURIA;
 allMissionsData["פרנקל"]["7"].group = GROUP1;
 allMissionsData["פרנקל"]["7"].tree = BROSH;
+allMissionsData["פרנקל"]["7"].img = LURIA_CAR;
 allMissionsData["פרנקל"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 allMissionsData["פרנקל"]["8"].address = CINEMA_NAME;
@@ -297,6 +302,7 @@ allMissionsData["ענבר"]["7"].address = CENTER_NAME;
 allMissionsData["ענבר"]["7"].map = CENTER;
 allMissionsData["ענבר"]["7"].group = GROUP2;
 allMissionsData["ענבר"]["7"].tree = BROSH;
+allMissionsData["ענבר"]["7"].img = CENTER_CAR;
 allMissionsData["ענבר"]["7"].escort = HABIBI_AMIT + ', ' + HABIBTI_AVIA;
 
 allMissionsData["ענבר"]["8"].address = CINEMA_NAME;
@@ -466,6 +472,7 @@ allMissionsData["מתן"]["7"].address = LURIA_NAME;
 allMissionsData["מתן"]["7"].map = LURIA;
 allMissionsData["מתן"]["7"].group = GROUP1;
 allMissionsData["מתן"]["7"].tree = BROSH;
+allMissionsData["מתן"]["7"].img = LURIA_CAR;
 allMissionsData["מתן"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 allMissionsData["מתן"]["8"].address = CINEMA_NAME;
@@ -522,6 +529,7 @@ allMissionsData["רובן"]["7"].address = CENTER_NAME;
 allMissionsData["רובן"]["7"].map = CENTER;
 allMissionsData["רובן"]["7"].group = GROUP2;
 allMissionsData["רובן"]["7"].tree = BROSH;
+allMissionsData["רובן"]["7"].img = CENTER_CAR;
 allMissionsData["רובן"]["7"].escort = HABIBI_AMIT + ', ' + HABIBTI_AVIA;
 
 allMissionsData["רובן"]["8"].address = CINEMA_NAME;
@@ -689,6 +697,7 @@ allMissionsData["ליו"]["7"].address = CENTER_NAME;
 allMissionsData["ליו"]["7"].map = CENTER;
 allMissionsData["ליו"]["7"].group = GROUP2;
 allMissionsData["ליו"]["7"].tree = ILAN;
+allMissionsData["ליו"]["7"].img = CENTER_CAR;
 allMissionsData["ליו"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
 allMissionsData["ליו"]["8"].address = CINEMA_NAME;
@@ -745,6 +754,7 @@ allMissionsData["אגם"]["7"].address = LURIA_NAME;
 allMissionsData["אגם"]["7"].map = LURIA;
 allMissionsData["אגם"]["7"].group = GROUP1;
 allMissionsData["אגם"]["7"].tree = BROSH;
+allMissionsData["אגם"]["7"].img = LURIA_CAR;
 allMissionsData["אגם"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 allMissionsData["אגם"]["8"].address = CINEMA_NAME;
@@ -969,6 +979,7 @@ allMissionsData["יוני"]["7"].address = LURIA_NAME;
 allMissionsData["יוני"]["7"].map = LURIA;
 allMissionsData["יוני"]["7"].group = GROUP1;
 allMissionsData["יוני"]["7"].tree = BROSH;
+allMissionsData["יוני"]["7"].img = LURIA_CAR;
 allMissionsData["יוני"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
 allMissionsData["יוני"]["8"].address = CINEMA_NAME;
@@ -1025,6 +1036,7 @@ allMissionsData["גליקמן"]["7"].address = CENTER_NAME;
 allMissionsData["גליקמן"]["7"].map = CENTER;
 allMissionsData["גליקמן"]["7"].group = GROUP2;
 allMissionsData["גליקמן"]["7"].tree = ILAN;
+allMissionsData["גליקמן"]["7"].img = CENTER_CAR;
 allMissionsData["גליקמן"]["7"].escort = HABIBTI_AVIA + ', ' + HABIBI_AMIT;
 
 allMissionsData["גליקמן"]["8"].address = CINEMA_NAME;
