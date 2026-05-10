@@ -460,7 +460,7 @@ allMissionsData["מתן"]["6"].address = LEVANTINI_NAME;
 allMissionsData["מתן"]["6"].map = LEVANTINI;
 allMissionsData["מתן"]["6"].group = COUPLE2;
 allMissionsData["מתן"]["6"].tree = ILAN;
-allMissionsData["מתן"]["6"].escort = HABIBI_MAOR;
+allMissionsData["מתן"]["6"].escort = HABIBI_ELIKO;
 
 allMissionsData["מתן"]["7"].address = LURIA_NAME;
 allMissionsData["מתן"]["7"].map = LURIA;
