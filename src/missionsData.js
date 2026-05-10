@@ -89,8 +89,8 @@ const ROTCHILD_65 = "32.065376902686175, 34.77628046053035";
 //tree
 const BROSH = "ברוש / ארנון";
 const ILAN = "אילן / אופיר";
-const MANGO = "מנגו / מורי";
-const PAPAYA = "פפאיה / איימי";
+const MANGO = "מנגו / איימי";
+const PAPAYA = "פפאיה / מורי";
 const LIMON = "לימון";
 
 //parks
