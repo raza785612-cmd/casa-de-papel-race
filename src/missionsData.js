@@ -91,10 +91,10 @@ const CENTER_CAR ="/missions/centercar.jpg";
 const LURIA_CAR ="/missions/luriacar.jpg";
 
 //tree
-const BROSH = "ברוש / ארנון";
-const ILAN = "אילן / אופיר";
-const MANGO = "מנגו / איימי";
-const PAPAYA = "פפאיה / מורי";
+const BROSH = "ברוש / אמייר";
+const ILAN = "אילן / יובל";
+const MANGO = "מנגו / מורי";
+const PAPAYA = "פפאיה / חנוך";
 const LIMON = "לימון";
 
 //parks
@@ -1083,8 +1083,8 @@ allMissionsData["גלעד"]["5"].img = SHOTER_PIC;
 allMissionsData["גלעד"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["גלעד"]["5"].dest = "לוריא 10";
 
-allMissionsData["גלעד"]["6"].address = MEXICANA_NAME;
-allMissionsData["גלעד"]["6"].map = MEXICANA;
+allMissionsData["גלעד"]["6"].address = PANKINA_NAME;
+allMissionsData["גלעד"]["6"].map = PANKINA;
 allMissionsData["גלעד"]["6"].group = COUPLE8;
 allMissionsData["גלעד"]["6"].tree = PAPAYA;
 allMissionsData["גלעד"]["6"].escort = HABIBTI_AVIA;
@@ -1139,8 +1139,8 @@ allMissionsData["אתי"]["5"].img = NAFHA_PIC;
 allMissionsData["אתי"]["5"].escort = HABIBI_ELIKO;
 allMissionsData["אתי"]["5"].dest = "פיארברג 22";
 
-allMissionsData["אתי"]["6"].address = MEXICANA_NAME;
-allMissionsData["אתי"]["6"].map = MEXICANA;
+allMissionsData["אתי"]["6"].address = PANKINA_NAME;
+allMissionsData["אתי"]["6"].map = PANKINA;
 allMissionsData["אתי"]["6"].group = COUPLE8;
 allMissionsData["אתי"]["6"].tree = PAPAYA;
 allMissionsData["אתי"]["6"].escort = HABIBTI_AVIA;
@@ -1183,20 +1183,20 @@ allMissionsData["עזרי"]["3"].escort = HABIBTI_AVIA;
 allMissionsData["עזרי"]["4"].address = MOTHERS_PARK_NAME;
 allMissionsData["עזרי"]["4"].map = MOTHERS_PARK;
 allMissionsData["עזרי"]["4"].group = PERSONAL;
-allMissionsData["עזרי"]["4"].tree = LIMON;
+allMissionsData["עזרי"]["4"].tree = PAPAYA;
 allMissionsData["עזרי"]["4"].img = MOTHER_PIC;
 allMissionsData["עזרי"]["4"].escort = HABIBTI_AVIA;
 
 allMissionsData["עזרי"]["5"].address = MOTHERS_PARK_NAME;
 allMissionsData["עזרי"]["5"].map = MOTHERS_PARK;
 allMissionsData["עזרי"]["5"].group = PERSONAL;
-allMissionsData["עזרי"]["5"].tree = LIMON;
+allMissionsData["עזרי"]["5"].tree = PAPAYA;
 allMissionsData["עזרי"]["5"].img = MOTHER_PIC;
 allMissionsData["עזרי"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["עזרי"]["5"].dest = "עין חרוד 15";
 
-allMissionsData["עזרי"]["6"].address = MEXICANA_NAME;
-allMissionsData["עזרי"]["6"].map = MEXICANA;
+allMissionsData["עזרי"]["6"].address = PANKINA_NAME;
+allMissionsData["עזרי"]["6"].map = PANKINA;
 allMissionsData["עזרי"]["6"].group = COUPLE8;
 allMissionsData["עזרי"]["6"].tree = PAPAYA;
 allMissionsData["עזרי"]["6"].escort = HABIBTI_AVIA;
