@@ -23,38 +23,60 @@ const Login = () => {
     // אפשר להוסיף כאן קריאה ל-handleLogin(), אבל עדיף שהם ילחצו בעצמם כדי לוודא שהם מוכנים.
   }, [location]);
 
+  // const handleLogin = async () => {
+  //   if (!username || !password) {
+  //     alert("נא להזין שם משתמש וסיסמה");
+  //     return;
+  //   }
+
+  //   setLoading(true);
+  //   const cleanUsername = username.trim();
+  //   const cleanPassword = password.trim();
+
+  //   const { data, error } = await supabase
+  //     .from('teams')
+  //     .select('*')
+  //     .eq('username', cleanUsername)
+  //     .eq('login_password', cleanPassword)
+  //     .single();
+
+  //   if (data && !error) {
+  //     localStorage.setItem('race_user', JSON.stringify(data));
+  //     if (data.username === 'admin') {
+  //       sessionStorage.setItem('isAdminConfirmed', 'true');
+  //       navigate('/admin-panel', { replace: true });
+  //     } else if (data.username === 'segel') {
+  //       navigate('/segel', { replace: true });
+  //     } else {
+  //       navigate('/station/1', { replace: true });
+  //     }
+  //   } else {
+  //     alert("שם משתמש או סיסמה שגויים ❌");
+  //   }
+  //   setLoading(false);
+  // };
   const handleLogin = async () => {
-    if (!username || !password) {
-      alert("נא להזין שם משתמש וסיסמה");
-      return;
-    }
+  setLoading(true);
+  const cleanUsername = username.trim();
+  const cleanPassword = password.trim();
 
-    setLoading(true);
-    const cleanUsername = username.trim();
-    const cleanPassword = password.trim();
+  const { data, error } = await supabase
+    .from('teams')
+    .select('*')
+    .eq('username', cleanUsername)
+    .eq('login_password', cleanPassword)
+    .single();
 
-    const { data, error } = await supabase
-      .from('teams')
-      .select('*')
-      .eq('username', cleanUsername)
-      .eq('login_password', cleanPassword)
-      .single();
+  if (error) {
+    console.error("Supabase Error Details:", error); // זה יגיד לנו אם המשתמש לא נמצא או שיש שגיאת שרת
+    alert(`שגיאה: ${error.message}`);
+  }
 
-    if (data && !error) {
-      localStorage.setItem('race_user', JSON.stringify(data));
-      if (data.username === 'admin') {
-        sessionStorage.setItem('isAdminConfirmed', 'true');
-        navigate('/admin-panel', { replace: true });
-      } else if (data.username === 'segel') {
-        navigate('/segel', { replace: true });
-      } else {
-        navigate('/station/1', { replace: true });
-      }
-    } else {
-      alert("שם משתמש או סיסמה שגויים ❌");
-    }
-    setLoading(false);
-  };
+  if (data && !error) {
+    // ... המשך הקוד שלך
+  }
+  setLoading(false);
+};
 
   return (
     <div style={{
