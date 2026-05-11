@@ -367,7 +367,7 @@ allMissionsData["דותן"]["8"].intel = INTEL_TASK8_1;
 allMissionsData["דותן"]["8"].map = CINEMA_HOTEL;
 allMissionsData["דותן"]["8"].group = GROUP3;
 allMissionsData["דותן"]["8"].tree = BROSH;
-allMissionsData["דותן"]["8"].escort = HABIBI_MAOR +', ' + HABIBI_ELIKO;
+allMissionsData["דותן"]["8"].escort = HABIBTI_AVIA;
 
 // --- צוקר ---
 allMissionsData["צוקר"].loginPass = "3344"; 
@@ -423,7 +423,7 @@ allMissionsData["צוקר"]["8"].intel = INTEL_TASK8_1;
 allMissionsData["צוקר"]["8"].map = CINEMA_HOTEL;
 allMissionsData["צוקר"]["8"].group = GROUP3;
 allMissionsData["צוקר"]["8"].tree = BROSH;
-allMissionsData["צוקר"]["8"].escort = HABIBI_ELIKO + ', ' + HABIBI_MAOR;
+allMissionsData["צוקר"]["8"].escort = HABIBTI_AVIA;
 
 // --- מתן ---
 allMissionsData["מתן"].loginPass = "7878"; 
@@ -636,7 +636,7 @@ allMissionsData["גדי"]["6"].address = ROSTIKO_NAME;
 allMissionsData["גדי"]["6"].map = ROSTIKO;
 allMissionsData["גדי"]["6"].group = COUPLE6;
 allMissionsData["גדי"]["6"].tree = ILAN;
-allMissionsData["גדי"]["6"].escort = HABIBI_AMIT;
+allMissionsData["גדי"]["6"].escort = HABIBI_ELIKO;
 
 allMissionsData["גדי"]["7"].address = CENTER_NAME;
 allMissionsData["גדי"]["7"].map = CENTER;
@@ -861,7 +861,7 @@ allMissionsData["נירו"]["6"].address = LASHUK_NAME;
 allMissionsData["נירו"]["6"].map = LASHUK;
 allMissionsData["נירו"]["6"].group = COUPLE7;
 allMissionsData["נירו"]["6"].tree = MANGO;
-allMissionsData["נירו"]["6"].escort = HABIBI_ELIKO;
+allMissionsData["נירו"]["6"].escort = HABIBI_AMIT;
 
 allMissionsData["נירו"]["7"].address = CENTER_NAME;
 allMissionsData["נירו"]["7"].map = CENTER;
@@ -917,7 +917,7 @@ allMissionsData["ניירו"]["6"].address = LASHUK_NAME;
 allMissionsData["ניירו"]["6"].map = LASHUK;
 allMissionsData["ניירו"]["6"].group = COUPLE7;
 allMissionsData["ניירו"]["6"].tree = MANGO;
-allMissionsData["ניירו"]["6"].escort = HABIBI_ELIKO;
+allMissionsData["ניירו"]["6"].escort = HABIBI_AMIT;
 
 allMissionsData["ניירו"]["7"].address = CENTER_NAME;
 allMissionsData["ניירו"]["7"].map = CENTER;
