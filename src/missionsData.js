@@ -136,6 +136,7 @@ const ROSTIKO = "בזל 42 תל אביב";
 const ARNESTO = "בן יהודה 90 תל אביב";
 const MEXICANA = "בוגרשוב 7 תל אביב";
 const LASHUK = "דיזינגוף 92 תל אביב";
+const YAIN_BAHATZER = "נחלת בנימין 3 תל אביב"
 
 //resturants names 
 const RAMA_NAME = " מסעדת ראמה המלך ג'ורג' 38";
@@ -148,6 +149,7 @@ const ROSTIKO_NAME = "רוסטיקו בזל";
 const ARNESTO_NAME = "Ernesto";
 const MEXICANA_NAME = "מקסיקנה, בוגרשוב 7";
 const LASHUK_NAME = "לה שוק דיזינגוף 92";
+const YAIN_BAHATZER_NAME = "יין בחצר נחלת בנימין 3 "
 
 
 
@@ -1083,8 +1085,8 @@ allMissionsData["גלעד"]["5"].img = SHOTER_PIC;
 allMissionsData["גלעד"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["גלעד"]["5"].dest = "לוריא 10";
 
-allMissionsData["גלעד"]["6"].address = PANKINA_NAME;
-allMissionsData["גלעד"]["6"].map = PANKINA;
+allMissionsData["גלעד"]["6"].address = YAIN_BAHATZER_NAME;
+allMissionsData["גלעד"]["6"].map = YAIN_BAHATZER;
 allMissionsData["גלעד"]["6"].group = COUPLE8;
 allMissionsData["גלעד"]["6"].tree = PAPAYA;
 allMissionsData["גלעד"]["6"].escort = HABIBTI_AVIA;
@@ -1139,8 +1141,8 @@ allMissionsData["אתי"]["5"].img = NAFHA_PIC;
 allMissionsData["אתי"]["5"].escort = HABIBI_ELIKO;
 allMissionsData["אתי"]["5"].dest = "פיארברג 22";
 
-allMissionsData["אתי"]["6"].address = PANKINA_NAME;
-allMissionsData["אתי"]["6"].map = PANKINA;
+allMissionsData["אתי"]["6"].address = YAIN_BAHATZER_NAME;
+allMissionsData["אתי"]["6"].map = YAIN_BAHATZER;
 allMissionsData["אתי"]["6"].group = COUPLE8;
 allMissionsData["אתי"]["6"].tree = PAPAYA;
 allMissionsData["אתי"]["6"].escort = HABIBTI_AVIA;
@@ -1195,8 +1197,8 @@ allMissionsData["עזרי"]["5"].img = MOTHER_PIC;
 allMissionsData["עזרי"]["5"].escort = HABIBTI_AVIA;
 allMissionsData["עזרי"]["5"].dest = "עין חרוד 15";
 
-allMissionsData["עזרי"]["6"].address = PANKINA_NAME;
-allMissionsData["עזרי"]["6"].map = PANKINA;
+allMissionsData["עזרי"]["6"].address = YAIN_BAHATZER_NAME;
+allMissionsData["עזרי"]["6"].map = YAIN_BAHATZER;
 allMissionsData["עזרי"]["6"].group = COUPLE8;
 allMissionsData["עזרי"]["6"].tree = PAPAYA;
 allMissionsData["עזרי"]["6"].escort = HABIBTI_AVIA;
