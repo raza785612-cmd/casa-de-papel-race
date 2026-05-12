@@ -603,7 +603,7 @@ allMissionsData["גדי"]["1"].address = RINUMA_NAME;
 allMissionsData["גדי"]["1"].map = RINUMA;
 allMissionsData["גדי"]["1"].group = PERSONAL;
 allMissionsData["גדי"]["1"].tree = "";
-allMissionsData["גדי"]["1"].escort = HABIBTI_AVIA;
+allMissionsData["גדי"]["1"].escort = HABIBI_AMIT;
 
 allMissionsData["גדי"]["2"].address = "Lightwave בוגרשוב 72";
 allMissionsData["גדי"]["2"].map = "32.07529620482618, 34.77279078751429";
