@@ -1083,7 +1083,7 @@ allMissionsData["גלעד"]["5"].group = PERSONAL;
 allMissionsData["גלעד"]["5"].tree = PAPAYA;
 allMissionsData["גלעד"]["5"].img = SHOTER_PIC;
 allMissionsData["גלעד"]["5"].escort = HABIBTI_AVIA;
-allMissionsData["גלעד"]["5"].dest = "לוריא 10";
+allMissionsData["גלעד"]["5"].dest = "חובבי ציון 54";
 
 allMissionsData["גלעד"]["6"].address = YAIN_BAHATZER_NAME;
 allMissionsData["גלעד"]["6"].map = YAIN_BAHATZER;
