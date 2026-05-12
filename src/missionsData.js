@@ -87,7 +87,7 @@ const ROTCHILD_65_NAME = "מלון רוטשילד 65";
 const ROTCHILD_65 = "32.065376902686175, 34.77628046053035";
 
 //cars
-const CENTER_CAR ="/missions/centercar.jpg";
+const CENTER_CAR ="/missions/CENTER_NEW_CAR.png";
 const LURIA_CAR ="/missions/luriacar.jpg";
 
 //tree
