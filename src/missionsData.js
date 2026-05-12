@@ -361,6 +361,7 @@ allMissionsData["דותן"]["6"].escort = HABIBI_MAOR;
 allMissionsData["דותן"]["7"].address = LURIA_NAME;
 allMissionsData["דותן"]["7"].map = LURIA;
 allMissionsData["דותן"]["7"].group = GROUP3;
+allMissionsData["דותן"]["7"].img = LURIA_CAR;
 allMissionsData["דותן"]["7"].tree = BROSH;
 allMissionsData["דותן"]["7"].escort = HABIBI_MAOR +', ' + HABIBI_ELIKO;
 
@@ -417,6 +418,7 @@ allMissionsData["צוקר"]["6"].escort = HABIBI_MAOR;
 allMissionsData["צוקר"]["7"].address = LURIA_NAME;
 allMissionsData["צוקר"]["7"].map = LURIA;
 allMissionsData["צוקר"]["7"].group = GROUP3;
+allMissionsData["צוקר"]["7"].img = LURIA_CAR;
 allMissionsData["צוקר"]["7"].tree = BROSH;
 allMissionsData["צוקר"]["7"].escort = HABIBI_ELIKO + ', ' + HABIBI_MAOR;
 
@@ -1094,6 +1096,7 @@ allMissionsData["גלעד"]["6"].escort = HABIBTI_AVIA;
 allMissionsData["גלעד"]["7"].address = LURIA_NAME;
 allMissionsData["גלעד"]["7"].map = LURIA;
 allMissionsData["גלעד"]["7"].group = GROUP3;
+allMissionsData["גלעד"]["7"].img = LURIA_CAR;
 allMissionsData["גלעד"]["7"].tree = BROSH;
 allMissionsData["גלעד"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
 
@@ -1149,6 +1152,7 @@ allMissionsData["אתי"]["6"].escort = HABIBTI_AVIA;
 
 allMissionsData["אתי"]["7"].address = LURIA_NAME;
 allMissionsData["אתי"]["7"].map = LURIA;
+allMissionsData["אתי"]["7"].img = LURIA_CAR;
 allMissionsData["אתי"]["7"].group = GROUP3;
 allMissionsData["אתי"]["7"].tree = BROSH;
 allMissionsData["אתי"]["7"].escort = HABIBI_MAOR + ', ' + HABIBI_ELIKO;
